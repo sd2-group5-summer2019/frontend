@@ -6,7 +6,13 @@ class LogIn extends React.Component {
 
     submit = e => {
         e.preventDefault()
-        fetch('http://localhost:3001/api/login', {method: 'POST', body: e})
+        console.log(e.target.elements.ID.value)
+        var box = { 
+            username:e.target.elements.ID.value,
+            password:e.target.elements.psw.value
+        }
+        console.log(JSON.stringify(box))
+        fetch('http://localhost:3001/api/login', {method: 'POST', body: JSON.stringify(box)})
             .then(res => res.json())
             .then(json => console.log(json))
     }
@@ -17,9 +23,9 @@ class LogIn extends React.Component {
             <h1> Login </h1>
             <form onSubmit={this.submit}>
                 <label> NID or knights Email </label>
-                <input type="text"></input>
+                <input name="ID" type="text"></input>
                 <label> password </label>
-                <input type="password" ></input>
+                <input name="psw" type="password" ></input>
                 <button>Submit</button>
             </form>
         </div>
