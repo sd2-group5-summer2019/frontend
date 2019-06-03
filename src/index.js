@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import axios from 'axios'
+import axios from 'axios';
+
+
 class LogIn extends React.Component {
 
     constructor(props){
@@ -29,22 +31,7 @@ class LogIn extends React.Component {
         .then(error => {console.log(error)})
     }
 
-    // submit = e => {
-    //     e.preventDefault()
-    //     console.log(typeof(e.target.elements.psw.value))
-
-    //     //let request = { 
-    //      //   username: e.target.elements.ID.value ,
-    //       //  password: e.target.elements.psw.value  
-    //     //}
-    //     console.log(JSON.stringify(request))
-    //     fetch('http://localhost:3001/api/login', {
-    //         method: 'POST', 
-    //         body: JSON.stringify(e.value)
-    //       })
-    //     .then(res => res.json())
-    //     .then(data => console.log(data))
-    // }
+    
 
     render(){
     return(
@@ -88,7 +75,7 @@ class HomePage extends React.Component{
     // is sent back from the end
     state = {
         loggedIn:false,
-        loading:false
+        user: ''
     }
 
     render(){
@@ -101,10 +88,14 @@ class HomePage extends React.Component{
         )
     }
 }
-ReactDOM.render(
+
+
+ ReactDOM.render(
         <HomePage />,
-    document.getElementById('root')
-)
+     document.getElementById('root')
+ )
+
+
 //palette
 // Light tan : #F5F0E6 background general
 // bright gold: #EAAB0B headers and buttons
