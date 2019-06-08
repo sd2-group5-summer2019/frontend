@@ -2,6 +2,7 @@ import React from 'react';
 import './index.css';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
+import { bindExpression } from '@babel/types';
 
 
 class LogIn extends React.Component {
@@ -14,6 +15,8 @@ class LogIn extends React.Component {
                 success:false
         }
         
+        this.changePage = this.changePage.bind(this);
+        this.formHandler = this.formHandler.bind(this);
        }
     
     changeHandler = (event) =>{
@@ -25,62 +28,55 @@ class LogIn extends React.Component {
     
     }
 
-    loadNewPage = ()=>{
-        this.setState({
-            success:true
-        })
+    changePage = (response)=>{
+        
+    
+            if(response.status===200){
+                this.setState({success:true})
+            }
+            else
+                console.log(response.data)
+
+        console.log(response.data);
     }
-    
-    
-  
+
     formHandler = async event => {
         event.preventDefault()
         console.log(this.state)
         axios.post(`http://localhost:3001/api/login`, this.state)
-        .then(function (response) {
-            if(response.status===200){
-                console.log(response.data)
-                //this.history.props.userLoggedIn(true)
-                this.loadNewPage()
-            }
-            else
-                console.log(response.data)})
+        .then(response => this.changePage(response))
         .catch(function (error){console.log(error)})
     }
 
     render(){
+        
 
-        if(this.state.success===true){
+        if(this.state.success){
             return <Redirect to="/survey"/>
-        }
-    return(
+        }else{
+            return(
         
-
-            <div className="boxThing">
-                   <h1> Login </h1>
+                <div className="boxThing">
+                       <h1> Login </h1>
+        
+                  <form onSubmit={this.formHandler}>
     
-              <form onSubmit={this.formHandler}>
-
-                <label> NID or knights Email </label>
-                <br></br>
-                <input name="username" value={this.state.id} onChange={this.changeHandler} type="text"></input>
-                <br></br>
-                <label> password </label>
-                <br></br>
-                <input name="password" value={this.state.passwd} onChange={this.changeHandler} type="password" ></input>
-                <br></br>
-                <button type="submit">Submit</button>
-                <br></br>
-            </form>
-           
-                     
-            </div>
-
-             
-
-           
-        
-    )
+                    <label> NID or knights Email </label>
+                    <br></br>
+                    <input name="username" value={this.state.id} onChange={this.changeHandler} type="text"></input>
+                    <br></br>
+                    <label> password </label>
+                    <br></br>
+                    <input name="password" value={this.state.passwd} onChange={this.changeHandler} type="password" ></input>
+                    <br></br>
+                    <button type="submit">Submit</button>
+                    <br></br>
+                </form>        
+                </div>
+    
+        )
+        }
+   
 }
 }
 
