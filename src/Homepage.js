@@ -1,12 +1,12 @@
 import React from 'react';
-import {Survey} from './Survey'
+
 
 class Homepage extends React.Component{
     render(){
         return(
             <div>
-             <p>gonna put a navbar in here somewhere as another component</p>
-           
+             <h1>Public Homepage</h1>
+            <p></p>
             </div>   
         )
     }

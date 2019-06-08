@@ -1,7 +1,7 @@
 import React from 'react';
 import './index.css';
 import axios from 'axios';
-import {withRouter, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 
 
 class LogIn extends React.Component {

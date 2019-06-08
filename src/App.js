@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import {Link, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import {LinkContainer} from "react-router-bootstrap";
 import { Navbar, Nav, NavItem} from "react-bootstrap";
 import Routes from "./Routes";
@@ -12,44 +12,28 @@ class App extends Component {
     this.state={
       username:'',
       token:'',
-      isLoggedIn:false
     }
   }
   
-  userLoggedIn = loggedIn =>
-  {
-    this.setState({isLoggedIn:loggedIn})
-  }
-
-  userLogOut = event =>{
-    this.userLoggedIn(false)
-    this.props.history.push("/login")
-  }
   render() {
 
-    const childProps = {
-      isLoggedIn:this.state.isLoggedIn,
-      userLoggedIn:this.userLoggedIn
-    }
     return (
 
       <div className="App container yellow">
         <Navbar>
             <Nav>
-            {this.state.isLoggedIn ? 
-            <NavItem onClick={this.userLogOut}>Log Out</NavItem> 
-            :
-                <Fragment>
+            <Fragment>
 
-               <LinkContainer to="/login">
-              <NavItem> Login </NavItem>
+              <LinkContainer to="/login">
+              <NavItem> Login (you can click here) </NavItem>
                </LinkContainer>
                <LinkContainer to="/survey">
-               <NavItem>Register</NavItem>
+               <NavItem>SurveyPage(for testing)</NavItem>
               </LinkContainer>
-
-                </Fragment>
-            }
+              <LinkContainer to="/register">
+               <NavItem>Register(goes to register page now)</NavItem>
+              </LinkContainer>
+            </Fragment>
             </Nav>
         </Navbar>
               
