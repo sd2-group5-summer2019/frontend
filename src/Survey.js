@@ -130,7 +130,7 @@ class Survey extends React.Component{
                 </form>
                 </div>
             )
-        } else if(formStatus){
+        } else if(formStatus && !form_submitted){
             
             const title = this.state.title
             var questions = Array.from(this.state.data);
