@@ -1,26 +1,36 @@
 import React from 'react';
-import {withRouter, Redirect} from "react-router-dom";
 import {LinkContainer} from "react-router-bootstrap";
 import { Navbar, Nav, NavItem} from "react-bootstrap";
-import Routes from "./Routes";
+import "./App.css";
 
 class Homepage extends React.Component{
 
     state={
-        loggedIn:false
+        loggedIn:true
     }
     render(){
 
         const logged = this.state.loggedIn
         if(logged){
-          return( <div>
+          return( <div className="yellow">
                <h1>Private Homepage</h1>
                <Navbar>
                   <Nav>
                      <LinkContainer to="/survey">
                      <NavItem>SurveyPage(for testing)</NavItem>
                     </LinkContainer>
-                    
+                    <LinkContainer to="/assignments">
+                     <NavItem>Assignments</NavItem>
+                    </LinkContainer>
+                    <LinkContainer to="/courses">
+                     <NavItem>Courses</NavItem>
+                    </LinkContainer>
+                    <LinkContainer to="/groups">
+                     <NavItem>Groups(for testing)</NavItem>
+                    </LinkContainer>
+                    <LinkContainer to="/students">
+                     <NavItem>Students(for testing)</NavItem>
+                    </LinkContainer>
                   </Nav>
               </Navbar>
            </div>)
