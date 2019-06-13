@@ -2,7 +2,7 @@ import React from 'react';
 import './index.css';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
-import { bindExpression } from '@babel/types';
+
 
 
 class LogIn extends React.Component {
@@ -28,7 +28,7 @@ class LogIn extends React.Component {
     
     }
 
-    changePage = (response)=>{
+    changePage = (response) => {
         
     
             if(response.status===200){

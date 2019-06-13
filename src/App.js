@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import {withRouter} from "react-router-dom";
+import {withRouter, Redirect} from "react-router-dom";
 import {LinkContainer} from "react-router-bootstrap";
 import { Navbar, Nav, NavItem} from "react-bootstrap";
 import Routes from "./Routes";
@@ -12,35 +12,17 @@ class App extends Component {
     this.state={
       username:'',
       token:'',
+      loggedIn:false
     }
   }
   
   render() {
-
-    return (
-
-      <div className="App container yellow">
-        <Navbar>
-            <Nav>
-            <Fragment>
-
-              <LinkContainer to="/login">
-              <NavItem> Login (you can click here) </NavItem>
-               </LinkContainer>
-               <LinkContainer to="/survey">
-               <NavItem>SurveyPage(for testing)</NavItem>
-              </LinkContainer>
-              <LinkContainer to="/register">
-               <NavItem>Register(goes to register page now)</NavItem>
-              </LinkContainer>
-            </Fragment>
-            </Nav>
-        </Navbar>
-              
-              
-        <Routes />
-      </div>
-    );
+   
+   
+      return ( <Routes />
+     )
+    
+    
   }
 }
 

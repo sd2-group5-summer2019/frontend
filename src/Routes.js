@@ -5,7 +5,6 @@ import LogIn from './LogIn';
 import Survey from './Survey';
 import Register from './Register';
 
-
 function Routes () {
 return(
         <Switch>
