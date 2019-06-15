@@ -1,8 +1,6 @@
-import React, { Component, Fragment } from "react";
-import {withRouter, Redirect} from "react-router-dom";
-import {LinkContainer} from "react-router-bootstrap";
-import { Navbar, Nav, NavItem} from "react-bootstrap";
-import Routes from "./Routes";
+import React, { Component } from "react";
+import {withRouter} from "react-router-dom";
+import Routes from "./components/Routes";
 import "./App.css";
 
 class App extends Component {
