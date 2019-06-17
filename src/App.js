@@ -2,26 +2,20 @@ import React, { Component } from "react";
 import {withRouter} from "react-router-dom";
 import Routes from "./components/Routes";
 import "./App.css";
+import {
+  BrowserRouter as Router,
+} from "react-router-dom";
 
 class App extends Component {
-  constructor(props){
-    super(props)
-
-    this.state={
-      username:'',
-      token:'',
-      loggedIn:false
-    }
-  }
   
   render() {
-   
-   
-      return ( <Routes />
+      return ( 
+      <Router>
+        <Routes />
+      </Router>
      )
-    
     
   }
 }
 
-export default withRouter(App);
+export default App;
