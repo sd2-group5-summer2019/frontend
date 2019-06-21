@@ -1,10 +1,14 @@
 import React from 'react';
-import Survey from '../components/Survey'
+import Survey from '../ui/Survey';
+import CreateAssignment from '../ui/CreateAssignment';
+
 class Assignments extends React.Component{
 
+    
+   
     render(){
         return(
-            <Survey/>
+            <CreateAssignment/>
         )
     }
 }

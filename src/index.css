@@ -9,6 +9,10 @@ body {
   color:white;
 }
 
+body button, input{
+  color:black;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -22,6 +26,8 @@ code {
   padding:25px;
   text-align:left;
 }
+
+
 
 .boxThing{
   background-color:#ffffff;

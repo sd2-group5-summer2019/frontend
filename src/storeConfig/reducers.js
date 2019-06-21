@@ -21,7 +21,7 @@ function currentUser(state = initialState, action){
            })
         case ON_LOGOUT:
             return Object.assign({}, state, {
-            token: action.payload,
+            token:'',
             loggedIn:false
         })
         case GET_TOKEN:

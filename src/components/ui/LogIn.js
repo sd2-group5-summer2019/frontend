@@ -1,8 +1,8 @@
 import React from 'react';
-import '../index.css';
+import "../../index.css";
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
-
+import {connect } from 'react-redux';
 
 
 class LogIn extends React.Component {
@@ -34,12 +34,21 @@ class LogIn extends React.Component {
         
     
             if(response.status===200){
+                // just in case, 
+                // setState could still be updating
+                // recommended we don't depend on it for
+                // conditional rendering or something idk
+                const payload = {
+                    user_id:response.data.id,
+                    token:response.data.token
+                }
                 this.setState({
                     success:true,
-                    user_id:response.data.username,
-                    token:response.data.password
+                    user_id:response.data.id,
+                    token:response.data.token
                 })
                 console.log(this.state)
+               this.props.onLogin(payload)
             }
             else
                 console.log(response.data)
@@ -50,7 +59,7 @@ class LogIn extends React.Component {
     formHandler = async event => {
         event.preventDefault()
         console.log(this.state)
-        axios.post(`http://localhost:3001/api/frontendTest`, this.state)
+        axios.post(`http://localhost:3001/api/login`, this.state)
         .then(response => this.changePage(response))
         .catch(function (error){console.log(error)})
     }
@@ -59,7 +68,7 @@ class LogIn extends React.Component {
         
 
         if(this.state.success){
-            return <Redirect to="/homepage"/>
+            return <Redirect to="/"/>
         }else{
             return(
         
@@ -87,4 +96,4 @@ class LogIn extends React.Component {
 }
 }
 
-export default LogIn;
+export default connect()(LogIn);
