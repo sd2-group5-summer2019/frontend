@@ -87,10 +87,10 @@ class Register extends React.Component{
             errors["password"] = "*Please enter your password.";
         }
                 
-       if (!type) {
-       formIsValid = false;
-       errors["type"] = "*Please select a user type.";
-       }
+        if (!type) {
+            formIsValid = false;
+            errors["type"] = "*Please select a user type.";
+        }
 
         this.setState({
                       errors: errors
@@ -105,63 +105,56 @@ class Register extends React.Component{
         else{
             return (
 
-                    <div className="boxThing" id="register">
-                        <h1>Registration</h1>
+                <div className="boxThing" id="register">
+                    <h1>Registration</h1>
                     <form method="post"  name="userRegistrationForm"  onSubmit= {this.submitHandler}>
-                            <label>First Name</label>
-                            <br></br>
-                            <div className="errorMsg">{this.state.errors.first_name}</div>
-                            <br></br>
-                            <input type="text" name="first_name" value={this.state.first_name} onChange={this.changeHandler} />
-                            <br></br>
-                    
-                            <label>Last Name</label>
-                            <br></br>
-                            <div className="errorMsg">{this.state.errors.last_name}</div>
-                            <br></br>
-                            <input type="text" name="last_name" value={this.state.last_name} onChange={this.changeHandler} />
-                            <br></br>
-                    
-                            <label>Username or NID:</label>
-                            <br></br>
-                            <div className="errorMsg">{this.state.errors.username}</div>
-                            <br></br>
-                            <input type="text" name="username" value={this.state.username} onChange={this.changeHandler}/>
-                            <br></br>
-                    
-                            <label>Email:</label>
-                            <br></br>
-                            <div className="errorMsg">{this.state.errors.email}</div>
-                            <br></br>
-                            <input type="text" name="email" value={this.state.email} onChange={this.changeHandler}/>
-                            <br></br>
-                    
-                            <label>Password</label>
-                            <br></br>
-                            <div className="errorMsg">{this.state.errors.password}</div>
-                            <br></br>
-                            <input type="password" name="password" value={this.state.password} onChange={this.changeHandler} />
-                            <br></br>
+                        <label>First Name</label>
+                        <div className="errorMsg">{this.state.errors.first_name}</div>
+                        <br></br>
+                        <input type="text" name="first_name" value={this.state.first_name} onChange={this.changeHandler} />
+                        <br></br>
+                
+                        <label>Last Name</label>
+                        <div className="errorMsg">{this.state.errors.last_name}</div>
+                        <br></br>
+                        <input type="text" name="last_name" value={this.state.last_name} onChange={this.changeHandler} />
+                        <br></br>
+                
+                        <label>Username or NID:</label>
+                        <div className="errorMsg">{this.state.errors.username}</div>
+                        <br></br>
+                        <input type="text" name="username" value={this.state.username} onChange={this.changeHandler}/>
+                        <br></br>
+                
+                        <label>Email:</label>
+                        <div className="errorMsg">{this.state.errors.email}</div>
+                        <br></br>
+                        <input type="text" name="email" value={this.state.email} onChange={this.changeHandler}/>
+                        <br></br>
+                
+                        <label>Password</label>
+                        <div className="errorMsg">{this.state.errors.password}</div>
+                        <br></br>
+                        <input type="password" name="password" value={this.state.password} onChange={this.changeHandler} />
+                        <br></br>
 
-                            <label>User Type</label>
-                            <br></br>
-                            <div className="errorMsg">{this.state.errors.type}</div>
-                            <br></br>
-                            <b>Student</b>
-                            <input type="radio" name="type" value={this.state.type === 'Student'} onChange={this.changeHandler} />
-                            <b>Admin</b>
-                            <input type="radio" name="type" value={this.state.type === 'Admin'} onChange={this.changeHandler} />
-                            <b>Sponsor</b>
-                            <input type="radio" name="type" value={this.state.type === 'Sponsor'} onChange={this.changeHandler} />
-                            <b>Coordinator</b>
-                            <input type="radio" name="type" value={this.state.type === 'Coordinator'} onChange={this.changeHandler} />
-                            <br></br>
-                            <input type="submit" className="button"  value="Register"/>
-                        </form>
-                    </div>
-                    );
+                        <label>User Type</label>
+                        <div className="errorMsg">{this.state.errors.type}</div>
+                        <br></br>
+                        <b>Student</b>
+                        <input type="radio" name="type" value={'STUDENT'} onChange={this.changeHandler} />
+                        <b>Admin</b>
+                        <input type="radio" name="type" value={'ADMIN'} onChange={this.changeHandler} />
+                        <b>Sponsor</b>
+                        <input type="radio" name="type" value={'SPONSOR'} onChange={this.changeHandler} />
+                        <b>Coordinator</b>
+                        <input type="radio" name="type" value={'Coordinator'} onChange={this.changeHandler} />
+                        <br></br>
+                        <input type="submit" className="button"  value="Register"/>
+                    </form>
+                </div>
+            );
         }
     }
 }
-
 export default Register;
