@@ -1,6 +1,6 @@
 
 node_modules/.cache/babel-loader/fba4a8924747503c262fef5d0b753f98.json
-*.js
+node_modules/
 *.json
 *.flow
 *.md
@@ -29,3 +29,8 @@ node_modules/dom-helpers/LICENSE
 node_modules/encoding/LICENSE
 node_modules/@react-bootstrap/react-popper/LICENSE
 node_modules/@restart/hooks/LICENSE
+node_modules/ua-parser-js/src/ua-parser.js
+node_modules/uncontrollable/hook.js
+node_modules/ua-parser-js/dist/ua-parser.min.js
+node_modules/typed-styles/index.js
+node_modules/value-equal/umd/resolve-pathname.min.js
