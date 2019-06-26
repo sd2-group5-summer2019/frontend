@@ -33,7 +33,7 @@ class LogIn extends React.Component {
     changePage = (response) => {
         
     
-            if(response.status === 200 && response.data.status === 200 ){
+            if(response.status === 200 && typeof response.data.status === 'undefined' ){
                 // just in case, 
                 // setState could still be updating
                 // recommended we don't depend on it for
