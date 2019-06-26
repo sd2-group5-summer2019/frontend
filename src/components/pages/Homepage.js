@@ -1,8 +1,8 @@
 import React from 'react';
 import {LinkContainer} from "react-router-bootstrap";
 import { Navbar, Nav, NavItem} from "react-bootstrap";
-import Menu from '../ui/Menu';
 import "../../index.css";
+import MenuContainer from '../containers/MenuContainer'
 
 
 const Homepage = ({ user_id='', token='', loggedIn=false }) =>{
@@ -13,7 +13,7 @@ const Homepage = ({ user_id='', token='', loggedIn=false }) =>{
         return( 
             <div>
                <h1 className="header">Private Homepage</h1>
-                   <Menu />
+                   <MenuContainer />
             </div>
         )
     } else {

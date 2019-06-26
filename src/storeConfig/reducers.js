@@ -1,6 +1,7 @@
 import { ON_LOGIN,
          ON_LOGOUT,
-         GET_TOKEN
+         GET_TOKEN, 
+         GET_TYPE
          } from "./actions";
 
 // initial state
@@ -8,7 +9,8 @@ import { ON_LOGIN,
 const initialState = {
     user_id:'',
     token:'',
-    loggedIn:false
+    loggedIn:false,
+    type:'admin'
 }
 
 function currentUser(state = initialState, action){
@@ -24,6 +26,8 @@ function currentUser(state = initialState, action){
             token:'',
             loggedIn:false
         })
+        case GET_TYPE:
+            return state.type
         case GET_TOKEN:
             return state.token
         default:

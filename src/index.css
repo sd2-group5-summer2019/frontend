@@ -27,7 +27,18 @@ code {
   text-align:left;
 }
 
-
+.menu {
+  background-color:#ffffff;
+  text-align:center;
+  color:black;
+  width: 300px;
+  margin:5px auto auto 0;
+  padding:2px;
+}
+.menu input, button, label, textarea{
+  margin:5px 5px 5px 10px;
+  padding:5px;
+}
 
 .boxThing{
   background-color:#ffffff;
@@ -42,6 +53,7 @@ code {
   margin:5px 5px 5px 10px;
   padding:5px;
 }
+
 .boxThing h1 { 
     font-size:20px;
     background-color:#fdcf04;

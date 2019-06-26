@@ -130,7 +130,7 @@ class CreateAssignment extends React.Component{
                     <input type="text" name="title" value={this.state.title} onChange={this.handleChange1}></input>
                     <br></br>
                     <br></br>
-                    <textarea placeholder="Brief Description (optional)..."></textarea>
+                    <input type="textarea" placeholder="Brief Description (optional)..."></input>
                     <br></br>
                     <label>Question {this.state.q_num}: </label>
                     <input name={this.state.q_num} value={this.state.tempQ.value} onChange={this.questionHandler} type="text"></input>
