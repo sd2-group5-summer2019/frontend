@@ -22,6 +22,7 @@ class Create_Team extends React.Component {
 		}
 
 			this.changeHandler = this.changeHandler.bind(this)
+			this.setSponsor = this.setSponsor.bind(this)
 	        this.changePage = this.changePage.bind(this);
 	        this.submitHandler = this.submitHandler.bind(this)
 
@@ -31,6 +32,10 @@ class Create_Team extends React.Component {
         this.setState({
             [e.target.name] :e.target.value
                       })
+    }
+
+    setSponsor(e) {
+        this.state.sponsor = e.value
     }
 
     changePage = (response)=>{
@@ -54,8 +59,7 @@ class Create_Team extends React.Component {
     componentDidMount() {
     axios.get('http://localhost:3001/api/get_all_sponsors')
         .then(res => {
-            const all_sponsors = res.data;
-            this.setState({all_sponsors});
+        	this.state.all_sponsors = res.data;
         })
 
     }
@@ -74,9 +78,11 @@ class Create_Team extends React.Component {
     				<input type="text" name="description" value={this.state.description} onChange={this.changeHandler}/>
     				<br></br>
     				<label>Sponsor</label>
-    				<Select options={this.state.all_sponsors.map(
-    					sponsor => ({ label:sponsor.company, 
-    						value:sponsor.user_id }))} onchange={opt=> this.sponsor=opt.value}/>
+    				<Select 
+    					options={this.state.all_sponsors.map(sponsor => ({ label:sponsor.company, value:sponsor.user_id }))} 
+                        getOptionValue={({value}) => value}
+                        onChange={({value}) => this.setSponsor({value})}
+    				/>
     				<br></br>
     				<label>SD1 Information</label>
 					<b>Spring</b>
@@ -86,7 +92,7 @@ class Create_Team extends React.Component {
 	            	<b>Fall</b>
 	            	<input type="radio" name="sd1_semester" value={'FALL'} onChange={this.changeHandler}/>
 	            	<b>Year</b>
-	            	<input type="number" name="sd1_year" min="1000" max="9999" onchange={this.changeHandler}/>
+	            	<input type="number" name="sd1_year" min="2019" max="2999" onchange={this.changeHandler}/>
     				<br></br>
     				<label>SD2 Information</label>
 					<b>Spring</b>
@@ -96,7 +102,8 @@ class Create_Team extends React.Component {
 	            	<b>Fall</b>
 	            	<input type="radio" name="sd2_semester" value={'FALL'} onChange={this.changeHandler}/>
 	            	<b>Year</b>
-	            	<input type="number" name="sd2_year" min="1000" max="9999" onChange={this.changeHandler}/>    				
+	            	<input type="number" name="sd2_year" min="2019" max="2999" onChange={this.changeHandler}/>   
+	            	<br></br>
 	            	<input type="submit" className="button" value="Create_Team"/>
     			</form>
     		</div>

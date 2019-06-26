@@ -1,5 +1,7 @@
 import React from 'react';
-import axios from 'axios'
+import axios from 'axios';
+import {LinkContainer} from "react-router-bootstrap";
+import { Navbar, Nav, NavItem} from "react-bootstrap";
 
 class Sponsors extends React.Component {
 	constructor(props) {
@@ -7,7 +9,7 @@ class Sponsors extends React.Component {
 		this.state = {
 			sponsors: []
 		}
-		//this.deleteRequest.bind(this);
+		this.deleteRequest = this.deleteRequest.bind(this);
 		this.state.sponsors = [{id: "nid", first_name: "mahzain", last_name: "malik", company: "ma026001", email: "mahzain@knights.ucf.edu", team: "group 5"}]
 	}
 
@@ -28,6 +30,13 @@ class Sponsors extends React.Component {
     render() {
         return(
         	<div>
+        		<Navbar>
+                	<Nav>
+                    	<LinkContainer to="/create_sponsor">
+                     		<NavItem>Create New Sponsor</NavItem>
+                    	</LinkContainer>
+                	</Nav>
+            	</Navbar>
 	            <h1>All Sponsors</h1>
 	            <table>
 	              	<thead>
@@ -48,7 +57,7 @@ class Sponsors extends React.Component {
 	               				<td>{sponsor.company}</td>
 	               				<td>{sponsor.email}</td>
 	               				<td>{sponsor.team}</td>
-	               				<td>VIEW | EDIT | <button name="DELETE" onclick={() => this.deleteRequest(sponsor.id)}>DELETE</button></td>
+	               				<td>VIEW | EDIT | <button name="DELETE" onClick={() => this.deleteRequest(sponsor.id)}>DELETE</button></td>
 	               			</tr>
 	               		)}
 	               	</tbody>

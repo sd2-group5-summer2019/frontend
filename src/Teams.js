@@ -1,5 +1,7 @@
 import React from 'react';
-import axios from 'axios'
+import axios from 'axios';
+import {LinkContainer} from "react-router-bootstrap";
+import { Navbar, Nav, NavItem} from "react-bootstrap";
 
 class Teams extends React.Component {
 	constructor(props) {
@@ -7,6 +9,7 @@ class Teams extends React.Component {
 		this.state = {
 			teams: []
 		}
+		this.deleteRequest = this.deleteRequest.bind(this);
 		this.state.teams = [{id: "nid", project_name: "name", sponsor: "Heinrik", num_students: "5"}]
 
 	}
@@ -27,6 +30,13 @@ class Teams extends React.Component {
     render() {
         return(
         	<div>
+        		<Navbar>
+                	<Nav>
+                    	<LinkContainer to="/create_team">
+                     		<NavItem>Create New Team</NavItem>
+                    	</LinkContainer>
+                	</Nav>
+            	</Navbar>
 	            <h1>All Teams</h1>
 	            <table>
 	              	<thead>
@@ -43,7 +53,7 @@ class Teams extends React.Component {
 	               				<td>{team.project_name}</td>
 	               				<td>{team.sponsor}</td>
 	               				<td>{team.num_students}</td>
-	               				<td>VIEW | EDIT | <button name="DELETE" onclick={() => this.deleteRequest(team.id)}>DELETE</button></td>
+	               				<td>VIEW | EDIT | <button name="DELETE" onClick={() => this.deleteRequest(team.id)}>DELETE</button></td>
 	               			</tr>
 	               		)}
 	               	</tbody>

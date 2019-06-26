@@ -18,10 +18,15 @@ class Create_Sponsor extends React.Component {
 			success:false
 		}
 			this.changeHandler = this.changeHandler.bind(this)
-	        this.changePage = this.changePage.bind(this);
+	        this.changePage = this.changePage.bind(this)
 	        this.submitHandler = this.submitHandler.bind(this)
+            this.setTeam = this.setTeam.bind(this)
+
 	}
 	
+    setTeam(e) {
+        this.state.team = e.value
+    }
 
     changeHandler(e) {
         this.setState({
@@ -50,8 +55,7 @@ class Create_Sponsor extends React.Component {
     componentDidMount() {
     axios.get('http://localhost:3001/api/get_all_teams')
         .then(res => {
-            const all_teams = res.data;
-            this.setState({all_teams});
+            this.state.all_teams = res.data;
         })
     }
     
@@ -75,7 +79,11 @@ class Create_Sponsor extends React.Component {
                     <input type="text" name="Email" value={this.state.email} onChange={this.changeHandler}/>
                     <br></br>
                     <label>Team</label>
-    				<Select options={this.state.all_teams.map(team => ({ label:team.project_name, value: team.team_id }))} onchange={opt=> this.state.team=opt.value}/>
+                    <Select
+                        options={this.state.all_teams.map(team => ({ label: team.project_name, value: team.id}))}
+                        getOptionValue={({value}) => value}
+                        onChange={({value}) => this.setTeam({value})}
+                    />
     				<br></br> 				
 	            	<input type="submit" className="button" value="Create_Team"/>
     			</form>

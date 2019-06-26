@@ -21,12 +21,11 @@ class Create_Student extends React.Component {
 			this.changeHandler = this.changeHandler.bind(this)
 	        this.changePage = this.changePage.bind(this)
 	        this.submitHandler = this.submitHandler.bind(this)
+            this.setTeam = this.setTeam.bind(this)
             this.state.all_teams = [{id: "nid", project_name: "name", sponsor: "Heinrik", num_students: "5"},
                                     {id: "12", project_name: "name2", sponsor: "Heinr22ik", num_students: "51"}
             ]
-
 	}
-	
 
     changeHandler(e) {
         this.setState({
@@ -34,10 +33,10 @@ class Create_Student extends React.Component {
                       })
     }
 
-    handleChange = team => {
-        this.setState({ team });
-        console.log(`Option selected:`, team);
-    };
+    setTeam(e) {
+        this.state.team = e.value
+    }
+
     changePage = (response)=>{
         if(response.status===200){
             this.setState({success:true})
@@ -59,13 +58,11 @@ class Create_Student extends React.Component {
     componentDidMount() {
     axios.get('http://localhost:3001/api/get_all_teams')
         .then(res => {
-            const all_teams = res.data;
-            this.setState({all_teams});
+            this.state.all_teams = res.data;
         })
     }
 
     render(){
-        const options = this.state.all_teams.map(team => ({ label: team.project_name, value: team.team_id}))
         if(this.state.success){
             return <Redirect to="/students"/>
         }
@@ -85,9 +82,11 @@ class Create_Student extends React.Component {
                     <input type="text" name="email" value={this.state.email} onChange={this.changeHandler}/>
                     <br></br>
                     <label>Team</label>
-    				<Select  
-                        options={options} 
-                        onchange={opt=> this.state.team=opt.value}/>
+                    <Select
+                        options={this.state.all_teams.map(team => ({ label: team.project_name, value: team.id}))}
+                        getOptionValue={({value}) => value}
+                        onChange={({value}) => this.setTeam({value})}
+                    />
     				<br></br> 				
 	            	<input type="submit" className="button" value="Create Student"/>
     			</form>

@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios'
+import {LinkContainer} from "react-router-bootstrap";
+import { Navbar, Nav, NavItem} from "react-bootstrap";
 
 class Students extends React.Component {
 	constructor(props) {
@@ -7,6 +9,7 @@ class Students extends React.Component {
 		this.state = {
 			students: []
 		}
+		this.deleteRequest = this.deleteRequest.bind(this);
 		this.state.students = [{id: "nid", first_name: "mahzain", last_name: "malik", nid: "ma026001", email: "mahzain@knights.ucf.edu", team: "group 5"}]
 	}
 
@@ -22,15 +25,20 @@ class Students extends React.Component {
     	.catch(function (error){console.log(error)})
     }
 
-    viewRequest(id) {
-
-    }
 	//GET ALL GROUPS FOR PARTICULAR COURSE FROM BACKEND
 	//GET ALL GROUPS IN APP
 	//ADD BUTTONS FOR CREATE COURSE, EDIT, AND DELETE
     render() {
         return(
         	<div>
+        		<Navbar>
+                	<Nav>
+                    	<LinkContainer to="/create_student">
+                     		<NavItem>Create New Student</NavItem>
+                    	</LinkContainer>
+                	</Nav>
+            	</Navbar>
+
 	            <h1>All Students</h1>
 	            <table>
 	              	<thead>
@@ -51,7 +59,7 @@ class Students extends React.Component {
 	               				<td>{student.nid}</td>
 	               				<td>{student.email}</td>
 	               				<td>{student.team}</td>
-	               				<td>VIEW | EDIT | <button name="DELETE" onclick={() => this.deleteRequest(student.id)}>DELETE</button></td>
+	               				<td>VIEW | EDIT | <button name="DELETE" onClick={() => this.deleteRequest(student.id)}>DELETE</button></td>
 	               			</tr>
 	               		)}
 	               	</tbody>
