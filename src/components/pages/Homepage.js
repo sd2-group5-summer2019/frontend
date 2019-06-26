@@ -1,12 +1,11 @@
 import React from 'react';
 import {LinkContainer} from "react-router-bootstrap";
 import { Navbar, Nav, NavItem} from "react-bootstrap";
+import Menu from '../ui/Menu';
 import "../../index.css";
 
 
 const Homepage = ({ user_id='', token='', loggedIn=false }) =>{
-
-
 
         const logged = loggedIn
 
@@ -14,27 +13,7 @@ const Homepage = ({ user_id='', token='', loggedIn=false }) =>{
         return( 
             <div>
                <h1 className="header">Private Homepage</h1>
-                    <div className="boxThing">
-                        <Navbar>
-                            <Nav>
-                                <LinkContainer to="/survey">
-                                    <NavItem>SurveyPage(for testing)</NavItem>
-                                </LinkContainer>
-                                <LinkContainer to="/assignments">
-                                    <NavItem>Assignments</NavItem>
-                                </LinkContainer>
-                                <LinkContainer to="/courses">
-                                    <NavItem>Courses</NavItem>
-                                </LinkContainer>
-                                <LinkContainer to="/groups">
-                                    <NavItem>Groups(for testing)</NavItem>
-                                </LinkContainer>
-                                <LinkContainer to="/students">
-                                    <NavItem>Students(for testing)</NavItem>
-                                </LinkContainer>
-                            </Nav>
-                        </Navbar>
-                </div>
+                   <Menu />
             </div>
         )
     } else {

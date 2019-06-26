@@ -33,7 +33,7 @@ class LogIn extends React.Component {
     changePage = (response) => {
         
     
-            if(response.status===200){
+            if(response.status === 200 && response.data.status === 200 ){
                 // just in case, 
                 // setState could still be updating
                 // recommended we don't depend on it for
@@ -42,26 +42,30 @@ class LogIn extends React.Component {
                     user_id:response.data.id,
                     token:response.data.token
                 }
+
                 this.setState({
                     success:true,
                     user_id:response.data.id,
                     token:response.data.token
                 })
+
                 console.log(this.state)
+
                this.props.onLogin(payload)
             }
             else
                 console.log(response.data)
 
         console.log(response.data);
+        console.log(response.status);
     }
 
     formHandler = async event => {
         event.preventDefault()
         console.log(this.state)
-        axios.post(`http://localhost:3001/api/login`, this.state)
+        axios.post(`http://localhost:3001/api/login_secure`, this.state)
         .then(response => this.changePage(response))
-        .catch(function (error){console.log(error)})
+        .catch(function (error){console.log(error + "in formhandler")})
     }
 
     render(){

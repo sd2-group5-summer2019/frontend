@@ -22,6 +22,7 @@ class Register extends React.Component{
         this.changePage = this.changePage.bind(this);
         this.submitHandler = this.submitHandler.bind(this)
         this.validateForm = this.validateForm.bind(this)
+        this.changeType = this.changeType.bind(this)
     };
     
     changeHandler(e) {
@@ -29,7 +30,11 @@ class Register extends React.Component{
             [e.target.name] :e.target.value
                       })
     }
-    
+    changeType(e){
+        this.setState({
+            type:e.target.id
+        })
+    }
     changePage = (response)=>{
         if(response.status===200){
             this.setState({success:true})
@@ -148,13 +153,13 @@ class Register extends React.Component{
                             <div className="errorMsg">{this.state.errors.type}</div>
                             <br></br>
                             <b>Student</b>
-                            <input type="radio" name="type" value={this.state.type === 'Student'} onChange={this.changeHandler} />
+                            <input type="radio" id="student" name="type" value={this.state.type} onChange={this.changeType} />
                             <b>Admin</b>
-                            <input type="radio" name="type" value={this.state.type === 'Admin'} onChange={this.changeHandler} />
+                            <input type="radio" id="admin" name="type" value={this.state.type} onChange={this.changeType} />
                             <b>Sponsor</b>
-                            <input type="radio" name="type" value={this.state.type === 'Sponsor'} onChange={this.changeHandler} />
+                            <input type="radio" id="sponsor" name="type" value={this.state.type} onChange={this.changeType} />
                             <b>Coordinator</b>
-                            <input type="radio" name="type" value={this.state.type === 'Coordinator'} onChange={this.changeHandler} />
+                            <input type="radio" id="coordinator" name="type" value={this.state.type} onChange={this.changeType} />
                             <br></br>
                             <input type="submit" className="button"  value="Register"/>
                         </form>
