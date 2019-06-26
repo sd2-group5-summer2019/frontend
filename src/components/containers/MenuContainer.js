@@ -5,7 +5,7 @@ import {onLogout} from '..//../storeConfig/actions';
 const mapStateToProps = state =>{
     return {
         user_id: state.user_id,
-        type:state.type,
+        userType:state.userType,
         token: state.token,
         loggedIn:state.loggedIn
     }

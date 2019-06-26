@@ -1,6 +1,7 @@
 import React from 'react';
-import Survey from '../ui/Survey';
 import CreateAssignment from '../ui/CreateAssignment';
+import MenuContainer from '../containers/MenuContainer';
+import "../../index.css";
 
 class Assignments extends React.Component{
 
@@ -8,7 +9,12 @@ class Assignments extends React.Component{
    
     render(){
         return(
-            <CreateAssignment/>
+            <div>
+                <h1 className="header">Assignments</h1>
+                <MenuContainer />
+                <CreateAssignment/>
+            </div>
+            
         )
     }
 }

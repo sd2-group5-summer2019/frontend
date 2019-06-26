@@ -40,7 +40,8 @@ class LogIn extends React.Component {
                 // conditional rendering or something idk
                 const payload = {
                     user_id:response.data.id,
-                    token:response.data.token
+                    token:response.data.token,
+                    userType:'admin'
                 }
 
                 this.setState({

@@ -5,10 +5,18 @@ import { Navbar, Nav, NavItem} from "react-bootstrap";
 import {connect } from 'react-redux';
 import "../../index.css";
 
-const Menu = ({ type='public', user_id='', token='', loggedIn=false , onLogout}) =>{
+const logoutHelper = () => {
+    return(
+        localStorage['redux-store'].clear
+       ) 
+}
+ 
 
+const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =>{
 
-        if(loggedIn && type==='admin'){
+        console.log(userType, token)
+
+        if(loggedIn && userType ==='admin'){
             return(
                 <div className="menu">
                 <Navbar>
@@ -29,13 +37,13 @@ const Menu = ({ type='public', user_id='', token='', loggedIn=false , onLogout})
                             <NavItem>Students(for testing)</NavItem>
                         </LinkContainer>
                         <NavItem>
-                            <button type="button" onClick={onLogout}>Log Out</button>
+                            <button type="button" onClick={function(){logoutHelper(); onLogout();}}>Log Out</button>
                         </NavItem>
                     </Nav>
                 </Navbar>
         </div>
             )
-        }else if(loggedIn && type==='student'){
+        }else if(loggedIn && userType==='student'){
             return(
                 <div className="menu">  
                 <Navbar>
@@ -47,15 +55,18 @@ const Menu = ({ type='public', user_id='', token='', loggedIn=false , onLogout})
                         <NavItem>Assignments</NavItem>
                     </LinkContainer>
                     <NavItem>
-                        <button type="button" onClick={onLogout}>Log Out</button>
+                        <button type="button" onClick={function(){logoutHelper(); onLogout();}}>Log Out</button>
                     </NavItem>
                 </Nav>
             </Navbar>
             </div>
             )
         }
+        else if(!loggedIn){
+            return(<Redirect to='/login'/>)
+        }
         else{
-            return(<p>Unauthorized</p>)
+            return(<p>Something whent wrong...</p>)
         }
         
 }

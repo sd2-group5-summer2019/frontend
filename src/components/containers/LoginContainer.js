@@ -7,7 +7,7 @@ const mapStateToProps = state =>{
         user_id: state.user_id,
         token: state.token,
         loggedIn:state.loggedIn,
-        type:state.type
+        userType:state.userType
     }
 }
 
