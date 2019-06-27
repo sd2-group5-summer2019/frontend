@@ -12,6 +12,7 @@ class Create_Sponsor extends React.Component {
 		this.state = {
             company: '',
             first_name: '',
+            last_name:'',
             email: '',
             team: '',
             all_teams: [],

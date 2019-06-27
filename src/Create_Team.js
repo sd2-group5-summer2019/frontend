@@ -92,7 +92,7 @@ class Create_Team extends React.Component {
 	            	<b>Fall</b>
 	            	<input type="radio" name="sd1_semester" value={'FALL'} onChange={this.changeHandler}/>
 	            	<b>Year</b>
-	            	<input type="number" name="sd1_year" min="2019" max="2999" onchange={this.changeHandler}/>
+	            	<input type="text" pattern="^(19|20)\d{2}$" name="sd1_year" value={this.state.sd1_year} onChange={this.changeHandler}/>   
     				<br></br>
     				<label>SD2 Information</label>
 					<b>Spring</b>
@@ -102,9 +102,9 @@ class Create_Team extends React.Component {
 	            	<b>Fall</b>
 	            	<input type="radio" name="sd2_semester" value={'FALL'} onChange={this.changeHandler}/>
 	            	<b>Year</b>
-	            	<input type="number" name="sd2_year" min="2019" max="2999" onChange={this.changeHandler}/>   
+	            	<input type="text" pattern="^(19|20)\d{2}$" name="sd2_year" value={this.state.sd2_year} onChange={this.changeHandler}/>   
 	            	<br></br>
-	            	<input type="submit" className="button" value="Create_Team"/>
+	            	<input type="submit" className="button" value="Create Team"/>
     			</form>
     		</div>
     	);
