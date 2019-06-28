@@ -11,7 +11,6 @@ const logoutHelper = () => {
        ) 
 }
  
-
 const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =>{
 
         console.log(userType, token)
@@ -27,14 +26,17 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
                         <LinkContainer to="/assignments">
                             <NavItem>Assignments</NavItem>
                         </LinkContainer>
-                        <LinkContainer to="/courses">
-                            <NavItem>Courses</NavItem>
+                        <LinkContainer to="/get_results">
+                            <NavItem>Get Results</NavItem>
                         </LinkContainer>
-                        <LinkContainer to="/groups">
-                            <NavItem>Groups(for testing)</NavItem>
+                        <LinkContainer to="/teams">
+                            <NavItem>Teams</NavItem>
+                        </LinkContainer>
+                        <LinkContainer to="/sponsors">
+                            <NavItem>Sponsors</NavItem>
                         </LinkContainer>
                         <LinkContainer to="/students">
-                            <NavItem>Students(for testing)</NavItem>
+                            <NavItem>Students</NavItem>
                         </LinkContainer>
                         <NavItem>
                             <button type="button" onClick={function(){logoutHelper(); onLogout();}}>Log Out</button>
