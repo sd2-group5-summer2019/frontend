@@ -44,7 +44,7 @@ class Survey extends React.Component{
     requestForm(event){
         event.preventDefault()
         const payload = {
-            form_id: parseInt(this.state.form_id)
+            form_id: this.state.form_id
         }
         this.setState({loading:true})
         console.log(this.state.form_id)
