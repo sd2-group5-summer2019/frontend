@@ -25,7 +25,7 @@ class Get_Results extends React.Component {
     changePage = (response)=>{
         if(response.status===200){
             this.setState({
-            	type: response.data.type,
+            	//type: response.data.type,
             	results: response.data.answers
             })
         }
@@ -55,7 +55,7 @@ class Get_Results extends React.Component {
     				</form>
     				<br></br>
     				{!this.state.success ? null : (
-    				<div><h1>{this.state.type}</h1>
+    				<div><h1>Survey Results</h1>
 		            <table>
 		              	<thead>
 		              		<tr>

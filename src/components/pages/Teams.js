@@ -21,7 +21,7 @@ class Teams extends React.Component {
         })
     }
     deleteRequest(id) {
-    	axios.post('http://localhost:3001/api/delete_user', id)
+    	axios.post('http://localhost:3001/api/delete_team', id)
         .catch(function (error){console.log(error)})
     }	
     //GET ALL GROUPS FOR PARTICULAR COURSE FROM BACKEND

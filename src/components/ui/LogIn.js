@@ -1,8 +1,8 @@
 import React from 'react';
-import './index.css';
+import "../../index.css";
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
-
+import {connect } from 'react-redux';
 
 
 class LogIn extends React.Component {
@@ -12,7 +12,9 @@ class LogIn extends React.Component {
         this.state={
                 username:'',
                 password:'',
-                success:false
+                success:false,
+                token:'',
+                user_id:''
         }
         
         this.changePage = this.changePage.bind(this);
@@ -31,28 +33,47 @@ class LogIn extends React.Component {
     changePage = (response) => {
         
     
-            if(response.status===200){
-                this.setState({success:true})
+            if(response.status === 200 && typeof response.data.status === 'undefined' ){
+                // just in case, 
+                // setState could still be updating
+                // recommended we don't depend on it for
+                // conditional rendering or something idk
+                const payload = {
+                    user_id:response.data.id,
+                    token:response.data.token,
+                    userType:'admin'
+                }
+
+                this.setState({
+                    success:true,
+                    user_id:response.data.id,
+                    token:response.data.token
+                })
+
+                console.log(this.state)
+
+               this.props.onLogin(payload)
             }
             else
                 console.log(response.data)
 
         console.log(response.data);
+        console.log(response.status);
     }
 
     formHandler = async event => {
         event.preventDefault()
         console.log(this.state)
-        axios.post(`http://localhost:3001/api/login`, this.state)
+        axios.post(`http://localhost:3001/api/login_secure`, this.state)
         .then(response => this.changePage(response))
-        .catch(function (error){console.log(error)})
+        .catch(function (error){console.log(error + "in formhandler")})
     }
 
     render(){
         
 
         if(this.state.success){
-            return <Redirect to="/survey"/>
+            return <Redirect to="/"/>
         }else{
             return(
         
@@ -80,4 +101,4 @@ class LogIn extends React.Component {
 }
 }
 
-export default LogIn;
+export default connect()(LogIn);
