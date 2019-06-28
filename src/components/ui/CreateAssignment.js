@@ -20,7 +20,7 @@ class CreateAssignment extends React.Component{
             type:'survey',
             q_num:0,
             description:'',
-            questions:{},
+            questions:[],
             start_date:'',
             end_date:'',
             form_retreived:false,
@@ -71,8 +71,11 @@ class CreateAssignment extends React.Component{
         let index = this.state.q_num + 1
         let qtext = this.state.tempQ
         let previewt = this.state.preview
-        questionList[index] = qtext
-
+        questionList[index-1] = {
+            question:qtext
+        }
+           
+    
         previewt.push(
             <div  key={"question" + index}>
                     <label>Question {(index) + ': ' + qtext}</label>
@@ -112,7 +115,7 @@ class CreateAssignment extends React.Component{
             questions:this.state.questions 
         }
         console.log(payload)
-        axios.post(`http://localhost:3001/api/frontendTest`, payload)
+        axios.post(`http://localhost:3001/api/submitForm`, payload)
         .then(response => this.redirectOnSubmit(response))
         .catch(function (error){console.log(error)})
     }
@@ -162,7 +165,7 @@ class CreateAssignment extends React.Component{
             form_retreived:false,
             form_submitted:false,
             tempQ:'',
-            preview:[]
+            preview:{}
         })
     }
     
