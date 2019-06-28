@@ -16,7 +16,7 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
 
         console.log(userType, token)
 
-        if(loggedIn && userType ==='admin'){
+        if(loggedIn && (userType ==='coordinator' || userType === 'admin')){
             return(
                 <div className="menu">
                 <Navbar>
@@ -26,6 +26,9 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
                         </LinkContainer>
                         <LinkContainer to="/assignments">
                             <NavItem>Assignments</NavItem>
+                        </LinkContainer>
+                        <LinkContainer to="/createassignment">
+                            <NavItem>Create New Assignment</NavItem>
                         </LinkContainer>
                         <LinkContainer to="/courses">
                             <NavItem>Courses</NavItem>

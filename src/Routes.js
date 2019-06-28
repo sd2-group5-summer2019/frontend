@@ -7,6 +7,7 @@ import AssignmentsPage from './components/pages/AssignmentsPage';
 import Groups from './components/pages/Groups';
 import Students from './components/pages/Students';
 import HomeContainer from './components/containers/HomeContainer';
+import CreateAssignmentC from './components/containers/CreateAssignmentC';
 
 const routes = (
         <Router>
@@ -18,6 +19,7 @@ const routes = (
             <Route path="/assignments" exact component={AssignmentsPage} />
             <Route path="/groups" exact component={Groups} />
             <Route path="/students" exact component={Students} />
+            <Route path="/createassignment" exact component={CreateAssignmentC}/>
             </Switch>
         </Router>
     )

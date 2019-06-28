@@ -45,7 +45,7 @@ class Survey extends React.Component{
         event.preventDefault()
         this.setState({loading:true})
         console.log(this.state.form_id)
-        axios.post(`http://localhost:3001/api/getSurvey`, this.state)
+        axios.post(`http://localhost:3001/api/get_survey`, this.state)
         .then(response => this.changePage(response))
         .catch(function (error){console.log(error)})
 
@@ -72,10 +72,10 @@ class Survey extends React.Component{
             user_id:this.state.student_id,
             token:this.state.token,
             form_id:this.state.form_id,
-            answers:this.state.results    
+            results:this.state.results    
         }
         console.log(payload)
-        axios.post(`http://localhost:3001/api/submitSurvey`, payload)
+        axios.post(`http://localhost:3001/api/submit_survey`, payload)
         .then(response => this.redirectOnSubmit(response))
         .catch(function (error){console.log(error)})
     }
@@ -134,6 +134,7 @@ class Survey extends React.Component{
             
             const title = this.state.title
             var questions = Array.from(this.state.data);
+           let {questions} = this.state.data
             return(
                 <div>
                     <h1 className="header">{title} </h1>
