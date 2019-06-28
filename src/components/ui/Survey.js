@@ -78,7 +78,7 @@ class Survey extends React.Component{
             results:this.state.results    
         }
         console.log(payload)
-        axios.post(`http://localhost:3001/api/submitSurvey`, payload)
+        axios.post(`http://localhost:3001/api/submitForm`, payload)
         .then(response => this.redirectOnSubmit(response))
         .catch(function (error){console.log(error)})
     }
@@ -99,6 +99,7 @@ class Survey extends React.Component{
     // changes form_retrieved to true so render can load the
     // survey form to the page 
     changePage(res){
+        
         if(res.status===200 && typeof res.data.status === 'undefined'){
             this.setState({
                 data:res.data.return,
@@ -110,7 +111,7 @@ class Survey extends React.Component{
             console.log(res.data.return)
         }
         else
-            console.log("Something went wrong")
+            console.log(res.data.status)
     }
 
     
