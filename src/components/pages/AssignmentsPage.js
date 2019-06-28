@@ -2,6 +2,9 @@ import React from 'react';
 import MenuContainer from '../containers/MenuContainer';
 import "../../index.css";
 
+import {LinkContainer} from "react-router-bootstrap";
+import { Navbar, Nav, NavItem} from "react-bootstrap";
+
 class Assignments extends React.Component{
 
     
@@ -19,8 +22,16 @@ class Assignments extends React.Component{
                 <div>
                     <h3>Active Assignments</h3>
                 </div>
-                <button>Create New Assignment</button>
-            </div>
+              <div>
+              <Navbar>
+                <Nav>
+                    <LinkContainer to="/create_assignment">
+                     <NavItem><button>Create Assignment</button></NavItem>
+                    </LinkContainer>
+                </Nav>
+                </Navbar>
+              </div>
+                  </div>
             )
        
         
