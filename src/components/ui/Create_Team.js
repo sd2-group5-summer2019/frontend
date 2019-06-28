@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios'
 import {Redirect} from 'react-router-dom';
-import './index.css';
+import "../../index.css";
 import Select from 'react-select';
 
 //NEED TO FIGURE OUT HOW TO ADD A SPONSOR FOR A TEAM

@@ -9,6 +9,10 @@ body {
   color:white;
 }
 
+body button, input{
+  color:black;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -21,6 +25,19 @@ code {
   margin:0;
   padding:25px;
   text-align:left;
+}
+
+.menu {
+  background-color:#ffffff;
+  text-align:center;
+  color:black;
+  width: 300px;
+  margin:5px auto auto 0;
+  padding:2px;
+}
+.menu input, button, label, textarea{
+  margin:5px 5px 5px 10px;
+  padding:5px;
 }
 
 .boxThing{
@@ -36,6 +53,7 @@ code {
   margin:5px 5px 5px 10px;
   padding:5px;
 }
+
 .boxThing h1 { 
     font-size:20px;
     background-color:#fdcf04;
