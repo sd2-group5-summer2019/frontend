@@ -1,5 +1,6 @@
 import React from "react";
 import axios from 'axios';
+import "../../index.css";
 
 class CreateAssignment extends React.Component{
     static defaultProps = {
@@ -75,7 +76,6 @@ class CreateAssignment extends React.Component{
         previewt.push(
             <div  key={"question" + index}>
                     <label>Question {(index) + ': ' + qtext}</label>
-                    <button onClick={this.removeQuestion}>x</button>
             </div>
                     
         )
@@ -175,16 +175,17 @@ class CreateAssignment extends React.Component{
         if(!formStatus && !form_submitted){
             return(
             <div>
-                <div>
+                
                 <h1 className="header">Create a New Assingment</h1>
-                <h3> Assignment Type : {this.state.type}</h3>
+                    <div  style={{margin:"auto"}}>
+                <h1> Assignment Type : {this.state.type}</h1>
                 <form onSubmit={this.formHandler}>
-                    <label>Title</label>
-                    <br></br>
+                    <label>Title: </label>
                     <input type="text" name="title" value={this.state.title} onChange={this.handleChange}></input>
                     <br></br>
                     <label >Start Date </label>
                     <input type="date" name="start_date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.start_date} onChange={this.handleChange}></input>
+                    <br></br>
                     <label>End Date</label>
                     <input type="date" name="end_date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.end_date} onChange={this.handleChange}></input>
                     <br></br>
@@ -193,9 +194,8 @@ class CreateAssignment extends React.Component{
                     <div>
                          {preview} 
                     </div>
-                    
                     <label>Question {this.state.q_num + 1}: </label>
-                    <input name={this.state.q_num} value={this.state.tempQ} onChange={this.questionHandler} type="text"></input>
+                    <input name={this.state.q_num} value={this.state.tempQ} onChange={this.questionHandler} type="text" placeholder="Press Enter to add"></input>
                     <br></br>
                     <button style={{display:'none'}} onClick={this.addNewQuestion}>Add Question</button>
                     <br></br>
@@ -203,6 +203,7 @@ class CreateAssignment extends React.Component{
                     
                 </form>
                 </div>
+                
                 </div>
             )
         }  else if (form_submitted) {

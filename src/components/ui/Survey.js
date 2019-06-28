@@ -20,7 +20,7 @@ class Survey extends React.Component{
             loading:false,
             title:'',
             type:'',
-            data: {},
+            data:{},
             results:{},
             form_retreived:false,
             form_submitted:false
@@ -43,9 +43,12 @@ class Survey extends React.Component{
 
     requestForm(event){
         event.preventDefault()
+        const payload = {
+            form_id: parseInt(this.state.form_id)
+        }
         this.setState({loading:true})
         console.log(this.state.form_id)
-        axios.post(`http://localhost:3001/api/get_survey`, this.state)
+        axios.post(`http://localhost:3001/api/getSurvey`, payload)
         .then(response => this.changePage(response))
         .catch(function (error){console.log(error)})
 
@@ -75,7 +78,7 @@ class Survey extends React.Component{
             results:this.state.results    
         }
         console.log(payload)
-        axios.post(`http://localhost:3001/api/submit_survey`, payload)
+        axios.post(`http://localhost:3001/api/submitSurvey`, payload)
         .then(response => this.redirectOnSubmit(response))
         .catch(function (error){console.log(error)})
     }
@@ -83,7 +86,7 @@ class Survey extends React.Component{
     redirectOnSubmit(res){
         if(res.status===200){
             this.setState({
-              form_submitted:true
+              form_submitted:false
             })  
             console.log(res.data)
         }
@@ -96,15 +99,15 @@ class Survey extends React.Component{
     // changes form_retrieved to true so render can load the
     // survey form to the page 
     changePage(res){
-        if(res.status===200){
+        if(res.status===200 && typeof res.data.status === 'undefined'){
             this.setState({
-                data:res.data.questions,
+                data:res.data.return,
                 title:res.data.title,
                 type:res.data.type,
                 loading:false,
                 form_retreived:true
             })
-            console.log(res.data.questions)
+            console.log(res.data.return)
         }
         else
             console.log("Something went wrong")
@@ -114,7 +117,7 @@ class Survey extends React.Component{
 
     render(){
         //question array is just for testing right now has hardcoded values (see default props above)
-       // const {questions} = this.props
+       ///const {questions} = this.props
         const formStatus = this.state.form_retreived
         const form_submitted = this.state.form_submitted
 
@@ -133,14 +136,14 @@ class Survey extends React.Component{
         } else if(formStatus && !form_submitted){
             
             const title = this.state.title
-            var questions = Array.from(this.state.data);
-           let {questions} = this.state.data
+            //var questions = this.props.questions;
+            let questions = this.state.data
+           //let {questions}= Array.from(this.state.data)
             return(
                 <div>
                     <h1 className="header">{title} </h1>
                     <form onSubmit={this.formHandler}>
 
-                       
                         {questions.map((questions, i)=>  
                            <div className="yellow" key={i+1}>
                             <label name={"question" + i}>{i + ") " + questions.text}</label>
