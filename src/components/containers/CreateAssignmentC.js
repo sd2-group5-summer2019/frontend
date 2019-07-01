@@ -1,5 +1,6 @@
 import CreateAssignment from '../ui/CreateAssignment';
 import {connect} from 'react-redux';
+import AssignmentsPage from '../pages/AssignmentsPage';
 
 const mapStateToProps = state =>{
     return {
@@ -11,5 +12,8 @@ const mapStateToProps = state =>{
 }
 
 const CreateAssignmentC = connect(mapStateToProps)(CreateAssignment)
+
+export const AssignmentsPageC = connect(mapStateToProps)(AssignmentsPage)
+
 
 export default CreateAssignmentC;

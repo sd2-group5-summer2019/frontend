@@ -5,7 +5,7 @@ import CreateAssignmentC from './components/containers/CreateAssignmentC';
 import LoginContainer from './components/containers/LoginContainer';
 import Survey from './components/ui/Survey';
 import Register from './components/ui/Register';
-import AssignmentsPage from './components/pages/AssignmentsPage';
+import {AssignmentsPageC} from './components/containers/CreateAssignmentC';
 import Create_Team from './components/ui/Create_Team';
 import Create_Student from './components/ui/Create_Student';
 import Create_Sponsor from './components/ui/Create_Sponsor';
@@ -21,7 +21,7 @@ const routes = (
             <Route path="/login" exact component={LoginContainer} />
             <Route path="/survey" exact component={Survey} />
             <Route path="/register" exact component={Register} />
-            <Route path="/assignments" exact component={AssignmentsPage} />
+            <Route path="/assignments" exact component={AssignmentsPageC} />
 
             <Route path="/teams" exact component={Teams} />
             <Route path="/sponsors" exact component={Sponsors} />

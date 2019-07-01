@@ -21,22 +21,22 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
                 <Navbar>
                     <Nav>
                         <LinkContainer to="/survey">
-                            <NavItem>SurveyPage(for testing)</NavItem>
+                            <NavItem>[SurveyPage(for testing)]</NavItem>
                         </LinkContainer>
                         <LinkContainer to="/assignments">
-                            <NavItem>Assignments</NavItem>
+                            <NavItem>[Assignments]</NavItem>
                         </LinkContainer>
                         <LinkContainer to="/get_results">
-                            <NavItem>Get Results</NavItem>
+                            <NavItem>[Get Results]</NavItem>
                         </LinkContainer>
                         <LinkContainer to="/teams">
-                            <NavItem>Teams</NavItem>
+                            <NavItem>[Teams]</NavItem>
                         </LinkContainer>
                         <LinkContainer to="/sponsors">
-                            <NavItem>Sponsors</NavItem>
+                            <NavItem>[Sponsors]</NavItem>
                         </LinkContainer>
                         <LinkContainer to="/students">
-                            <NavItem>Students</NavItem>
+                            <NavItem>[Students]</NavItem>
                         </LinkContainer>
                         <NavItem>
                             <button type="button" onClick={function(){logoutHelper(); onLogout();}}>Log Out</button>

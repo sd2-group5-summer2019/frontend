@@ -14,28 +14,41 @@ class Assignments extends React.Component{
     // the most current
    
     render(){
-
-            return(
-                <div>
-                <h1 className="header">Assignments</h1>
-                <MenuContainer/>
-                <div>
-                    <h3>Active Assignments</h3>
-                </div>
-              <div>
-              <Navbar>
-                <Nav>
-                    <LinkContainer to="/create_assignment">
-                     <NavItem><button>Create Assignment</button></NavItem>
-                    </LinkContainer>
-                </Nav>
-                </Navbar>
-              </div>
+            const user_type = this.props.userType
+            if(user_type === 'admin'){
+                return(
+                    <div>
+                    <h1 className="header">Assignments</h1>
+                    <MenuContainer/>
+                    <div>
+                        <h3>Active Assignments</h3>
+                        <ul>
+                            <li>
+                                Form 2 [VIEW]
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Recently Closed</h3>
+                        <ul>
+                            <li>Form 1 [GET RESULTS]</li>
+                        </ul>
+                    </div>
+                  <div>
+                  <Navbar>
+                    <Nav>
+                        <LinkContainer to="/create_assignment">
+                         <NavItem><button>Create Assignment</button></NavItem>
+                        </LinkContainer>
+                    </Nav>
+                    </Navbar>
                   </div>
-            )
-       
-        
-        
+                      </div>
+                )
+            }else{
+               return(<p>asdf</p>) 
+            }
+                
     }
 }
 export default Assignments;

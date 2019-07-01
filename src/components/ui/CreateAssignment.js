@@ -13,7 +13,7 @@ class CreateAssignment extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            user_id:'2',
+            user_id:'4',
             token:'testToken',
             loading:false,
             title:'',
@@ -72,7 +72,7 @@ class CreateAssignment extends React.Component{
         let qtext = this.state.tempQ
         let previewt = this.state.preview
         questionList[index-1] = {
-            question:qtext
+            question_text:qtext
         }
            
     
@@ -106,6 +106,7 @@ class CreateAssignment extends React.Component{
     formHandler(event){
         event.preventDefault()
         const payload = {
+            type:this.state.type,
             user_id:this.state.user_id,
             token:this.state.token,
             title:this.state.title,
@@ -115,7 +116,7 @@ class CreateAssignment extends React.Component{
             questions:this.state.questions 
         }
         console.log(payload)
-        axios.post(`http://localhost:3001/api/submitForm`, payload)
+        axios.post(`http://localhost:3001/api/createForm`, payload)
         .then(response => this.redirectOnSubmit(response))
         .catch(function (error){console.log(error)})
     }
@@ -165,7 +166,7 @@ class CreateAssignment extends React.Component{
             form_retreived:false,
             form_submitted:false,
             tempQ:'',
-            preview:{}
+            preview:[]
         })
     }
     
