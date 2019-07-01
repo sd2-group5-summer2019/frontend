@@ -13,7 +13,7 @@ class CreateAssignment extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            user_id:'4',
+            user_id:'13',
             token:'testToken',
             loading:false,
             title:'',
@@ -72,7 +72,7 @@ class CreateAssignment extends React.Component{
         let qtext = this.state.tempQ
         let previewt = this.state.preview
         questionList[index-1] = {
-            question_text:qtext
+            question:qtext
         }
            
     
@@ -106,6 +106,7 @@ class CreateAssignment extends React.Component{
     formHandler(event){
         event.preventDefault()
         const payload = {
+            access_level:this.props.userType,
             type:this.state.type,
             user_id:this.state.user_id,
             token:this.state.token,

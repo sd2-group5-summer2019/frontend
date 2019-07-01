@@ -48,7 +48,7 @@ class Survey extends React.Component{
         }
         this.setState({loading:true})
         console.log(this.state.form_id)
-        axios.post(`http://localhost:3001/api/getSurvey`, payload)
+        axios.post(`http://localhost:3001/api/getForm`, payload)
         .then(response => this.changePage(response))
         .catch(function (error){console.log(error)})
 
