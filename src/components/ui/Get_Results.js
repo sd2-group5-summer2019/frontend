@@ -26,10 +26,11 @@ class Get_Results extends React.Component {
         if(response.status===200){
             this.setState({
             	//type: response.data.type,
-            	results: response.data.answers
+				results: response.data,
+				success:true
             })
         }
-        console.log(response.data);
+        console.log(response.data.questions);
     }
     submitHandler(e) {
         e.preventDefault();
@@ -66,9 +67,9 @@ class Get_Results extends React.Component {
 		               	</thead>
 		               	<tbody>
 		               		{this.state.results.map(result =>
-		               			<tr key={result.question}>
-		               				<td>{result.question}</td>
-		               				<td>{result.answer}</td>
+		               			<tr key={result.question_text}>
+		               				<td>{result.question_text}</td>
+		               				<td>{result.answer_text}</td>
 		               			</tr>
 		               		)}
 		               	</tbody>
