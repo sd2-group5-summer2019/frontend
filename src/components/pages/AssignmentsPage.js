@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import CreateAssignmentC from '../containers/CreateAssignmentC';
 import {Redirect} from 'react-router-dom';
+import Get_Results from '../ui/Get_Results';
 
 class Assignments extends React.Component{
         constructor(props){
@@ -17,13 +18,26 @@ class Assignments extends React.Component{
                 loading:false,
                 form_id:'',
                 page:false,
-                forms:[]
+                tableE:[
+                    {title:''},
+                    {th1:''},
+                    {th2:''},
+                    {btn_text:''}
+                ] //array of elements for the table
             }
             this.componentDidMount = this.componentDidMount.bind(this);
             this.changePage = this.changePage.bind(this);
+            this.assignmentsTable = this.assignmentsTable.bind(this);
         }
 
+
+        // loads different things depending on user type
+        // for students a list of current uncompleted assignments
+        // for instructors all the assignments they've created 
+        // right now it only loads all the assignments user_id not being used
+        // in the API endpont i cobbled together
         componentDidMount(){
+
             let user_id = this.props.user_id
 
             axios.post(`http://localhost:3001/api/getAllForms`).then(response => {
@@ -35,6 +49,7 @@ class Assignments extends React.Component{
             })
             .catch(function (error){console.log(error)})
 
+            this.assignmentsTable()
             // axios.post(`http://localhost:3001/api/frontendTest`, user_id)
             // .then(response => {
             //     this.setState({
@@ -55,7 +70,34 @@ class Assignments extends React.Component{
            })
            
         }
+
+        // populates the assignments table depending on the
+        // type of user
+        assignmentsTable(){
+            const user = this.props.userType
+            const tableText = this.state.tableE
+
+            if(user === 'student'){
+                tableText.title = 'Current Assignments'
+                tableText.th1 = 'Due Date'
+                tableText.btn_text = 'Take'
+            }else if(user === 'coordinator'){
+                tableText.title = 'Assignments'
+                tableText.th1 = 'Active'
+                tableText.btn_text = 'View Results'
+            }
+                this.setState({
+                    tableE:tableText
+                })
+        }
+
+        newAssignment(){
+
+        }
         
+ 
+
+     
     
     // basically I'm thinking on component did mount you 
     // call either all the active assignments for students
@@ -63,67 +105,62 @@ class Assignments extends React.Component{
     // the most current
    
     render(){
-        const user_type = this.props.userType
+        const user = this.props.userType
         const temp = this.state.assignments
-            if(user_type === 'coordinator'){
-                return(
-                    
-                    <Container>
-                        <h1 className="header"><center>Assignments</center></h1>
-                        <Row>
-                            <Col sm={3}> <MenuContainer/> </Col>
-                            <Col sm={9}> <CreateAssignmentC/>
-                            
-                            </Col>
-                        </Row>
-                    </Container>
-                )
-            }else if(user_type === 'student' && !this.state.page){
+        const tableText = this.state.tableE
+        
+        if(!this.state.page){
                return(
                   <Container>
-                    <h1 className="header"><center>Assignments</center></h1>
+                    <Row className="text-center"> <h1>Assignments</h1></Row>
                     <Row>
                         <Col sm={3}> <MenuContainer/> </Col>
                         <Col sm={9}>
-                             <h1>Current</h1>
-		                        <Table  responsive="sm" striped bordered hover variant="dark">
-		                        	<thead>
-		              		            <tr>
-		              			            <th>Title</th>
-		              			            <th>Due Date</th>
-                                            <th></th>
-		              		            </tr>
-		               	            </thead>
-                                     <tbody>
-                                         {temp.map(temp =>
-                                            <tr value={temp.form_id} key={temp.title}>
+		                    <Table  responsive="sm" striped bordered hover variant="dark">
+		                        <thead>
+		              		        <tr>
+		              			        <th>{tableText.title}</th>
+		              			        <th>{tableText.th1}</th>
+                                        <th>{tableText.th2}</th>
+		              		        </tr>
+		               	        </thead>
+                                 <tbody>
+                                     {temp.map(temp =>
+                                        <tr value={temp.form_id} key={temp.title}>
                                             <td>{temp.title}</td>
-                                            <td>{temp.complete}</td>
-                                            <td> <button name={temp.form_id} onClick={this.changePage}>Take</button></td> 
-                                            </tr>
-                                        )}
-                                     </tbody>
-                                 </Table>
+                                            <td>{user !== 'coordinator' ? temp.end_date: temp.completed}</td>
+                                            <td> <button name={temp.form_id} onClick={this.changePage}>{tableText.btn_text}</button></td> 
+                                        </tr>
+                                    )}
+                                 </tbody>
+                             </Table>
                         </Col>
                     </Row>
                 </Container>
                )
-            }else if(user_type === 'student' && this.state.page ){
+            }else if(user==='student' && this.state.page){
                 return(
                     <Container>
-                        <h1 className="header">Take Survey</h1>
+                         <Row className="text-center"> <h1>Take Assignment</h1></Row>
                         <Row>
                             <Col sm={3}> <MenuContainer/> </Col>
                             <Col sm={9}> <Survey flag={"true"} form_id={this.state.form_id} /> </Col>
                         </Row>
                     </Container>
-                   
                 )
+            }else if(user==='coordinator' && this.state.page){
+                    return(
+                        <Container>
+                             <Row className="text-center"> <h1>View Results</h1></Row>
+                            <Row>
+                                <Col sm={3}> <MenuContainer/> </Col>
+                                <Col sm={9}> <Get_Results flag={"true"} form_id={this.state.form_id} /> </Col>
+                            </Row>
+                        </Container>
+                    )  
             }else{
                 return(<Redirect to='/'/>)
-            }
-            
-                
+            }           
     }
 }
 export default Assignments;

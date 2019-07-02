@@ -17,6 +17,15 @@ class Get_Results extends React.Component {
 	        //this.state.type = "type"
 	        //this.state.results = [{question:'q1', answer:'a1'}, {question:'q2', answer:'a2'}, {question:'q3', answer:'a3'}]
 	}
+
+	componentDidMount(){
+		if(this.props.form_id){
+			this.setState({
+				formid:this.props.form_id
+			})
+		}
+		
+	}
 	changeHandler(e) {
 		this.setState({
 		[e.target.name] :e.target.value
@@ -43,6 +52,7 @@ class Get_Results extends React.Component {
     render(){
     		return(
     			<div className="boxName" id="/get_results">
+					
     				<form method="post" name="getResults" onSubmit={this.submitHandler}>
 	    				<label>USER ID
 	    					<input type="text" name="userid" value={this.state.userid} onChange={this.changeHandler}/>

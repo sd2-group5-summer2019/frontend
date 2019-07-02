@@ -20,7 +20,9 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
             return(
                 <Nav justify fill className="flex">                
                     <ListGroup>
-                         <ListGroup.Item action href="/"> Dashboard </ListGroup.Item>
+                        
+                        <ListGroup.Item > Menu </ListGroup.Item>
+                        <ListGroup.Item action href="/"> Dashboard </ListGroup.Item>
                         <ListGroup.Item action href="/assignments"> Assignments </ListGroup.Item>
                         <ListGroup.Item action href="/get_results"> Results </ListGroup.Item>
                         <ListGroup.Item action href="/teams"> Teams </ListGroup.Item>
@@ -38,6 +40,7 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
             return(
                 <Nav fill className="flex">                
                     <ListGroup>
+                        <ListGroup.Item > Menu </ListGroup.Item>
                         <ListGroup.Item action href="/"> Dashboard </ListGroup.Item>
                         <ListGroup.Item action href="/assignments"> Assignments </ListGroup.Item>
                         <ListGroup.Item action href="/survey"> SurveyPage (temporary) </ListGroup.Item>
