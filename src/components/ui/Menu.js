@@ -1,71 +1,55 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
-import {LinkContainer} from "react-router-bootstrap";
-import { Navbar, Nav, NavItem} from "react-bootstrap";
+import Nav from 'react-bootstrap/Nav';
 import {connect } from 'react-redux';
-import "../../index.css";
+import Button from 'react-bootstrap/Button';
+import ListGroup from 'react-bootstrap/ListGroup';
+// import "../../index.css";
 
 const logoutHelper = () => {
     return(
         localStorage['redux-store'].clear
        ) 
 }
- 
+
 const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =>{
 
-        console.log(userType, token)
+        console.log(userType)
 
-        if(loggedIn && userType ==='admin'){
+        if(loggedIn && userType === 'coordinator'){
             return(
-                <div className="menu">
-                <Navbar>
-                    <Nav>
-                        <LinkContainer to="/survey">
-                            <NavItem>[SurveyPage(for testing)]</NavItem>
-                        </LinkContainer>
-                        <LinkContainer to="/assignments">
-                            <NavItem>[Assignments]</NavItem>
-                        </LinkContainer>
-                        <LinkContainer to="/get_results">
-                            <NavItem>[Get Results]</NavItem>
-                        </LinkContainer>
-                        <LinkContainer to="/teams">
-                            <NavItem>[Teams]</NavItem>
-                        </LinkContainer>
-                        <LinkContainer to="/sponsors">
-                            <NavItem>[Sponsors]</NavItem>
-                        </LinkContainer>
-                        <LinkContainer to="/students">
-                            <NavItem>[Students]</NavItem>
-                        </LinkContainer>
-                        <NavItem>
-                            <button type="button" onClick={function(){logoutHelper(); onLogout();}}>Log Out</button>
-                        </NavItem>
-                    </Nav>
-                </Navbar>
-        </div>
+                <Nav justify fill className="flex">                
+                    <ListGroup>
+                         <ListGroup.Item action href="/"> Dashboard </ListGroup.Item>
+                        <ListGroup.Item action href="/assignments"> Assignments </ListGroup.Item>
+                        <ListGroup.Item action href="/get_results"> Results </ListGroup.Item>
+                        <ListGroup.Item action href="/teams"> Teams </ListGroup.Item>
+                        <ListGroup.Item action href="/students"> Students </ListGroup.Item>
+                        <ListGroup.Item action href="/sponsors"> Sponsors </ListGroup.Item>
+                        <ListGroup.Item action href="/survey"> SurveyPage (temporary) </ListGroup.Item>
+                        <ListGroup.Item>
+                            <Button type="button" onClick={function(){logoutHelper(); onLogout();}}>Log Out</Button>
+                        </ListGroup.Item>
+                    </ListGroup>
+                 </Nav>
+     
             )
-        }else if(loggedIn && userType==='student'){
+        }else if(loggedIn && userType === 'student'){
             return(
-                <div className="menu">  
-                <Navbar>
-                <Nav>
-                    <LinkContainer to="/survey">
-                        <NavItem>SurveyPage(for testing)</NavItem>
-                    </LinkContainer>
-                    <LinkContainer to="/assignments">
-                        <NavItem>Assignments</NavItem>
-                    </LinkContainer>
-                    <NavItem>
-                        <button type="button" onClick={function(){logoutHelper(); onLogout();}}>Log Out</button>
-                    </NavItem>
-                </Nav>
-            </Navbar>
-            </div>
+                <Nav fill className="flex">                
+                    <ListGroup>
+                        <ListGroup.Item action href="/"> Dashboard </ListGroup.Item>
+                        <ListGroup.Item action href="/assignments"> Assignments </ListGroup.Item>
+                        <ListGroup.Item action href="/survey"> SurveyPage (temporary) </ListGroup.Item>
+                        <ListGroup.Item>
+                            <Button type="button" onClick={function(){logoutHelper(); onLogout();}}>Log Out</Button>
+                        </ListGroup.Item>
+                    </ListGroup>
+                 </Nav>
             )
         }
         else if(!loggedIn){
-            return(<Redirect to='/login'/>)
+            return(<Redirect to='/'/>)
         }
         else{
             return(<p>Something whent wrong...</p>)

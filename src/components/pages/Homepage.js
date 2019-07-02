@@ -1,9 +1,10 @@
 import React from 'react';
-import {LinkContainer} from "react-router-bootstrap";
-import { Navbar, Nav, NavItem} from "react-bootstrap";
 import "../../index.css";
 import MenuContainer from '../containers/MenuContainer'
-
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import LoginContainer from '../containers/LoginContainer';
 
 const Homepage = ({ user_id='', token='', loggedIn=false }) =>{
 
@@ -11,33 +12,20 @@ const Homepage = ({ user_id='', token='', loggedIn=false }) =>{
 
     if(logged){
         return( 
-            <div>
-               <h1 className="header">Private Homepage</h1>
-                   <MenuContainer />
-            </div>
+            
+            <Container>
+                <h1 className="header"> <center> Dashboard </center></h1>
+            
+                <Row>
+                    <Col sm={3}> <MenuContainer /> </Col>
+                    <Col sm={9}> </Col>
+                </Row>
+            </Container>
+             
+           
         )
     } else {
-        return(
-              <div>
-                    <h1 className="header">Public Homepage</h1>
-                        <div className="boxThing">
-                            <Navbar>
-                                <Nav>
-                                    <React.Fragment>
-  
-                                        <LinkContainer to="/login">
-                                            <NavItem> Login (you can click here) </NavItem>
-                                        </LinkContainer>
-                                        <LinkContainer to="/register">
-                                            <NavItem>Register(goes to register page now)</NavItem>
-                                        </LinkContainer>
-                                    </React.Fragment>
-                                </Nav>
-                            </Navbar>
-                    </div>
-                </div>
-                   
-        )
+        return( <LoginContainer/> )
     }
 }
 

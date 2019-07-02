@@ -3,7 +3,7 @@ import "../../index.css";
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
 import {connect } from 'react-redux';
-
+import Nav from 'react-bootstrap/Nav';
 
 class LogIn extends React.Component {
 
@@ -31,7 +31,7 @@ class LogIn extends React.Component {
     }
 
     changePage = (response) => {
-        
+        console.log(response.data)
     
             if(response.status === 200 && typeof response.data.status === 'undefined' ){
                 // just in case, 
@@ -39,9 +39,9 @@ class LogIn extends React.Component {
                 // recommended we don't depend on it for
                 // conditional rendering or something idk
                 const payload = {
-                    user_id:response.data.id,
+                    user_id:response.data.user_id,
                     token:response.data.token,
-                    userType:'admin'
+                    userType:response.data.type
                 }
 
                 this.setState({
@@ -76,7 +76,7 @@ class LogIn extends React.Component {
             return <Redirect to="/"/>
         }else{
             return(
-        
+                
                 <div className="boxThing">
                        <h1> Login </h1>
         
@@ -92,8 +92,17 @@ class LogIn extends React.Component {
                     <br></br>
                     <button type="submit">Submit</button>
                     <br></br>
-                </form>        
+
+                    <br></br>
+                        <Nav>
+                          <Nav.Link href="/register">
+                              Register 
+                         </Nav.Link>
+                        </Nav>
+                </form>    
+
                 </div>
+                
     
         )
         }

@@ -113,7 +113,7 @@ class Register extends React.Component{
                     <div className="boxThing" id="register">
                         <h1>Registration</h1>
                     <form method="post"  name="userRegistrationForm"  onSubmit= {this.submitHandler}>
-                            <label>First Name</label>
+                            <label>First Name </label>
                             <br></br>
                             <div className="errorMsg">{this.state.errors.first_name}</div>
                             <br></br>

@@ -1,6 +1,8 @@
 import React from "react";
 import axios from 'axios';
-
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 
 class Survey extends React.Component{
@@ -14,7 +16,7 @@ class Survey extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            form_id:'',
+            form_id:this.props.form_id,
             student_id:'13',
             token:'testToken',
             loading:false,
@@ -22,6 +24,7 @@ class Survey extends React.Component{
             type:'',
             data:[],
             results:[],
+            requested:this.props.flag,
             form_retreived:false,
             form_submitted:false
         };
@@ -32,6 +35,7 @@ class Survey extends React.Component{
         this.questionHandler= this.questionHandler.bind(this);
         this.formHandler = this.formHandler.bind(this);
         this.redirectOnSubmit = this.redirectOnSubmit.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
       }
     
     
@@ -39,6 +43,17 @@ class Survey extends React.Component{
         this.setState({
             form_id:event.target.value
         }) 
+    }
+
+    componentDidMount(){
+            if(this.state.requested){
+                const payload = {
+                    form_id:this.state.form_id
+                }
+                axios.post(`http://localhost:3001/api/getForm`, payload)
+                .then(response => this.changePage(response))
+                .catch(function (error){console.log(error)})
+            }
     }
 
     requestForm(event){
@@ -86,7 +101,7 @@ class Survey extends React.Component{
     redirectOnSubmit(res){
         if(res.status===200){
             this.setState({
-              form_submitted:false
+              form_submitted:true
             })  
             console.log(res.data)
         }
@@ -102,15 +117,17 @@ class Survey extends React.Component{
         
         if(res.status===200 && typeof res.data.status === 'undefined'){
             const result = res.data
-            console.log(res.data)
-            this.setState({
+        
+                console.log(res.data)
+                this.setState({
                 data:result,
                 title:result[0].title,
                 type:result[0].type,
                 loading:false,
                 form_retreived:true
-            })
-            console.log(res.data)
+                })
+            
+            
         }
         else
             console.log(res.data.status)
@@ -123,9 +140,10 @@ class Survey extends React.Component{
        ///const {questions} = this.props
         const formStatus = this.state.form_retreived
         const form_submitted = this.state.form_submitted
-
+        
         if(!formStatus){
             return(
+                
                 <div>
                 <h1>Request Survey/form (for testing purposes for now)</h1>
                 <p> this isnt gonna be a thing in the final product though</p>

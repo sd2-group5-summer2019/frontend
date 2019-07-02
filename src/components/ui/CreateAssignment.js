@@ -1,6 +1,8 @@
 import React from "react";
 import axios from 'axios';
-import "../../index.css";
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 class CreateAssignment extends React.Component{
     static defaultProps = {
@@ -179,12 +181,13 @@ class CreateAssignment extends React.Component{
 
         if(!formStatus && !form_submitted){
             return(
-            <div>
+             <div>
                 
-                <h1 className="header">Create a New Assingment</h1>
-                    <div  style={{margin:"auto"}}>
+                <h1 className="header">Create a New Assingment</h1> 
                 <h1> Assignment Type : {this.state.type}</h1>
-                <form onSubmit={this.formHandler}>
+                <Form onSubmit={this.formHandler}>
+                   
+
                     <label>Title: </label>
                     <input type="text" name="title" value={this.state.title} onChange={this.handleChange}></input>
                     <br></br>
@@ -202,14 +205,15 @@ class CreateAssignment extends React.Component{
                     <label>Question {this.state.q_num + 1}: </label>
                     <input name={this.state.q_num} value={this.state.tempQ} onChange={this.questionHandler} type="text" placeholder="Press Enter to add"></input>
                     <br></br>
-                    <button style={{display:'none'}} onClick={this.addNewQuestion}>Add Question</button>
+                    <Button style={{display:'none'}} onClick={this.addNewQuestion}>Add Question</Button>
                     <br></br>
-                    <button type="submit">Create {this.state.type}</button>
+                    <Button variant="primary" type="submit">Create {this.state.type}</Button>
                     
-                </form>
-                </div>
+                </Form>
                 
                 </div>
+                
+               
             )
         }  else if (form_submitted) {
             return(

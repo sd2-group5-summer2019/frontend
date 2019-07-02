@@ -10,7 +10,7 @@ const initialState = {
     user_id:'',
     token:'',
     loggedIn:false,
-    userType:'public'
+    userType:''
 }
 
 function currentUser(state = initialState, action){
@@ -18,6 +18,7 @@ function currentUser(state = initialState, action){
     switch (action.type){
         case ON_LOGIN:
            return Object.assign({}, state, {
+               user_id:action.payload.user_id,
                token: action.payload.token,
                loggedIn:true,
                userType:action.payload.userType
