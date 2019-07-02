@@ -15,13 +15,13 @@ class Survey extends React.Component{
         super(props);
         this.state = {
             form_id:'',
-            student_id:'2',
+            student_id:'13',
             token:'testToken',
             loading:false,
             title:'',
             type:'',
-            data:{},
-            results:{},
+            data:[],
+            results:[],
             form_retreived:false,
             form_submitted:false
         };
@@ -101,14 +101,16 @@ class Survey extends React.Component{
     changePage(res){
         
         if(res.status===200 && typeof res.data.status === 'undefined'){
+            const result = res.data
+            console.log(res.data)
             this.setState({
-                data:res.data.return,
-                title:res.data.title,
-                type:res.data.type,
+                data:result,
+                title:result[0].title,
+                type:result[0].type,
                 loading:false,
                 form_retreived:true
             })
-            console.log(res.data.return)
+            console.log(res.data)
         }
         else
             console.log(res.data.status)
@@ -147,9 +149,9 @@ class Survey extends React.Component{
 
                         {questions.map((questions, i)=>  
                            <div className="yellow" key={i+1}>
-                            <label name={"question" + i}>{i + ") " + questions.text}</label>
+                            <label name={"question" + i}>{(i +1) + ") " + questions.question_text}</label>
                             <br></br>
-                            <input id={i} type="text" autoComplete="off" name={questions.id} value={this.state.results.value} onChange={this.questionHandler}/>
+                            <input id={i} type="text" autoComplete="off" name={questions.question_id} value={this.state.results.value} onChange={this.questionHandler}/>
                             <br></br>
                             </div>
                        )}

@@ -46,8 +46,8 @@ class Assignments extends React.Component{
     // the most current
    
     render(){
-           const user_type = 'admin'
-         const temp = this.state.assignments
+        const user_type = 'student'
+        const temp = this.state.assignments
             if(user_type === 'admin'){
                 return(
                     <div>

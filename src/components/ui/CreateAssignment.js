@@ -106,7 +106,7 @@ class CreateAssignment extends React.Component{
     formHandler(event){
         event.preventDefault()
         const payload = {
-            access_level:this.props.userType,
+            access_level:'coordinator',
             type:this.state.type,
             user_id:this.state.user_id,
             token:this.state.token,
