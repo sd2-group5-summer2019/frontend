@@ -18,6 +18,7 @@ class Assignments extends React.Component{
                 loading:false,
                 form_id:'',
                 page:false,
+                newAssignment:false,
                 tableE:[
                     {title:''},
                     {th1:''},
@@ -28,6 +29,7 @@ class Assignments extends React.Component{
             this.componentDidMount = this.componentDidMount.bind(this);
             this.changePage = this.changePage.bind(this);
             this.assignmentsTable = this.assignmentsTable.bind(this);
+            this.newAssignment = this.newAssignment.bind(this);
         }
 
 
@@ -92,7 +94,10 @@ class Assignments extends React.Component{
         }
 
         newAssignment(){
-
+            this.setState({
+                page:true,
+                newAssignment:true
+            })
         }
         
  
@@ -108,7 +113,7 @@ class Assignments extends React.Component{
         const user = this.props.userType
         const temp = this.state.assignments
         const tableText = this.state.tableE
-        
+
         if(!this.state.page){
                return(
                   <Container>
@@ -121,7 +126,8 @@ class Assignments extends React.Component{
 		              		        <tr>
 		              			        <th>{tableText.title}</th>
 		              			        <th>{tableText.th1}</th>
-                                        <th>{tableText.th2}</th>
+                                         <th>{user === 'coordinator' ? <button onClick={this.newAssignment}>New Assignment</button>
+                                         : tableText.th2} </th> 
 		              		        </tr>
 		               	        </thead>
                                  <tbody>
@@ -148,7 +154,7 @@ class Assignments extends React.Component{
                         </Row>
                     </Container>
                 )
-            }else if(user==='coordinator' && this.state.page){
+            }else if(user==='coordinator' && this.state.page && !this.state.newAssignment){
                     return(
                         <Container>
                              <Row className="text-center"> <h1>View Results</h1></Row>
@@ -158,7 +164,18 @@ class Assignments extends React.Component{
                             </Row>
                         </Container>
                     )  
-            }else{
+            }else if(user==='coordinator' && this.state.page && this.state.newAssignment){
+                return(
+                    <Container>
+                         <Row className="text-center"> <h1>Assignments</h1></Row>
+                        <Row>
+                            <Col sm={3}> <MenuContainer/> </Col>
+                            <Col sm={9}> <CreateAssignmentC /> </Col>
+                        </Row>
+                    </Container>
+                ) 
+            }
+            else{
                 return(<Redirect to='/'/>)
             }           
     }

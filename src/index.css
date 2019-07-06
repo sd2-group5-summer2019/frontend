@@ -1,14 +1,11 @@
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* background-color:#1F1F1F;
-  color:white; */
 }
-
+/*
 body button, input{
   color:black;
 }
@@ -26,7 +23,7 @@ code {
   text-align:left;
 }
 
-/* .menu {
+ .menu {
   background-color:#ffffff;
   text-align:center;
   color:black;
@@ -37,7 +34,7 @@ code {
 .menu input, button, label, textarea{
   margin:5px 5px 5px 10px;
   padding:5px;
-} */
+} 
 
 .boxThing{
   margin:auto;
@@ -50,4 +47,4 @@ code {
   padding:5px;
 }
 
-
+ */

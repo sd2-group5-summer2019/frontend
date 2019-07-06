@@ -22,7 +22,7 @@ const routes = (
             <Route path="/survey" exact component={Survey} />
             <Route path="/register" exact component={Register} />
             <Route path="/assignments" exact component={AssignmentsPageC} />
-
+            <Route path="/create_assignment" exact component={CreateAssignmentC} />
             <Route path="/teams" exact component={Teams} />
             <Route path="/sponsors" exact component={Sponsors} />
             <Route path="/students" exact component={Students} />

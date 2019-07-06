@@ -183,8 +183,13 @@ class CreateAssignment extends React.Component{
             return(
              <div>
                 
-                <h1 className="header">Create a New Assingment</h1> 
-                <h1> Assignment Type : {this.state.type}</h1>
+                <h1 className="header"> Create a New Assignment </h1> 
+                <h3> Assignment Type</h3>
+                <select>
+                    <option>Survey</option>
+                    <option>Meeting Attendance</option>
+                    <option>Quiz</option>
+                </select>
                 <Form onSubmit={this.formHandler}>
                    
 
@@ -192,7 +197,7 @@ class CreateAssignment extends React.Component{
                     <input type="text" name="title" value={this.state.title} onChange={this.handleChange}></input>
                     <br></br>
                     <label >Start Date </label>
-                    <input type="date" name="start_date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.start_date} onChange={this.handleChange}></input>
+                    <input type="date" name="start_date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.start_date} onChange={this.handleChange}></input>
                     <br></br>
                     <label>End Date</label>
                     <input type="date" name="end_date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.end_date} onChange={this.handleChange}></input>
@@ -204,8 +209,22 @@ class CreateAssignment extends React.Component{
                     </div>
                     <label>Question {this.state.q_num + 1}: </label>
                     <input name={this.state.q_num} value={this.state.tempQ} onChange={this.questionHandler} type="text" placeholder="Press Enter to add"></input>
+                    <label>Question Type: </label>
+                    <select>
+                        <option>Free Response </option>
+                        <option>Multiple Choice</option>
+                        <option>Select 1-5</option>
+                        <option>Fill in the blank</option>
+                        <option></option>
+                    </select>
+                    <label>Alerts</label>
+                    <select>
+                        <option>No Notification</option>
+                        <option>Below Certain Threshold</option>
+                        <option>Differing Answers</option>
+                    </select>
                     <br></br>
-                    <Button style={{display:'none'}} onClick={this.addNewQuestion}>Add Question</Button>
+                    <button onClick={this.addNewQuestion}>Add Question</button>
                     <br></br>
                     <Button variant="primary" type="submit">Create {this.state.type}</Button>
                     

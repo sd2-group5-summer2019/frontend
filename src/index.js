@@ -26,9 +26,9 @@ store.subscribe(()=>{
 })
 
  ReactDOM.render(
-    <Provider store={store}>
-         {routes}
-    </Provider>     
+          <Provider store={store}>
+                {routes}
+          </Provider>    
    ,
      document.getElementById('root')
  )
