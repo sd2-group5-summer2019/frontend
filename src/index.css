@@ -1,10 +1,17 @@
+*{
+  font-size:16px;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size:18px;
+  font-size-adjust:.5;
 }
+
 /*
 body button, input{
   color:black;

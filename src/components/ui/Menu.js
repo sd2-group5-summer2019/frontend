@@ -22,11 +22,17 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
 
      if(loggedIn){
             return(
+                <Navbar collapseOnSelect bg="light" expand="lg">
+                 
+                  <Navbar.Brand href="/">SDPortal</Navbar.Brand>
+                  <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                  <Navbar.Collapse id="responsive-navbar-nav">
 
-                <Navbar bg="light" expand="lg">
                   <Nav className="mr-auto">
-                    <NavDropdown title="Menu" id="collasible-nav-dropdown">
-                    <NavDropdown.Item href="/assignments">Assignments</NavDropdown.Item>
+
+                    <NavDropdown title="Menu" id="collapsable-nav-dropdown">
+                        <NavDropdown.Item href="/assignments">Assignments</NavDropdown.Item>
+                        <NavDropdown.Item href="/">Project Management</NavDropdown.Item>
 
                         {userType !== 'student'?
                             <React.Fragment>
@@ -41,18 +47,20 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
                             <React.Fragment></React.Fragment>
                         }
                      
-                      <NavDropdown.Divider />
-                      <NavDropdown.Item href="/settings">Settings</NavDropdown.Item>
-                        <NavDropdown.Item>
-                            <Button type="button" onClick={function(){logoutHelper(); onLogout();}}>Log Out</Button>
-                        </NavDropdown.Item>
+                            <NavDropdown.Divider />
+                                <NavDropdown.Item href="/settings">Settings</NavDropdown.Item>
+                                <NavDropdown.Item>
+                                    <Button type="button" onClick={function(){logoutHelper(); onLogout();}}>Log Out</Button>
+                                </NavDropdown.Item>
                     </NavDropdown>
-                  </Nav>
-                  <h1 className="mr-auto"><center>Homepage</center></h1>
+                    
+                </Nav>
+                 
                     <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                    <Button variant="outline-success">Search</Button>
-                  </Form>
+                        <FormControl type="text" placeholder="Search"/>
+                        <Button variant="outline-success">Search</Button>
+                    </Form>
+                </ Navbar.Collapse>
               </Navbar>
             )
         }

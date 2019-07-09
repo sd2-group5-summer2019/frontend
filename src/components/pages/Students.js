@@ -12,9 +12,12 @@ class Students extends React.Component {
 		this.state.students = [{id: "nid", first_name: "mahzain", last_name: "malik", nid: "ma026001", email: "mahzain@knights.ucf.edu", team: "group 5"}]
 	}
     componentDidMount() {
-    	axios.get('http://localhost:3001/api/get_all_students')
+    	axios.post('http://localhost:3001/api/getAllStudents')
         .then(res => {
-            this.state.students = res.data;
+			console.log(res.data)
+          this.setState({
+			  students:res.data
+		  })
         })
     }
     deleteRequest(id) {
@@ -48,7 +51,7 @@ class Students extends React.Component {
 	               	</thead>
 	               	<tbody>
 	               		{this.state.students.map(student =>
-	               			<tr key={student.id}>
+	               			<tr key={student.user_id}>
 	               				<td>{student.first_name}</td>
 	               				<td>{student.last_name}</td>
 	               				<td>{student.nid}</td>

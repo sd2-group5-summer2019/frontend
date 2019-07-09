@@ -9,6 +9,7 @@ import Col from 'react-bootstrap/Col';
 import CreateAssignmentC from '../containers/CreateAssignmentC';
 import {Redirect} from 'react-router-dom';
 import Get_Results from '../ui/Get_Results';
+import Button from 'react-bootstrap/Button';
 
 class Assignments extends React.Component{
         constructor(props){
@@ -86,7 +87,7 @@ class Assignments extends React.Component{
             }else if(user === 'coordinator'){
                 tableText.title = 'Assignments'
                 tableText.th1 = 'Active'
-                tableText.btn_text = 'View Results'
+                tableText.btn_text = 'Results'
             }
                 this.setState({
                     tableE:tableText
@@ -116,17 +117,18 @@ class Assignments extends React.Component{
 
         if(!this.state.page){
                return(
+                <div>
+                                <MenuContainer pageTitle="Assignments"/> 
                   <Container>
-                    <Row className="text-center"> <h1>Assignments</h1></Row>
                     <Row>
-                        <Col sm={3}> <MenuContainer/> </Col>
+                        <Col sm={3}> </Col>
                         <Col sm={9}>
-		                    <Table  responsive="sm" striped bordered hover variant="dark">
+		                    <Table  responsive="sm" striped bordered hover>
 		                        <thead>
 		              		        <tr>
 		              			        <th>{tableText.title}</th>
 		              			        <th>{tableText.th1}</th>
-                                         <th>{user === 'coordinator' ? <button onClick={this.newAssignment}>New Assignment</button>
+                                         <th>{user === 'coordinator' ? <button type="button" onClick={this.newAssignment}>New Assignment</button>
                                          : tableText.th2} </th> 
 		              		        </tr>
 		               	        </thead>
@@ -135,7 +137,7 @@ class Assignments extends React.Component{
                                         <tr value={temp.form_id} key={temp.title}>
                                             <td>{temp.title}</td>
                                             <td>{user !== 'coordinator' ? temp.end_date: temp.completed}</td>
-                                            <td> <button name={temp.form_id} onClick={this.changePage}>{tableText.btn_text}</button></td> 
+                                            <td> <Button type="button" name={temp.form_id} onClick={this.changePage}>{tableText.btn_text}</Button></td> 
                                         </tr>
                                     )}
                                  </tbody>
@@ -143,36 +145,44 @@ class Assignments extends React.Component{
                         </Col>
                     </Row>
                 </Container>
+
+                </div>
                )
             }else if(user==='student' && this.state.page){
                 return(
                     <Container>
+                        <Row><MenuContainer/></Row>
                          <Row className="text-center"> <h1>Take Assignment</h1></Row>
                         <Row>
-                            <Col sm={3}> <MenuContainer/> </Col>
+                            <Col sm={3}>  </Col>
                             <Col sm={9}> <Survey flag={"true"} form_id={this.state.form_id} /> </Col>
                         </Row>
                     </Container>
                 )
             }else if(user==='coordinator' && this.state.page && !this.state.newAssignment){
                     return(
+                       <div>
+                           <MenuContainer/> 
                         <Container>
                              <Row className="text-center"> <h1>View Results</h1></Row>
                             <Row>
-                                <Col sm={3}> <MenuContainer/> </Col>
+                                <Col sm={3}> </Col>
                                 <Col sm={9}> <Get_Results flag={"true"} form_id={this.state.form_id} /> </Col>
                             </Row>
                         </Container>
+                        </div>
                     )  
             }else if(user==='coordinator' && this.state.page && this.state.newAssignment){
                 return(
-                    <Container>
-                         <Row className="text-center"> <h1>Assignments</h1></Row>
+                   <div>
+                       <MenuContainer/> 
+                        <Container>
                         <Row>
-                            <Col sm={3}> <MenuContainer/> </Col>
+                            <Col sm={3}> </Col>
                             <Col sm={9}> <CreateAssignmentC /> </Col>
                         </Row>
                     </Container>
+                   </div>
                 ) 
             }
             else{

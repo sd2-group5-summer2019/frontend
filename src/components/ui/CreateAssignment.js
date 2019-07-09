@@ -15,7 +15,7 @@ class CreateAssignment extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            user_id:'13',
+            user_id:this.props.user_id,
             token:'testToken',
             loading:false,
             title:'',
@@ -23,11 +23,10 @@ class CreateAssignment extends React.Component{
             q_num:0,
             description:'',
             questions:[],
-            start_date:'',
-            end_date:'',
             form_retreived:false,
             form_submitted:false,
             tempQ:'',
+            q_type:'',
             preview:[
                 <h3 key="0">Questions</h3>
             ]
@@ -72,9 +71,11 @@ class CreateAssignment extends React.Component{
         let questionList = this.state.questions
         let index = this.state.q_num + 1
         let qtext = this.state.tempQ
+        let q_type = this.state.q_type
         let previewt = this.state.preview
         questionList[index-1] = {
-            question:qtext
+            question:qtext,
+            type:q_type
         }
            
     
@@ -101,7 +102,7 @@ class CreateAssignment extends React.Component{
                tempQ:questiontext
                       })
 
-        console.log(event.target.value)
+      
     }
 
     // handles sending the assignment to the backend
@@ -114,8 +115,6 @@ class CreateAssignment extends React.Component{
             token:this.state.token,
             title:this.state.title,
             description:this.state.description,
-            start_date:this.state.start_date,
-            end_date:this.state.end_date,
             questions:this.state.questions 
         }
         console.log(payload)
@@ -155,21 +154,35 @@ class CreateAssignment extends React.Component{
             console.log("Something went wrong")
     }
 
+    // <label >Start Date </label>
+    // <input type="date" name="start_date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.start_date} onChange={this.handleChange}></input>
+    // <br></br>
+    // <label>End Date</label>
+    // <input type="date" name="end_date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.end_date} onChange={this.handleChange}></input>
+    // <br></br>
+
+    // <label>Alerts</label>
+    // <select>
+    //     <option>No Notification</option>
+    //     <option>Below Certain Threshold</option>
+    //     <option>Different Answers</option>
+    // </select>
     
     resetForm(){
         this.setState({
             loading:false,
             title:'',
-            type:'Survey',
+            type:'',
             q_num:1,
             description:'',
             questions:[],
-            start_date:'',
-            end_date:'',
             form_retreived:false,
             form_submitted:false,
             tempQ:'',
-            preview:[]
+            q_type:'',
+            preview:[
+                <h3 key="0">Questions</h3>
+            ]
         })
     }
     
@@ -185,23 +198,15 @@ class CreateAssignment extends React.Component{
                 
                 <h1 className="header"> Create a New Assignment </h1> 
                 <h3> Assignment Type</h3>
-                <select>
-                    <option>Survey</option>
-                    <option>Meeting Attendance</option>
-                    <option>Quiz</option>
+                <select name="type" value={this.state.type} onChange={this.handleChange}>
+                    <option value="survey">Survey</option>
+                    <option value="quiz">Quiz</option>
                 </select>
                 <Form onSubmit={this.formHandler}>
                    
 
                     <label>Title: </label>
                     <input type="text" name="title" value={this.state.title} onChange={this.handleChange}></input>
-                    <br></br>
-                    <label >Start Date </label>
-                    <input type="date" name="start_date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.start_date} onChange={this.handleChange}></input>
-                    <br></br>
-                    <label>End Date</label>
-                    <input type="date" name="end_date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.end_date} onChange={this.handleChange}></input>
-                    <br></br>
                     <br></br>
                     <textarea style={{color:'black'}} name="description" value={this.state.description} onChange={this.handleChange} placeholder="Brief Description (optional)..."/>
                     <div>
@@ -210,19 +215,13 @@ class CreateAssignment extends React.Component{
                     <label>Question {this.state.q_num + 1}: </label>
                     <input name={this.state.q_num} value={this.state.tempQ} onChange={this.questionHandler} type="text" placeholder="Press Enter to add"></input>
                     <label>Question Type: </label>
-                    <select>
-                        <option>Free Response </option>
-                        <option>Multiple Choice</option>
-                        <option>Select 1-5</option>
-                        <option>Fill in the blank</option>
-                        <option></option>
+                    <select name="q_type" value={this.state.q_type} onChange={this.handleChange}>
+                        <option value="free_response">Free Response </option>
+                        <option value="select">Select 1-5</option>
+                        <option value="multiple_choice">Multiple Choice</option>
+                        <option value="fill_blank">Fill in the blank</option>
                     </select>
-                    <label>Alerts</label>
-                    <select>
-                        <option>No Notification</option>
-                        <option>Below Certain Threshold</option>
-                        <option>Differing Answers</option>
-                    </select>
+                  
                     <br></br>
                     <button onClick={this.addNewQuestion}>Add Question</button>
                     <br></br>
@@ -239,7 +238,6 @@ class CreateAssignment extends React.Component{
                <div>
                    <h1>Assignment created</h1>
                    <button onClick={this.resetForm}>Create Another Assignment</button>
-                   <button>Assignments Page</button>
                </div>
             )
         }
