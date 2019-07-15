@@ -10,6 +10,7 @@ import CreateAssignmentC from '../containers/CreateAssignmentC';
 import {Redirect} from 'react-router-dom';
 import Get_Results from '../ui/Get_Results';
 import Button from 'react-bootstrap/Button';
+import CreateInstance from '../ui/CreateInstance';
 
 class Assignments extends React.Component{
         constructor(props){
@@ -19,7 +20,7 @@ class Assignments extends React.Component{
                 loading:false,
                 form_id:'',
                 page:false,
-                newAssignment:false,
+                pageCode:0,
                 tableE:[
                     {title:''},
                     {th1:''},
@@ -66,11 +67,37 @@ class Assignments extends React.Component{
         
         changePage(event){
            event.preventDefault();
-           console.log(event.target.name)
-           this.setState({
-               form_id:event.target.name,
-               page:true
-           })
+           const page = this.state.pageCode
+           const user = this.props.userType
+           const next_page = event.target.id
+           console.log(event.target.id)
+
+           if(user === 'student'){
+            this.setState({
+                pageCode:1
+            })
+           }else if(user !== 'student' && next_page === 'newAssignment')
+           {
+                this.setState({
+                    pageCode:3
+                })
+           }
+           else if(user !== 'student' && next_page === 'results')
+           {
+                   
+                this.setState({
+                     form_id:event.target.name,
+                    pageCode:2
+                })
+           }
+           else if(user !== 'student' && next_page === 'assign')
+           {
+                this.setState({
+                     form_id:event.target.name,
+                    pageCode:4
+                })
+           }
+        
            
         }
 
@@ -86,7 +113,7 @@ class Assignments extends React.Component{
                 tableText.btn_text = 'Take'
             }else if(user === 'coordinator'){
                 tableText.title = 'Assignments'
-                tableText.th1 = 'Active'
+                tableText.th1 = ''
                 tableText.btn_text = 'Results'
             }
                 this.setState({
@@ -114,30 +141,32 @@ class Assignments extends React.Component{
         const user = this.props.userType
         const temp = this.state.assignments
         const tableText = this.state.tableE
+        const page = this.state.pageCode
 
-        if(!this.state.page){
+        if(page === 0){
                return(
                 <div>
-                                <MenuContainer pageTitle="Assignments"/> 
+                <MenuContainer pageTitle="Assignments"/> 
                   <Container>
                     <Row>
-                        <Col sm={3}> </Col>
+                        <Col sm={3}> 
+                            {user === 'coordinator' ? <Button type="button" size="lg" id='newAssignment' onClick={this.changePage}>New Assignment</Button> : ''} 
+                        </Col>
                         <Col sm={9}>
 		                    <Table  responsive="sm" striped bordered hover>
 		                        <thead>
 		              		        <tr>
 		              			        <th>{tableText.title}</th>
 		              			        <th>{tableText.th1}</th>
-                                         <th>{user === 'coordinator' ? <button type="button" onClick={this.newAssignment}>New Assignment</button>
-                                         : tableText.th2} </th> 
+                                         <th> </th> 
 		              		        </tr>
 		               	        </thead>
                                  <tbody>
                                      {temp.map(temp =>
                                         <tr value={temp.form_id} key={temp.title}>
                                             <td>{temp.title}</td>
-                                            <td>{user !== 'coordinator' ? temp.end_date: temp.completed}</td>
-                                            <td> <Button type="button" name={temp.form_id} onClick={this.changePage}>{tableText.btn_text}</Button></td> 
+                                            <td>{user === 'student' ? temp.end_date : <Button variant="success" id='assign' size="lg" type="button" name={temp.form_id} onClick={this.changePage}>Assign</ Button>}</td>
+                                            <td> <Button type="button" id='results' size="lg" name={temp.form_id} onClick={this.changePage}>{tableText.btn_text}</Button></td> 
                                         </tr>
                                     )}
                                  </tbody>
@@ -148,7 +177,7 @@ class Assignments extends React.Component{
 
                 </div>
                )
-            }else if(user==='student' && this.state.page){
+            }else if(page === 1){
                 return(
                     <Container>
                         <Row><MenuContainer/></Row>
@@ -159,7 +188,7 @@ class Assignments extends React.Component{
                         </Row>
                     </Container>
                 )
-            }else if(user==='coordinator' && this.state.page && !this.state.newAssignment){
+            }else if(page === 2){
                     return(
                        <div>
                            <MenuContainer/> 
@@ -172,7 +201,7 @@ class Assignments extends React.Component{
                         </Container>
                         </div>
                     )  
-            }else if(user==='coordinator' && this.state.page && this.state.newAssignment){
+            }else if(page === 3){
                 return(
                    <div>
                        <MenuContainer/> 
@@ -184,8 +213,19 @@ class Assignments extends React.Component{
                     </Container>
                    </div>
                 ) 
-            }
-            else{
+                }else if(page === 4){
+                   return(
+                    <div>
+                    <MenuContainer/> 
+                        <Container>
+                            <Row>
+                            <Col sm={3}> </Col>
+                            <Col sm={9}> <CreateInstance form_id={this.state.form_id} /> </Col>
+                            </Row>
+                        </Container>
+                     </div>
+                   )
+                }else{
                 return(<Redirect to='/'/>)
             }           
     }

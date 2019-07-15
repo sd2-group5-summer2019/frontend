@@ -3,6 +3,7 @@ import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import CreateInstance from "./CreateInstance";
 
 class CreateAssignment extends React.Component{
     static defaultProps = {
@@ -16,7 +17,7 @@ class CreateAssignment extends React.Component{
         super(props);
         this.state = {
             user_id:this.props.user_id,
-            token:'testToken',
+            token:this.props.token,
             loading:false,
             title:'',
             type:'survey',
@@ -27,6 +28,7 @@ class CreateAssignment extends React.Component{
             form_submitted:false,
             tempQ:'',
             q_type:'',
+            form_id:'',
             preview:[
                 <h3 key="0">Questions</h3>
             ]
@@ -124,10 +126,13 @@ class CreateAssignment extends React.Component{
     }
 
     redirectOnSubmit(res){
+        console.log(res.data.form_id)
+       
         if(res.status===200){
             this.setState({
               form_status:true,
-              form_submitted:true
+              form_submitted:true,
+              form_id:res.data.form_id
             })  
             console.log(res.data)
         }
@@ -154,19 +159,7 @@ class CreateAssignment extends React.Component{
             console.log("Something went wrong")
     }
 
-    // <label >Start Date </label>
-    // <input type="date" name="start_date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.start_date} onChange={this.handleChange}></input>
-    // <br></br>
-    // <label>End Date</label>
-    // <input type="date" name="end_date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.end_date} onChange={this.handleChange}></input>
-    // <br></br>
 
-    // <label>Alerts</label>
-    // <select>
-    //     <option>No Notification</option>
-    //     <option>Below Certain Threshold</option>
-    //     <option>Different Answers</option>
-    // </select>
     
     resetForm(){
         this.setState({
@@ -180,6 +173,7 @@ class CreateAssignment extends React.Component{
             form_submitted:false,
             tempQ:'',
             q_type:'',
+            form_id:'',
             preview:[
                 <h3 key="0">Questions</h3>
             ]
@@ -233,12 +227,10 @@ class CreateAssignment extends React.Component{
                 
                
             )
-        }  else if (form_submitted) {
+        }  else {
             return(
-               <div>
-                   <h1>Assignment created</h1>
-                   <button onClick={this.resetForm}>Create Another Assignment</button>
-               </div>
+             
+                     <CreateInstance form_id={this.state.form_id} />
             )
         }
       
