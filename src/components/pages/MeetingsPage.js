@@ -9,13 +9,24 @@ import Col from 'react-bootstrap/Col';
 import CreateAssignmentC from '../containers/CreateAssignmentC';
 import {Redirect} from 'react-router-dom';
 import Get_Results from '../ui/Get_Results';
+import {LinkContainer} from "react-router-bootstrap";
+import { Navbar, Nav, NavItem} from "react-bootstrap";
+import Meeting from '../ui/Meeting';
+//access_level, title, user_id, description, team_id, start_date, end_date
+//{title:'test', description:'agenda', start_date:'start', end_date:'end', completed:'false'}
+//[{form_id:'10', title:'test', description:'agenda', start_date:'start', end_date:'end', is_complete:false}]
+//                                
 
-class Assignments extends React.Component{
+class MeetingsPage extends React.Component{
         constructor(props){
             super(props)
 		    this.state = {
-                assignments:[],
+                meetings:[],
                 loading:false,
+                instance_id:'',
+                title:'',
+                description:'',
+                is_complete:'',
                 form_id:'',
                 page:false,
                 tableE:[
@@ -27,7 +38,7 @@ class Assignments extends React.Component{
             }
             this.componentDidMount = this.componentDidMount.bind(this);
             this.changePage = this.changePage.bind(this);
-            this.assignmentsTable = this.assignmentsTable.bind(this);
+            this.meetingsTable = this.meetingsTable.bind(this);
         }
 
 
@@ -38,62 +49,60 @@ class Assignments extends React.Component{
         // in the API endpont i cobbled together
         componentDidMount(){
 
-            let user_id = this.props.user_id
+            const payload = {
+                user_id:'4'
+            }
 
-            axios.post(`http://localhost:3001/api/getAllForms`).then(response => {
-                
+            axios.post(`http://localhost:3001/api/getInstances`, payload).then(response => {
+                const meetings = [];
+                for(var i = 0; i < response.data.length; i++) {
+                    if(response.data[i].type === 'meeting')
+                        meetings.push(response.data[i])
+                }
                 this.setState({
-                    assignments:response.data
+                    meetings:meetings
                 })
                 console.log(response.data)
             })
             .catch(function (error){console.log(error)})
 
-            this.assignmentsTable()
-            // axios.post(`http://localhost:3001/api/frontendTest`, user_id)
-            // .then(response => {
-            //     this.setState({
-            //         assignments:response.data
-            //     })
-            //     console.log(response.data)
-            // })
-            // .catch(function (error){console.log(error)})
+            this.meetingsTable()
 
         }
         
         changePage(event){
            event.preventDefault();
-           console.log(event.target.name)
+           const res = event.target
+           console.log(res.title)
+
            this.setState({
-               form_id:event.target.name,
+               title:res.title,
+               description:res.name,
+               instance_id:res.id,
+               is_complete:res.value,
                page:true
-           })
-           
+           })           
         }
 
         // populates the assignments table depending on the
         // type of user
-        assignmentsTable(){
-            const user = this.props.userType
+        meetingsTable(){
+            const user = 'coordinator'
             const tableText = this.state.tableE
 
             if(user === 'student'){
-                tableText.title = 'Current Assignments'
+                tableText.title = 'Current Meetings'
                 tableText.th1 = 'Due Date'
-                tableText.btn_text = 'Take'
-            }else if(user === 'admin'){
-                tableText.title = 'Assignments'
-                tableText.th1 = 'Active'
-                tableText.btn_text = 'View Results'
+                tableText.btn_text = 'Begin'
+            }else if(user === 'coordinator'){
+                tableText.title = 'Meetings'
+                tableText.th1 = 'Status'
             }
                 this.setState({
                     tableE:tableText
                 })
         }
 
-        newAssignment(){
-
-        }
         
  
 
@@ -105,18 +114,19 @@ class Assignments extends React.Component{
     // the most current
    
     render(){
-        const user = this.props.userType
-        const temp = this.state.assignments
+        const user = 'coordinator'
         const tableText = this.state.tableE
-
+        
         if(!this.state.page){
                return(
-
                   <Container>
-                    <Row className="text-center"> <h1>Assignments</h1></Row>
+                    <Row className="text-center"> <h1>Meetings</h1></Row>
                     <Row>
                         <Col sm={3}> <MenuContainer/> </Col>
                         <Col sm={9}>
+                        <LinkContainer to="/create_meeting">
+                            <NavItem>Create New Meeting</NavItem>
+                        </LinkContainer>
 		                    <Table  responsive="sm" striped bordered hover variant="dark">
 		                        <thead>
 		              		        <tr>
@@ -126,11 +136,11 @@ class Assignments extends React.Component{
 		              		        </tr>
 		               	        </thead>
                                  <tbody>
-                                     {temp.map(temp =>
-                                        <tr value={temp.form_id} key={temp.title}>
-                                            <td>{temp.title}</td>
-                                            <td>{user !== 'coordinator' ? temp.end_date: temp.completed}</td>
-                                            <td> <button name={temp.form_id} onClick={this.changePage}>{tableText.btn_text}</button></td> 
+                                     {this.state.meetings.map(meeting =>
+                                        <tr value={meeting.form_id} key={meeting.instance_id}>
+                                            <td>{meeting.title}</td>
+                                            <td>{user !== 'coordinator' ? meeting.end_date: meeting.is_complete ? 'Completed' : 'Not Started' }</td>
+                                            <td> <button title={meeting.title} name={meeting.description} id={meeting.instance_id} value={meeting.is_complete} onClick={this.changePage}>{meeting.is_complete ? 'View Results':'Begin'}</button></td> 
                                         </tr>
                                     )}
                                  </tbody>
@@ -145,23 +155,35 @@ class Assignments extends React.Component{
                          <Row className="text-center"> <h1>Take Assignment</h1></Row>
                         <Row>
                             <Col sm={3}> <MenuContainer/> </Col>
-                            <Col sm={9}> <Survey flag={"true"} form_id={this.state.form_id} /> </Col>
+                            <Col sm={9}> <Meeting flag={"true"} form_id={this.state.form_id} /> </Col>
                         </Row>
                     </Container>
                 )
             }else if(user==='coordinator' && this.state.page){
+                if(this.state.is_complete){
                     return(
                         <Container>
-                             <Row className="text-center"> <h1>View Results</h1></Row>
                             <Row>
                                 <Col sm={3}> <MenuContainer/> </Col>
-                                <Col sm={9}> <Get_Results flag={"true"} form_id={this.state.form_id} /> </Col>
+                                <Col sm={9}> <Meeting flag={"true"} instance_id={this.state.instance_id} title={this.state.title} description={this.state.description} /> </Col>
                             </Row>
                         </Container>
-                    )  
+                    )
+                }
+                else{
+                  return(
+                    <Container>
+                         <Row className="text-center"> <h1>View Results</h1></Row>
+                        <Row>
+                            <Col sm={3}> <MenuContainer/> </Col>
+                            <Col sm={9}> <Get_Results flag={"true"} instance_id={this.state.instance_id} form_id={this.state.form_id}/> </Col>
+                        </Row>
+                    </Container>
+                )  
+                }
             }else{
                 return(<Redirect to='/'/>)
             }           
     }
 }
-export default Assignments;
+export default MeetingsPage;

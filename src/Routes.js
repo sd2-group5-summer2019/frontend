@@ -13,6 +13,8 @@ import Teams from './components/pages/Teams';
 import Students from './components/pages/Students';
 import Sponsors from './components/pages/Sponsors';
 import Get_Results from './components/ui/Get_Results';
+import MeetingsPage from './components/pages/MeetingsPage';
+import CreateMeeting from './components/ui/CreateMeeting';
 
 const routes = (
     <Router>
@@ -30,8 +32,10 @@ const routes = (
             <Route path="/create_sponsor" exact component={Create_Sponsor} />
             <Route path="/create_team" exact component={Create_Team} />
             <Route path="/get_results" exact component={Get_Results} />
-            
             <Route path="/create_assignment" exact component={CreateAssignmentC} />
+            <Route path="/meetings" exact component={MeetingsPage} />
+            <Route path="/create_meeting" exact component={CreateMeeting} />
+            <Route path="/meetings" exact component={MeetingsPage} />
         </Switch>
     </Router>
 )

@@ -16,7 +16,7 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
 
         console.log(userType)
 
-        if(loggedIn && userType === 'coordinator'){
+        if(loggedIn && userType === 'admin'){
             return(
                 <Nav justify fill className="flex">                
                     <ListGroup>
@@ -28,7 +28,8 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
                         <ListGroup.Item action href="/teams"> Teams </ListGroup.Item>
                         <ListGroup.Item action href="/students"> Students </ListGroup.Item>
                         <ListGroup.Item action href="/sponsors"> Sponsors </ListGroup.Item>
-                        <ListGroup.Item action href="/survey"> SurveyPage (temporary) </ListGroup.Item>
+                        <ListGroup.Item action href="/survey"> Survey Page (temporary) </ListGroup.Item>
+                        <ListGroup.Item action href="/meetings"> Meeting Page (temporary) </ListGroup.Item>
                         <ListGroup.Item>
                             <Button type="button" onClick={function(){logoutHelper(); onLogout();}}>Log Out</Button>
                         </ListGroup.Item>
