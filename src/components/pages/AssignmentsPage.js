@@ -163,7 +163,7 @@ class Assignments extends React.Component{
 		               	        </thead>
                                  <tbody>
                                      {temp.map(temp =>
-                                        <tr value={temp.form_id} key={temp.title}>
+                                        <tr value={temp.form_id} key={temp.form_id}>
                                             <td>{temp.title}</td>
                                             <td>{user === 'student' ? temp.end_date : <Button variant="success" id='assign' size="lg" type="button" name={temp.form_id} onClick={this.changePage}>Assign</ Button>}</td>
                                             <td> <Button type="button" id='results' size="lg" name={temp.form_id} onClick={this.changePage}>{tableText.btn_text}</Button></td> 

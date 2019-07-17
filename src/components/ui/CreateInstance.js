@@ -67,32 +67,66 @@ class CreateInstance extends React.Component{
 
     selectTable(){
         const data = this.state.data
+        const code = parseInt(this.state.code)
+        let temp;
 
-        const temp = <Table responsive="sm" bordered hover>
-                    <thead>
-                        <tr>
-                         <th>Name</th>
-                        <th>Assign</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        
-                        {data.map((data, i) =>
-                                        <tr value={data.user_id} key={data.user_id}>
-                                            <td>{data.first_name + " " + data.last_name}</td>
-                                            <td>
-                                                {this.state.list[i] === undefined || this.state.list[i].id ==='removed' ? 
-                                                    <Button size="lg" id={data.user_id} value={i} variant="success" onClick={this.toggleList} > Select</Button>
-                                                    :
-                                                    <Button size="lg" id={data.user_id} value={i} variant="danger" onClick={this.toggleList} > Deselect</Button>
-                                                }
-                                                
-                                                </td> 
-                                        </tr>
-                                    )}
-                        
-                    </tbody>
-                </Table>
+
+        if(code === 4){
+            temp = ( <Table responsive="sm" bordered hover>
+            <thead>
+                <tr>
+                 <th>Team Name</th>
+                <th>Assign</th>
+                </tr>
+                </thead>
+                <tbody>
+                
+                {data.map((data, i) =>
+                                <tr value={data.team_id} key={data.team_id}>
+                                    <td>{data.project_title}</td>
+                                    <td>
+                                        {this.state.list[i] === undefined || this.state.list[i].id ==='removed' ? 
+                                            <Button size="lg" id={data.team_id} value={i} variant="success" onClick={this.toggleList} > Select</Button>
+                                            :
+                                            <Button size="lg" id={data.team_id} value={i} variant="danger" onClick={this.toggleList} > Deselect</Button>
+                                        }
+                                        
+                                        </td> 
+                                </tr>
+                            )}
+                
+            </tbody>
+            </Table>
+            )
+        }else if(code === 5){
+           temp = ( <Table responsive="sm" bordered hover>
+            <thead>
+                <tr>
+                 <th>Name</th>
+                <th>Assign</th>
+                </tr>
+                </thead>
+                <tbody>
+                
+                {data.map((data, i) =>
+                                <tr value={data.user_id} key={data.user_id}>
+                                    <td>{data.first_name + " " + data.last_name}</td>
+                                    <td>
+                                        {this.state.list[i] === undefined || this.state.list[i].id ==='removed' ? 
+                                            <Button size="lg" id={data.user_id} value={i} variant="success" onClick={this.toggleList} > Select</Button>
+                                            :
+                                            <Button size="lg" id={data.user_id} value={i} variant="danger" onClick={this.toggleList} > Deselect</Button>
+                                        }
+                                        
+                                        </td> 
+                                </tr>
+                            )}
+                
+            </tbody>
+           </Table> )
+        }
+        
+      
 
        
 
@@ -118,13 +152,11 @@ class CreateInstance extends React.Component{
         const code_val = parseInt(this.state.code)
         
         let apiCall = 'getAllStudents'
-
-        const testing = `http${apiCall}`
         
         
 
         if(code_val === 4){
-            apiCall  = 'getAllStudents'
+            apiCall  = 'getAllTeams'
         }else if(code_val === 5){
             apiCall = 'getAllStudents'
         }
@@ -200,7 +232,7 @@ class CreateInstance extends React.Component{
     }
 
     formHandler(e){
-      
+        e.preventDefault()
         const payload = this.createPayload(this.state.code)
         payload.end_date = e.target.end_date.value
         payload.start_date = e.target.start_date.value
@@ -253,7 +285,7 @@ class CreateInstance extends React.Component{
                             <Button size="lg" variant="primary" type="submit"> Assign </Button>
                         </section>
                     }
-                   
+                   <br></br>
                    {selectTable}
                 
             </Form>

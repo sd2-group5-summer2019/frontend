@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import CreateInstance from "./CreateInstance";
+import InputGroup from 'react-bootstrap/InputGroup';
 
 class CreateAssignment extends React.Component{
     static defaultProps = {
@@ -19,15 +20,13 @@ class CreateAssignment extends React.Component{
             user_id:this.props.user_id,
             token:this.props.token,
             loading:false,
-            title:'',
             type:'survey',
             q_num:0,
-            description:'',
             questions:[],
             form_retreived:false,
             form_submitted:false,
             tempQ:'',
-            q_type:'',
+            q_type:'free_response',
             form_id:'',
             preview:[
                 <h3 key="0">Questions</h3>
@@ -68,6 +67,7 @@ class CreateAssignment extends React.Component{
 
     }
 
+    // adds new question to a preview array that contains only elements
     addNewQuestion(event){
         event.preventDefault()
         let questionList = this.state.questions
@@ -82,8 +82,9 @@ class CreateAssignment extends React.Component{
            
     
         previewt.push(
+
             <div  key={"question" + index}>
-                    <label>Question {(index) + ': ' + qtext}</label>
+                 <label>Question {(index) + ': ' + qtext}</label>
             </div>
                     
         )
@@ -110,19 +111,21 @@ class CreateAssignment extends React.Component{
     // handles sending the assignment to the backend
     formHandler(event){
         event.preventDefault()
+            
+
         const payload = {
             access_level:'coordinator',
             type:this.state.type,
             user_id:this.state.user_id,
             token:this.state.token,
-            title:this.state.title,
-            description:this.state.description,
+            title:event.target.title.value,
+            description:event.target.description.value,
             questions:this.state.questions 
         }
         console.log(payload)
-        axios.post(`http://localhost:3001/api/createForm`, payload)
-        .then(response => this.redirectOnSubmit(response))
-        .catch(function (error){console.log(error)})
+        // axios.post(`http://localhost:3001/api/createForm`, payload)
+        // .then(response => this.redirectOnSubmit(response))
+        // .catch(function (error){console.log(error)})
     }
 
     redirectOnSubmit(res){
@@ -165,9 +168,7 @@ class CreateAssignment extends React.Component{
         this.setState({
             loading:false,
             title:'',
-            type:'',
             q_num:1,
-            description:'',
             questions:[],
             form_retreived:false,
             form_submitted:false,
@@ -185,41 +186,63 @@ class CreateAssignment extends React.Component{
         const formStatus = this.state.form_retreived
         const form_submitted = this.state.form_submitted
         const preview = this.state.preview
+        const assignmentType = this.state.type 
+        const questionType = this.state.q_type
 
         if(!formStatus && !form_submitted){
             return(
              <div>
+                 <h1>Create Assignment </h1>
                 
-                <h1 className="header"> Create a New Assignment </h1> 
-                <h3> Assignment Type</h3>
-                <select name="type" value={this.state.type} onChange={this.handleChange}>
-                    <option value="survey">Survey</option>
-                    <option value="quiz">Quiz</option>
-                </select>
-                <Form onSubmit={this.formHandler}>
-                   
+                    <InputGroup>
+                        <Form.Control onChange={this.handleChange} size="lg" as="select" >
+                            <option>Select Assignment Type</option>
+                            <option value="survey"> Survey</option>
+                            <option value="quiz"> Quiz</option>
+                        </Form.Control>
+                     </InputGroup>
+                
 
-                    <label>Title: </label>
-                    <input type="text" name="title" value={this.state.title} onChange={this.handleChange}></input>
-                    <br></br>
-                    <textarea style={{color:'black'}} name="description" value={this.state.description} onChange={this.handleChange} placeholder="Brief Description (optional)..."/>
+               <br></br>
+
+                <Form onSubmit={this.formHandler}>
+                    <Form.Group controlId="title">
+	                    <Form.Control size="lg" type="text" placeholder="Title" />
+	                </ Form.Group>
+
+                    <Form.Group controlId="description">
+	                    <Form.Control size="lg" as="textarea" type="text" placeholder="Optional description..." />
+	                </ Form.Group>
+
+                    
+                 
+                
                     <div>
                          {preview} 
                     </div>
-                    <label>Question {this.state.q_num + 1}: </label>
-                    <input name={this.state.q_num} value={this.state.tempQ} onChange={this.questionHandler} type="text" placeholder="Press Enter to add"></input>
-                    <label>Question Type: </label>
-                    <select name="q_type" value={this.state.q_type} onChange={this.handleChange}>
-                        <option value="free_response">Free Response </option>
-                        <option value="select">Select 1-5</option>
-                        <option value="multiple_choice">Multiple Choice</option>
-                        <option value="fill_blank">Fill in the blank</option>
-                    </select>
+                    <Form.Group controlId="question_text">
+                        <Form.Label>Question {this.state.q_num + 1} text: </Form.Label>
+	                    <Form.Control size="lg" type="text" placeholder="Optional description..." />
+	                </ Form.Group>
+
+
+                   
+                   <Form.Group controlId="question_type">
+                        <Form.Label>Question Type: </Form.Label>
+	                    <Form.Control size="lg" as="select">
+                            <option default value="free_response">Free Response </option>
+                            <option value="select">Select 1-5</option>
+                            <option value="multiple_choice">Multiple Choice</option>
+                            <option value="fill_blank">Fill in the blank</option>
+                        </Form.Control>
+	                </ Form.Group>
+                   
                   
                     <br></br>
                     <button onClick={this.addNewQuestion}>Add Question</button>
                     <br></br>
-                    <Button variant="primary" type="submit">Create {this.state.type}</Button>
+                    <br></br>
+                    <Button size="lg" variant="primary" type="submit">Create {this.state.type}</Button>
                     
                 </Form>
                 
