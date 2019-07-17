@@ -43,7 +43,7 @@ class Assignments extends React.Component{
         componentDidMount(){
 
             let user_id = this.props.user_id
-
+            console.log(user_id)
             axios.post(`http://localhost:3001/api/getAllForms`).then(response => {
                 
                 this.setState({
@@ -111,7 +111,7 @@ class Assignments extends React.Component{
                 tableText.title = 'Current Assignments'
                 tableText.th1 = 'Due Date'
                 tableText.btn_text = 'Take'
-            }else if(user === 'coordinator'){
+            }else if(user === 'admin'){
                 tableText.title = 'Assignments'
                 tableText.th1 = ''
                 tableText.btn_text = 'Results'
