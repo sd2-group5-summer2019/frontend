@@ -39,7 +39,7 @@ class Assignments extends React.Component{
         componentDidMount(){
 
             let user_id = this.props.user_id
-
+            console.log(user_id)
             axios.post(`http://localhost:3001/api/getAllForms`).then(response => {
                 
                 this.setState({

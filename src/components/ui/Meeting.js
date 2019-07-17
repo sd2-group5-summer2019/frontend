@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 
 class Meeting extends React.Component{
 
+//hard coded users in team for now
     constructor(props) {
         super(props);
         this.state = {
@@ -15,24 +16,19 @@ class Meeting extends React.Component{
             team_id:'',
             users:[{first_name:'bob', last_name:'saget', user_id:'13'}, {first_name:'spongebob', last_name:'squarepants', user_id:'1'}, {first_name:'patrick', last_name:'star', user_id:'2'}],
             token:'testToken',
+            reasons:[],
             loading:false,
             title:this.props.title,
             description:this.props.description,
-            did_not_attend:[],
             requested:this.props.flag,
             form_retreived:true,
             form_submitted:false
         };
     
-        // this.handleChange1 = this.handleChange1.bind(this);
         this.componentWillMount = this.componentWillMount.bind(this);
-
-        // this.requestForm = this.requestForm.bind(this);
-        // this.changePage = this.changePage.bind(this);
         this.formHandler = this.formHandler.bind(this);
         this.redirectOnSubmit = this.redirectOnSubmit.bind(this);
         this.absenceHandler = this.absenceHandler.bind(this);
-
     }
     
     componentWillMount(){
@@ -44,30 +40,7 @@ class Meeting extends React.Component{
         }
         this.setState({users:temp})
     }
-    // handleChange1(event){
-    //     this.setState({
-    //         instance_id:event.target.value
-    //     }) 
-    // }
 
-
-
-    // requestForm(event){
-    //     event.preventDefault()
-    //     const payload = {
-    //         formid: this.state.form_id
-    //     }
-    //     this.setState({loading:true})
-    //     console.log(this.state.instance_id)
-    //     axios.post(`http://localhost:3001/api/getForm`, payload)
-    //     .then(response => this.changePage(response))
-    //     .catch(function (error){console.log(error)})
-
-    // }
-
-
-    
-    // handles sending the survey to the backend
     formHandler(event){
         
         event.preventDefault()
@@ -96,27 +69,6 @@ class Meeting extends React.Component{
             console.log("Something went wrong")
     }
 
-    // // processes the response from the form request
-    // // stores the questions array in data
-    // // changes form_retrieved to true so render can load the
-    // // survey form to the page 
-    // changePage(res){
-        
-    //     if(res.status===200 && typeof res.data.status === 'undefined'){
-    //         const result = res.data.result[0]
-    //             this.setState({
-    //             title:result.title,
-    //             type:result.type,
-    //             description:result.description,
-    //             loading:false,
-    //             form_retreived:true
-    //             })
-    //     }
-    //     else
-    //         console.log(res.data.status)
-    //     console.log(this.state)
-
-    // }
     absenceHandler(event) {
         const temp = this.state.users
         const user_id = event.target.name
@@ -134,26 +86,9 @@ class Meeting extends React.Component{
     }
 
     render(){
-
-        console.log(this.state.users)
-        const formStatus = this.state.form_retreived
         const form_submitted = this.state.form_submitted
 
-        if(!formStatus){
-            return(
-                
-                <div>
-                <h1>Request Meeting/form (for testing purposes for now)</h1>
-                <p> this isnt gonna be a thing in the final product though</p>
-                <form onSubmit={this.requestForm}>
-                    <label>Enter Form Id </label>
-                    <input type="text" name="instance_id" value={this.state.instance_id} onChange={this.handleChange1}></input>
-                    <button type="submit">Request Form/survey</button>
-                </form>
-                </div>
-            )
-        } else if(formStatus && !form_submitted){
-            
+        if(!form_submitted){
             return(
                 <div>
                     <h1 className="header">{this.state.title} </h1>
@@ -166,14 +101,14 @@ class Meeting extends React.Component{
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Reason for Absense</th>
+                                    <th>Reason for Absence</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {this.state.users.map(student =>
                                     <tr key={student.user_id}>
                                         <td>{student.first_name} {student.last_name}</td>
-                                        <td> <input type="text" name={student.user_id} value={this.state.did_not_attend.reason} onChange={this.absenceHandler}/> 
+                                        <td> <input type="text" name={student.user_id} value={this.state.reasons.reason} onChange={this.absenceHandler}/> 
                                         </td>
                                     </tr>
                                 )}

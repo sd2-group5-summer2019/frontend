@@ -9,12 +9,15 @@ class Students extends React.Component {
 			students: []
 		}
 		this.deleteRequest = this.deleteRequest.bind(this);
-		this.state.students = [{id: "nid", first_name: "mahzain", last_name: "malik", nid: "ma026001", email: "mahzain@knights.ucf.edu", team: "group 5"}]
+		this.componentDidMount = this.componentDidMount.bind(this);
+		//this.state.students = [{id: "nid", first_name: "mahzain", last_name: "malik", nid: "ma026001", email: "mahzain@knights.ucf.edu", team: "group 5"}]
 	}
     componentDidMount() {
-    	axios.get('http://localhost:3001/api/get_all_students')
+    	const type = 'coordinator'
+    	axios.post('http://localhost:3001/api/getAllStudents', type)
         .then(res => {
-            this.state.students = res.data;
+            this.setState({students:res.data})
+            console.log(res.data);
         })
     }
     deleteRequest(id) {
@@ -25,6 +28,7 @@ class Students extends React.Component {
 	//GET ALL GROUPS IN APP
 	//ADD BUTTONS FOR CREATE COURSE, EDIT, AND DELETE
     render() {
+    	console.log(this.state.students)
         return(
         	<div>
         		<Navbar>

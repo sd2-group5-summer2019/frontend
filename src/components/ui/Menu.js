@@ -16,7 +16,7 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
 
         console.log(userType)
 
-        if(loggedIn && userType === 'admin'){
+        if(loggedIn && userType === 'coordinator'){
             return(
                 <Nav justify fill className="flex">                
                     <ListGroup>

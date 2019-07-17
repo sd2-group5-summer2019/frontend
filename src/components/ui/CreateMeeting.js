@@ -11,15 +11,13 @@ class CreateMeeting extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            user_id:'13',
             token:'testToken',
             loading:false,
             title:'',
             team_id:'1',
             type:'meeting',
             description:'',
-            start_date:'',
-            end_date:'',
+            date:'',
             form_retreived:false,
             form_submitted:false
         };
@@ -42,15 +40,15 @@ class CreateMeeting extends React.Component{
     formHandler(event){
         event.preventDefault()
         const payload = {
-            user_id:'13',
-            access_level:'coordinator',
+            user_id:this.props.user_id,
+            access_level:this.props.userType,
             type:this.state.type,
             team_id:this.state.team_id,
             token:this.state.token,
             title:this.state.title,
             description:this.state.description,
-            start_date:this.state.start_date,
-            end_date:this.state.end_date,
+            start_date:this.state.date,
+            end_date:this.state.date,
         }
         console.log(payload)
         axios.post(`http://localhost:3001/api/createForm`, payload)
@@ -88,7 +86,7 @@ class CreateMeeting extends React.Component{
         this.setState({
             loading:false,
             title:'',
-            type:'Meeting',
+            type:'meeting',
             description:'',
             start_date:'',
             end_date:'',
@@ -111,11 +109,7 @@ class CreateMeeting extends React.Component{
                         <input type="text" name="title" value={this.state.title} onChange={this.handleChange}></input>
                         <br></br>
                         <label >Start Date </label>
-                        <input type="date" name="start_date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.start_date} onChange={this.handleChange}></input>
-                        <br></br>
-                        <label>End Date</label>
-                        <input type="date" name="end_date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.end_date} onChange={this.handleChange}></input>
-                        <br></br>
+                        <input type="date" name="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.date} onChange={this.handleChange}></input>
                         <br></br>
                         <textarea style={{color:'black'}} name="description" value={this.state.description} onChange={this.handleChange} placeholder="Brief Description (optional)..."/>
                         <br></br>
@@ -130,7 +124,7 @@ class CreateMeeting extends React.Component{
                    <h1>Meeting created</h1>
                    <button onClick={this.resetForm}>Create Another Meeting</button>
                    <LinkContainer to="/meetings">
-                            <button>Create New Meeting</button>
+                            <button>Back to Meetings Menu</button>
                    </LinkContainer>
 
                </div>
