@@ -33,6 +33,7 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
                     <NavDropdown title="Menu" id="collapsable-nav-dropdown">
                         <NavDropdown.Item href="/assignments"> Assignments </NavDropdown.Item>
                         <NavDropdown.Item href="/"> Project Management </NavDropdown.Item>
+                        <NavDropdown.Item href="/meetings"> Meetings </NavDropdown.Item>
 
                         {userType !== 'student'?
                             <React.Fragment>
@@ -42,7 +43,7 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
                                 <NavDropdown.Item href="/teams"> Teams </NavDropdown.Item>
                                 <NavDropdown.Item href="/sponsors"> Advisors </NavDropdown.Item>
                                 <NavDropdown.Item href="/sponsors"> Sponsors </NavDropdown.Item>
-                                <NavDropdown.Item href="/meetings"> Meetings </NavDropdown.Item>
+                               
                             </React.Fragment>
                             : 
                             <React.Fragment></React.Fragment>

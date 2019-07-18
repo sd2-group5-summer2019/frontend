@@ -76,8 +76,9 @@ class MeetingsPage extends React.Component{
                return(
                   <Container>
                     <Row className="text-center"> <h1>Meetings</h1></Row>
+                    <Row><MenuContainer/></Row>
                     <Row>
-                        <Col sm={3}> <MenuContainer/> </Col>
+                        <Col sm={3}>  </Col>
                         <Col sm={9}>
                         <LinkContainer to="/create_meeting">
                             <NavItem>Create New Meeting</NavItem>

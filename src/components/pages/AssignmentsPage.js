@@ -111,7 +111,7 @@ class Assignments extends React.Component{
                 tableText.title = 'Current Assignments'
                 tableText.th1 = 'Due Date'
                 tableText.btn_text = 'Take'
-            }else if(user === 'admin'){
+            }else if(user === 'coordinator'){
                 tableText.title = 'Assignments'
                 tableText.th1 = ''
                 tableText.btn_text = 'Results'
