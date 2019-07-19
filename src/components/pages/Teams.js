@@ -24,7 +24,7 @@ class Teams extends React.Component {
         .then(res => {
 			console.log(res.data)
            this.setState({
-			   teams:res.data.result
+			   teams:res.data.team
 		   }) 
         })
 	}
