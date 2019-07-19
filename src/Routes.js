@@ -15,6 +15,7 @@ import Sponsors from './components/pages/Sponsors';
 import Get_Results from './components/ui/Get_Results';
 import {MeetingsPageC} from './components/containers/CreateMeetingC';
 import CreateMeetingC from './components/containers/CreateMeetingC';
+import TeamsContainer from './components/containers/GeneralContainer';
 
 const routes = (
     <Router>
@@ -25,7 +26,7 @@ const routes = (
             <Route path="/register" exact component={Register} />
             <Route path="/assignments" exact component={AssignmentsPageC} />
             <Route path="/create_assignment" exact component={CreateAssignmentC} />
-            <Route path="/teams" exact component={Teams} />
+            <Route path="/teams" exact component={TeamsContainer} />
             <Route path="/sponsors" exact component={Sponsors} />
             <Route path="/students" exact component={Students} />
             <Route path="/create_student" exact component={Create_Student} />

@@ -1,6 +1,7 @@
 import CreateAssignment from '../ui/CreateAssignment';
 import {connect} from 'react-redux';
 import AssignmentsPage from '../pages/AssignmentsPage';
+import Teams from '../pages/Teams';
 
 const mapStateToProps = state =>{
     return {
@@ -15,5 +16,6 @@ const CreateAssignmentC = connect(mapStateToProps)(CreateAssignment)
 
 export const AssignmentsPageC = connect(mapStateToProps)(AssignmentsPage)
 
+export const TeamContainer = connect(mapStateToProps)(Teams)
 
 export default CreateAssignmentC;

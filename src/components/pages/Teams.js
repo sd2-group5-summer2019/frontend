@@ -7,19 +7,28 @@ class Teams extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			user_id:this.props.user_id,
 			teams: []
+			
 		}
 		this.deleteRequest = this.deleteRequest.bind(this);
-		this.state.teams = [{id: "nid", project_name: "name", sponsor: "Heinrik", num_students: "5"}]
+		this.componentDidMount = this.componentDidMount.bind(this);
+		// this.state.teams = [{id: "nid", project_name: "name", sponsor: "Heinrik", num_students: "5"}]
 
 	}
 
     componentDidMount() {
-    axios.get('http://localhost:3001/api/get_all_teams')
+		
+	const payload ={user_id:this.state.user_id}
+    axios.post('http://localhost:3001/api/getAllTeams', payload)
         .then(res => {
-            this.state.teams = res.data;
+			console.log(res.data)
+           this.setState({
+			   teams:res.data.result
+		   }) 
         })
-    }
+	}
+	
     deleteRequest(id) {
     	axios.post('http://localhost:3001/api/delete_team', id)
         .catch(function (error){console.log(error)})
@@ -28,6 +37,7 @@ class Teams extends React.Component {
 	//GET ALL GROUPS IN APP
 	//ADD BUTTONS FOR CREATE COURSE, EDIT, AND DELETE
     render() {
+		const teams = this.state.teams
         return(
         	<div>
         		<Navbar>
@@ -42,17 +52,13 @@ class Teams extends React.Component {
 	              	<thead>
 	              		<tr>
 	              			<th>Project Name</th>
-	              			<th>Sponsor Name</th>
-	              			<th>Number of Students</th>
 	              			<th>Actions</th>
 	              		</tr>
 	               	</thead>
 	               	<tbody>
-	               		{this.state.teams.map(team =>
-	               			<tr key={team.id}>
-	               				<td>{team.project_name}</td>
-	               				<td>{team.sponsor}</td>
-	               				<td>{team.num_students}</td>
+	               		{teams.map(team =>
+	               			<tr key={team.team_id}>
+	               				<td>{team.project_title}</td>
 	               				<td>VIEW | EDIT | <button name="DELETE" onClick={() => this.deleteRequest(team.id)}>DELETE</button></td>
 	               			</tr>
 	               		)}
