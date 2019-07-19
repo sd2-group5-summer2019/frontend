@@ -19,7 +19,8 @@ class Teams extends React.Component {
 
     componentDidMount() {
 		
-	const payload ={user_id:this.state.user_id}
+	const payload ={'user_id':this.state.user_id}
+	console.log(payload)
     axios.post('http://localhost:3001/api/getAllTeams', payload)
         .then(res => {
 			console.log(res.data)
