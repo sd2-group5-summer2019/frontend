@@ -76,28 +76,28 @@ class CreateAssignment extends React.Component{
             return(
                 <div>
                 <InputGroup className="mb-3">
-                <InputGroup.Prepend>
-                <InputGroup.Checkbox aria-label="Checkbox for following text input" />
+                <InputGroup.Prepend >
+                <InputGroup.Checkbox id="checkbox1" aria-label="checkbox1" />
                 </InputGroup.Prepend>
-                    <Form.Control aria-label="Text input with checkbox" />
+                    <Form.Control id="text_input1" aria-label="text_input1" />
                 </InputGroup>
                 <InputGroup className="mb-3">
                 <InputGroup.Prepend>
-                <InputGroup.Checkbox aria-label="Checkbox for following text input" />
+                <InputGroup.Checkbox id="checkbox2" aria-label="checkbox2" />
                 </InputGroup.Prepend>
-                    <Form.Control aria-label="Text input with checkbox" />
+                    <Form.Control id="text_input2" aria-label="textInput2" />
                 </InputGroup>
                 <InputGroup className="mb-3">
                 <InputGroup.Prepend>
-                <InputGroup.Checkbox aria-label="Checkbox for following text input" />
+                <InputGroup.Checkbox id="checkbox3" aria-label="checkbox3" />
                 </InputGroup.Prepend>
-                    <Form.Control aria-label="Text input with checkbox" />
+                    <Form.Control id="text_input3" aria-label="textInput3" />
                 </InputGroup>
                 <InputGroup className="mb-3">
                 <InputGroup.Prepend>
-                <InputGroup.Checkbox aria-label="Checkbox for following text input" />
+                <InputGroup.Checkbox id="checkbox4" aria-label="checkbox4" />
                 </InputGroup.Prepend>
-                    <Form.Control aria-label="Text input with checkbox" />
+                    <Form.Control id="text_input4"aria-label="textInput4" />
                 </InputGroup>
                 
                 </div>
@@ -123,11 +123,12 @@ class CreateAssignment extends React.Component{
         let qtext = document.getElementById('question_text').value
         let q_type = document.getElementById('question_type').value
         let previewt = this.state.preview
+        let answerKey = []
         document.getElementById('question_text').value = ''
         
         questionList[index-1] = {
-            question:qtext,
-            type:q_type
+            'question_text':qtext,
+            'question_type':q_type
         }
            
         // adds new question into a an array of dom elements so that 
@@ -150,7 +151,7 @@ class CreateAssignment extends React.Component{
         )
         }else if(assignmentType === 'quiz' && q_type === 'fill_blank'){
 
-            let answerKey = document.getElementById('question_answer').value
+            answerKey[0] = document.getElementById('question_answer').value
             questionList[index -1].answer = answerKey
             previewt.push(
                 <ListGroup key={index}>
@@ -158,7 +159,29 @@ class CreateAssignment extends React.Component{
                     <ListGroup.Item>{'(' + q_type + ')'}</ListGroup.Item>
                     <ListGroup.Item>Answer: {answerKey}</ListGroup.Item>
                 </ListGroup>          
-        )
+            )
+        }else if(assignmentType === 'quiz' && q_type === 'multiple_choice'){
+           
+            for(let i = 0; i<4; i++){
+               console.log(document.getElementById(`checkbox${i+1}`).checked)
+                answerKey[i] = {'answer': document.getElementById(`text_input${i+1}`).value, 
+                                'isCorrect': document.getElementById(`checkbox${i+1}`).checked
+                             }
+            }
+            questionList[index -1].answers = answerKey
+            previewt.push(
+                <ListGroup key={index}>
+                    <ListGroup.Item> Question {(index) + ': ' + qtext}</ListGroup.Item>
+                    <ListGroup.Item>{'(' + q_type + ')'}</ListGroup.Item>
+                    <ListGroup.Item> Answer Choices </ListGroup.Item>
+                    <ListGroup.Item>1. {answerKey[0].answer}  Correct?: {answerKey[0].isCorrect ? 'Yes': 'No'} </ListGroup.Item>
+                    <ListGroup.Item>2. {answerKey[1].answer}  Correct?: {answerKey[1].isCorrect ? 'Yes': 'No'}</ListGroup.Item>
+                    <ListGroup.Item>3. {answerKey[2].answer}  Correct?: {answerKey[2].isCorrect ? 'Yes': 'No'} </ListGroup.Item>
+                    <ListGroup.Item>4. {answerKey[3].answer}  Correct?: {answerKey[3].isCorrect ? 'Yes': 'No'}</ListGroup.Item>
+                </ListGroup>          
+            )
+            
+
         }
 
 
@@ -166,7 +189,8 @@ class CreateAssignment extends React.Component{
                 questions:questionList,
                 q_num:index,
                 preview:previewt,
-                tempQ:''
+                tempQ:'',
+                
                       })
         console.log(questionList)
     }
@@ -192,6 +216,8 @@ class CreateAssignment extends React.Component{
             if(form_threshold !== ''){
                 payload.form_threshold = parseInt(form_threshold)
             }
+        }else{
+            payload.form_threshold = null;
         }
 
         console.log(payload)

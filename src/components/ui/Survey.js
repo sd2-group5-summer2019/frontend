@@ -90,7 +90,8 @@ class Survey extends React.Component{
             user_id:this.state.student_id,
             token:this.state.token,
             form_id:this.state.form_id,
-            results:this.state.results    
+            results:this.state.results,
+            instance_id:this.props.instance_id    
         }
         console.log(payload)
         axios.post(`http://localhost:3001/api/submitForm`, payload)

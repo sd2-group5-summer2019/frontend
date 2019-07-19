@@ -11,6 +11,7 @@ import {Redirect} from 'react-router-dom';
 import Get_Results from '../ui/Get_Results';
 import Button from 'react-bootstrap/Button';
 import CreateInstance from '../ui/CreateInstance';
+import { Nav } from 'react-bootstrap';
 
 class Assignments extends React.Component{
         constructor(props){
@@ -19,6 +20,7 @@ class Assignments extends React.Component{
                 assignments:[],
                 loading:false,
                 form_id:'',
+               instance_id:'',
                 page:false,
                 pageCode:0,
                 tableE:[
@@ -41,27 +43,38 @@ class Assignments extends React.Component{
         // right now it only loads all the assignments user_id not being used
         // in the API endpont i cobbled together
         componentDidMount(){
+            const user_type = this.props.userType
+            let payload = {"user_id":this.props.user_id, "user_type":user_type}
 
-            let user_id = this.props.user_id
-            console.log(user_id)
-            axios.post(`http://localhost:3001/api/getAllForms`).then(response => {
-                
-                this.setState({
-                    assignments:response.data
-                })
+            let api = '';
+
+            if(user_type === 'student'){
+                api = 'getInstances'
+            }else{
+                api = 'getAllForms'
+            }
+            
+
+            console.log(payload)
+            axios.post(`http://localhost:3001/api/${api}`, payload).then(response => {
+                if(user_type === 'student'){
+                    this.setState({
+                        assignments:response.data.filter(function(item){
+                            return item.is_complete === 0;
+                        })
+                    })
+                }else{
+                    this.setState({
+                        assignments:response.data
+                    })
+                }
+
+               
                 console.log(response.data)
             })
             .catch(function (error){console.log(error)})
 
-            this.assignmentsTable()
-            // axios.post(`http://localhost:3001/api/frontendTest`, user_id)
-            // .then(response => {
-            //     this.setState({
-            //         assignments:response.data
-            //     })
-            //     console.log(response.data)
-            // })
-            // .catch(function (error){console.log(error)})
+            this.assignmentsTable() 
 
         }
         
@@ -74,7 +87,9 @@ class Assignments extends React.Component{
 
            if(user === 'student'){
             this.setState({
-                pageCode:1
+                pageCode:1,
+               form_id:event.target.name,
+               instance_id:event.target.id
             })
            }else if(user !== 'student' && next_page === 'newAssignment')
            {
@@ -145,14 +160,23 @@ class Assignments extends React.Component{
 
         if(page === 0){
                return(
-                <div>
-                <MenuContainer pageTitle="Assignments"/> 
+               
+               
                   <Container>
                     <Row>
                         <Col sm={3}> 
-                            {user === 'coordinator' ? <Button type="button" size="lg" id='newAssignment' onClick={this.changePage}>New Assignment</Button> : ''} 
+                            <MenuContainer pageTitle="Assignments"/> 
                         </Col>
                         <Col sm={9}>
+                                <br></br>
+                               <h1>Assignments</h1>
+                                <br></br>
+                            <Nav> 
+                                <Nav.Item>
+                                        {user === 'coordinator' ? <Button type="button" size="lg" id='newAssignment' onClick={this.changePage}>New Assignment</Button> : ''} 
+                                </Nav.Item>
+                            </Nav>
+                            <br></br>
 		                    <Table  responsive="sm" striped bordered hover>
 		                        <thead>
 		              		        <tr>
@@ -166,7 +190,8 @@ class Assignments extends React.Component{
                                         <tr value={temp.form_id} key={temp.form_id}>
                                             <td>{temp.title}</td>
                                             <td>{user === 'student' ? temp.end_date : <Button variant="success" id='assign' size="lg" type="button" name={temp.form_id} onClick={this.changePage}>Assign</ Button>}</td>
-                                            <td> <Button type="button" id='results' size="lg" name={temp.form_id} onClick={this.changePage}>{tableText.btn_text}</Button></td> 
+                                     <td>{user === 'student' ? <Button type="button" id={temp.instance_id} size="lg" name={temp.form_id} onClick={this.changePage}>{tableText.btn_text}</Button> 
+                                             : <Button type="button" id='results' size="lg" name={temp.form_id} onClick={this.changePage}>{tableText.btn_text}</Button>}</td> 
                                         </tr>
                                     )}
                                  </tbody>
@@ -175,55 +200,57 @@ class Assignments extends React.Component{
                     </Row>
                 </Container>
 
-                </div>
+             
                )
             }else if(page === 1){
                 return(
                     <Container>
-                        <Row><MenuContainer/></Row>
-                         <Row className="text-center"> <h1>Take Assignment</h1></Row>
+                        <Row>  <Col> <h1>Assignments</h1></Col></Row>
                         <Row>
-                            <Col sm={3}>  </Col>
-                            <Col sm={9}> <Survey flag={"true"} form_id={this.state.form_id} /> </Col>
+                            <Col sm={3}> <MenuContainer/> </Col>
+                            <Col sm={9}> <Survey flag={"true"} form_id={this.state.form_id} instance_id={this.state.instance_id} /> </Col>
                         </Row>
                     </Container>
                 )
             }else if(page === 2){
                     return(
-                       <div>
-                           <MenuContainer/> 
+                     
                         <Container>
-                             <Row className="text-center"> <h1>View Results</h1></Row>
+                               <Row>  <Col> <h1>Results</h1></Col></Row>
                             <Row>
-                                <Col sm={3}> </Col>
-                                <Col sm={9}> <Get_Results flag={"true"} form_id={this.state.form_id} /> </Col>
+                                <Col sm={3}> <MenuContainer/>  </Col>
+                                <Col sm={9}> 
+                                   
+                                    <Get_Results flag={"true"} form_id={this.state.form_id} /> 
+                                </Col>
                             </Row>
                         </Container>
-                        </div>
+                      
                     )  
             }else if(page === 3){
                 return(
-                   <div>
-                       <MenuContainer/> 
-                        <Container>
+                   
+                    
+                    <Container>
+                        
                         <Row>
-                            <Col sm={3}> </Col>
+                            <Col sm={3}> <MenuContainer/>  </Col>
                             <Col sm={9}> <CreateAssignmentC /> </Col>
                         </Row>
                     </Container>
-                   </div>
+                  
                 ) 
                 }else if(page === 4){
                    return(
-                    <div>
-                    <MenuContainer/> 
+                   
                         <Container>
+                            <Row>  <Col> <h1>Assign Assignment</h1></Col></Row>
                             <Row>
-                            <Col sm={3}> </Col>
+                            <Col sm={3}>  <MenuContainer/> </Col>
                             <Col sm={9}> <CreateInstance form_id={this.state.form_id} /> </Col>
                             </Row>
                         </Container>
-                     </div>
+                    
                    )
                 }else{
                 return(<Redirect to='/'/>)

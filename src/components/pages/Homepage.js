@@ -8,12 +8,10 @@ const Dash = ({user_id ='', token=''}) => {
 
     return(
         <Container>
+            
             <Row>
-                <Col sm={3}></Col>
-                <Col >
-                    <h1>Dash</h1>
-
-                </Col>
+                <Col sm={3}> <MenuContainer /></Col>
+                <Col sm={9} > <h1>Dashboard</h1></Col>
             </Row>
         </Container>
     )
@@ -24,12 +22,7 @@ const Homepage = ({ user_id='', token='', loggedIn=false }) =>{
         const logged = loggedIn
 
     if(logged){
-        return( 
-           <div>
-                <MenuContainer />
-                    <Dash />
-           </div>
-        )
+        return( <Dash />)
     } else {
         return( <LoginContainer/> )
     }

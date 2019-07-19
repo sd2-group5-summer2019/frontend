@@ -153,6 +153,7 @@ class CreateInstance extends React.Component{
         
         let apiCall = 'getAllStudents'
         
+        let payload = {"user_id":35, "type": "coordinator"}
         
 
         if(code_val === 4){
@@ -168,7 +169,7 @@ class CreateInstance extends React.Component{
             loadingButton:'loading...'
         })
         
-        axios.post(`http://localhost:3001/api/${apiCall}`)
+        axios.post(`http://localhost:3001/api/${apiCall}`, payload)
         .then(res => {
             console.log(res.data)
             this.setState({

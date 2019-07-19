@@ -22,46 +22,37 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
 
      if(loggedIn){
             return(
+
+
+                
                 <Navbar collapseOnSelect bg="light" expand="lg">
-                 
-                  <Navbar.Brand href="/">SDPortal</Navbar.Brand>
                   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                   <Navbar.Collapse id="responsive-navbar-nav">
-
-                  <Nav className="mr-auto">
-
-                    <NavDropdown title="Menu" id="collapsable-nav-dropdown">
-                        <NavDropdown.Item href="/assignments"> Assignments </NavDropdown.Item>
-                        <NavDropdown.Item href="/"> Project Management </NavDropdown.Item>
-                        <NavDropdown.Item href="/meetings"> Meetings </NavDropdown.Item>
-
-                        {userType !== 'student'?
+                  <Nav justify className="flex-column">
+                        <ListGroup>
+                            <ListGroup.Item action href="/">Dashboard</ListGroup.Item>
+                            <ListGroup.Item action href="/assignments">Assignments</ListGroup.Item>
+                            <ListGroup.Item action href="/">Project Management</ListGroup.Item>
+                            {userType !== 'student'?
                             <React.Fragment>
-                                
-                                <NavDropdown.Item href="/"> Analytics </NavDropdown.Item>
-                                <NavDropdown.Item href="/students"> Students </NavDropdown.Item>
-                                <NavDropdown.Item href="/teams"> Teams </NavDropdown.Item>
-                                <NavDropdown.Item href="/sponsors"> Advisors </NavDropdown.Item>
-                                <NavDropdown.Item href="/sponsors"> Sponsors </NavDropdown.Item>
-                               
+                                <ListGroup.Item action href="/"> Analytics</ListGroup.Item>
+                                <ListGroup.Item action href="/students"> Students</ListGroup.Item>
+                                <ListGroup.Item action href="/teams"> Teams</ListGroup.Item>
+                                <ListGroup.Item action href="/sponsors"> Advisors</ListGroup.Item>
+                                <ListGroup.Item action href="/sponsors"> Sponsors</ListGroup.Item>
+                                <ListGroup.Item action href="/meetings"> Meetings</ListGroup.Item>
                             </React.Fragment>
                             : 
                             <React.Fragment></React.Fragment>
                         }
-                     
-                            <NavDropdown.Divider />
-                                <NavDropdown.Item href="/settings">Settings</NavDropdown.Item>
-                                <NavDropdown.Item>
-                                    <Button type="button" onClick={function(){logoutHelper(); onLogout();}}>Log Out</Button>
-                                </NavDropdown.Item>
-                    </NavDropdown>
-                    
+                            <ListGroup.Item action href="/settings"> Settings </ListGroup.Item>
+                            <ListGroup.Item>
+                                <Button type="button" onClick={function(){logoutHelper(); onLogout();}}>Log Out</Button>
+                            </ListGroup.Item>
+
+                        </ListGroup>
                 </Nav>
                  
-                    <Form inline>
-                        <FormControl type="text" placeholder="Search"/>
-                        <Button variant="outline-success">Search</Button>
-                    </Form>
                 </ Navbar.Collapse>
               </Navbar>
             )
