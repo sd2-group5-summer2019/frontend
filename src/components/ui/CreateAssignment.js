@@ -229,17 +229,24 @@ class CreateAssignment extends React.Component{
 
     redirectOnSubmit(res){
         console.log(res.data.form_id)
+
+        this.setState({
+            loading:true
+        })
        
         if(res.status===200){
             this.setState({
               form_status:true,
               form_submitted:true,
-              form_id:res.data.form_id
+              form_id:res.data.form_id,
+              loading:false
             })  
-            console.log(res.data)
+            console.log(this.state.form_id)
         }
         else
             console.log("Something went wrong")
+
+
     }
 
     // processes the response from the form request
@@ -370,7 +377,7 @@ class CreateAssignment extends React.Component{
         }  else {
             return(
              
-                     <AssignContainer form_id={this.state.form_id} />
+                <AssignContainer form_id={this.state.form_id} /> 
             )
         }
       
