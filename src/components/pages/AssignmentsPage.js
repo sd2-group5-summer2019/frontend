@@ -192,7 +192,7 @@ class Assignments extends React.Component{
                                             <td>{temp.title}</td>
                                             <td>{user === 'student' ? temp.end_date : <Button variant="success" id='assign' size="lg" type="button" name={temp.form_id} onClick={this.changePage}>Assign</ Button>}</td>
                                      <td>{user === 'student' ? <Button type="button" id={temp.instance_id} size="lg" name={temp.form_id} onClick={this.changePage}>{tableText.btn_text}</Button> 
-                                             : <Button type="button" id='results' size="lg" name={temp.form_id} onClick={this.changePage}>{tableText.btn_text}</Button>}</td> 
+                                             : <Button type="button" id='results' size="lg" name={temp.form_id} onClick={this.changePage} >{tableText.btn_text}</Button>}</td> 
                                         </tr>
                                     )}
                                  </tbody>
@@ -205,11 +205,10 @@ class Assignments extends React.Component{
                )
             }else if(page === 1){
                 return(
-                    <Container>
-                        <Row>  <Col> <h1>Assignments</h1></Col></Row>
+                    <Container >
                         <Row>
-                            <Col sm={3}> <MenuContainer/> </Col>
-                            <Col sm={9}> <Survey flag={"true"} form_id={this.state.form_id} instance_id={this.state.instance_id} /> </Col>
+                            <Col sm={3} > <MenuContainer/> </Col>
+                            <Col sm={9} style={{padding:"10px 0 0 0"}}> <Survey flag={"true"} form_id={this.state.form_id} instance_id={this.state.instance_id} /> </Col>
                         </Row>
                     </Container>
                 )
@@ -217,9 +216,8 @@ class Assignments extends React.Component{
                     return(
                      
                         <Container>
-                               <Row>  <Col> <h1>Results</h1></Col></Row>
                             <Row>
-                                <Col sm={3}> <MenuContainer/>  </Col>
+                                <Col sm={3} > <MenuContainer/>  </Col>
                                 <Col sm={9}> 
                                    
                                     <Get_Results flag={"true"} form_id={this.state.form_id} /> 
@@ -233,7 +231,6 @@ class Assignments extends React.Component{
                    
                     
                     <Container>
-                        
                         <Row>
                             <Col sm={3}> <MenuContainer/>  </Col>
                             <Col sm={9}> <CreateAssignmentC /> </Col>
@@ -244,11 +241,10 @@ class Assignments extends React.Component{
                 }else if(page === 4){
                    return(
                    
-                        <Container>
-                            <Row>  <Col> <h1>Assign Assignment</h1></Col></Row>
+                        <Container >
                             <Row>
-                            <Col sm={3}>  <MenuContainer/> </Col>
-                            <Col sm={9}> <AssignContainer form_id={this.state.form_id} /> </Col>
+                            <Col  style={{margin:"0"}} sm={3}>  <MenuContainer/> </Col>
+                            <Col sm={9} > <AssignContainer form_id={this.state.form_id} /> </Col>
                             </Row>
                         </Container>
                     

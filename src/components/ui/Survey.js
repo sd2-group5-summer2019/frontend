@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Form from "react-bootstrap/FormGroup";
-import { Button } from "react-bootstrap";
+import {Card, Button } from "react-bootstrap";
 
 
 class Survey extends React.Component{
@@ -29,7 +29,8 @@ class Survey extends React.Component{
             results:[],
             requested:this.props.flag,
             form_retreived:false,
-            form_submitted:false
+            form_submitted:false,
+            check:0
         };
     
         this.handleChange1 = this.handleChange1.bind(this);
@@ -61,10 +62,10 @@ class Survey extends React.Component{
             break;
             case 'select':
                     element =  <Container>
-                                    <Row>
+                                    <Row className="justify-content-sm-center">
                                         <Col><label> 1 </label></Col> <Col><label> 2 </label></Col> <Col><label> 3 </label></Col> <Col><label> 4 </label></Col> <Col><label> 5 </label></Col>
                                     </Row>
-                                    <Row>   
+                                    <Row className="justify-content-md-center">   
                                             <Col> <input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={1}/> </Col>
                                             <Col> <input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={2}/> </Col>
                                             <Col> <input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={3}/> </Col>
@@ -96,7 +97,7 @@ class Survey extends React.Component{
                 const payload = {
                     form_id:this.state.form_id
                 }
-                axios.post(`http://localhost:3001/api/frontendTest`, payload)
+                axios.post(`http://localhost:3001/api/getForm`, payload)
                 .then(response => this.changePage(response))
                 .catch(function (error){console.log(error)})
             }
@@ -172,7 +173,8 @@ class Survey extends React.Component{
                 title:result.title,
                 type:result.type,
                 loading:false,
-                form_retreived:true
+                form_retreived:true,
+                check:1
                 })
             
             
@@ -188,6 +190,7 @@ class Survey extends React.Component{
        ///const {questions} = this.props
         const formStatus = this.state.form_retreived
         const form_submitted = this.state.form_submitted
+        const check = this.state.check
         
         // if(!formStatus){
         //     return(
@@ -203,38 +206,44 @@ class Survey extends React.Component{
         //         </div>
         //     )
         // } else 
-        if(formStatus && !form_submitted){
+        if(formStatus && !form_submitted && this.state.data !== undefined){
             
             const title = this.state.title
             //var questions = this.props.questions;
             let questions = this.state.data
            //let {questions}= Array.from(this.state.data)
             return(
-                <div>
-                    <h1 className="header">Complete {this.state.type} </h1>
-                    <Form  onSubmit={this.formHandler}>
+                <Card>
+                    <Card.Header as="h1">{title} </Card.Header>
+                    <Card.Body>
+                        <Card.Text>Description</Card.Text>
                         <ListGroup>
-                            <ListGroup.Item>{title}</ListGroup.Item>
-                        {questions.map((question, i)=>  
+                   
+                                <ListGroup.Item></ListGroup.Item>
+                                    {questions.map((question, i)=>  
 
-                            <ListGroup.Item key={i+1}>
+                                        <ListGroup.Item key={i+1}>
                            
-                            <label name={"question" + i}>{(i +1) + ") " + question.question_text}</label>
-                            <br></br>
-                            {this.inputBox(question, i)}
+                                        <label name={"question" + i}>{(i +1) + ") " + question.question_text}</label>
+                                        <br></br>
+                                        {this.inputBox(question, i)}
                             
-                            <br></br>
-                            </ListGroup.Item>
-                       )}
-                       
-                        <Button size="lg" type="submit"> Submit {this.state.type} </Button>
+                                        <br></br>
+                                        </ListGroup.Item>
+                                    )}
+
+                                <ListGroup.Item> <center><Button size="lg" type="submit" onClick={this.formHandler}> Submit {this.state.type} </Button></center></ListGroup.Item>
                         </ListGroup>
-                    </Form>
-                </div>
+                    </Card.Body>
+                </Card>
+                   
             )
         } else if (form_submitted) {
             return(
-                <h1>Survey Completed</h1>
+                <Card>
+                    <Card.Body><h1>Survey Completed</h1></Card.Body>
+                </Card>
+                
             )
         }
         else{

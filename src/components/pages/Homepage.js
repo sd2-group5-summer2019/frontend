@@ -10,7 +10,7 @@ const Dash = ({user_id ='', token=''}) => {
         <Container>
             
             <Row>
-                <Col sm={3}> <MenuContainer /></Col>
+                <Col style={{padding:"5px", margin:"0px"}} sm={3}> <MenuContainer /></Col>
                 <Col sm={9} > <h1>Dashboard</h1></Col>
             </Row>
         </Container>

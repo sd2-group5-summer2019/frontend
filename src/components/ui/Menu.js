@@ -24,12 +24,11 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
             return(
 
 
-                
-                <Navbar collapseOnSelect bg="light" expand="lg">
+                <Navbar  collapseOnSelect  expand="lg">
                   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                  <Navbar.Collapse id="responsive-navbar-nav">
+                  <Navbar.Collapse  id="responsive-navbar-nav">
                   <Nav justify className="flex-column">
-                        <ListGroup>
+                        <ListGroup >
                             <ListGroup.Item action href="/">Dashboard</ListGroup.Item>
                             <ListGroup.Item action href="/assignments">Assignments</ListGroup.Item>
                             <ListGroup.Item action href="/">Project Management</ListGroup.Item>
@@ -47,7 +46,7 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
                         }
                             <ListGroup.Item action href="/settings"> Settings </ListGroup.Item>
                             <ListGroup.Item>
-                                <Button type="button" onClick={function(){logoutHelper(); onLogout();}}>Log Out</Button>
+                                <Button size="lg" type="button" onClick={function(){logoutHelper(); onLogout();}}>Log Out</Button>
                             </ListGroup.Item>
 
                         </ListGroup>

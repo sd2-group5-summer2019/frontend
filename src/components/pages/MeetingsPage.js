@@ -83,7 +83,7 @@ class MeetingsPage extends React.Component{
                         <LinkContainer to="/create_meeting">
                             <NavItem>Create New Meeting</NavItem>
                         </LinkContainer>
-		                    <Table  responsive="sm" striped bordered hover variant="dark">
+		                    <Table  responsive="sm" striped bordered hover>
 		                        <thead>
 		              		        <tr>
 		              			        <th>Title</th>
