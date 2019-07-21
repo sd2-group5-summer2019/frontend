@@ -29,8 +29,7 @@ class Survey extends React.Component{
             results:[],
             requested:this.props.flag,
             form_retreived:false,
-            form_submitted:false,
-            check:0
+            form_submitted:false
         };
     
         this.handleChange1 = this.handleChange1.bind(this);
@@ -110,7 +109,7 @@ class Survey extends React.Component{
         }
         this.setState({loading:true})
         console.log(this.state.form_id)
-        axios.post(`http://localhost:3001/api/getForm`, payload)
+        axios.post(`http://localhost:3001/api/getSurvey`, payload)
         .then(response => this.changePage(response))
         .catch(function (error){console.log(error)})
 
@@ -169,12 +168,11 @@ class Survey extends React.Component{
         
                 console.log(res.data)
                 this.setState({
-                data:result.questions,
-                title:result.title,
-                type:result.type,
+                data:result,
+                title:'',
+                type:'',
                 loading:false,
-                form_retreived:true,
-                check:1
+                form_retreived:true
                 })
             
             
@@ -190,7 +188,7 @@ class Survey extends React.Component{
        ///const {questions} = this.props
         const formStatus = this.state.form_retreived
         const form_submitted = this.state.form_submitted
-        const check = this.state.check
+        
         
         // if(!formStatus){
         //     return(
