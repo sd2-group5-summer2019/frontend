@@ -12,6 +12,7 @@ import Get_Results from '../ui/Get_Results';
 import Button from 'react-bootstrap/Button';
 import CreateInstance from '../ui/CreateInstance';
 import { Nav } from 'react-bootstrap';
+import {AssignContainer} from '../containers/GeneralContainer';
 
 class Assignments extends React.Component{
         constructor(props){
@@ -186,8 +187,8 @@ class Assignments extends React.Component{
 		              		        </tr>
 		               	        </thead>
                                  <tbody>
-                                     {temp.map(temp =>
-                                        <tr value={temp.form_id} key={temp.form_id}>
+                                     {temp.map((temp, i) =>
+                                        <tr value={temp.form_id} key={temp.form_id + i}>
                                             <td>{temp.title}</td>
                                             <td>{user === 'student' ? temp.end_date : <Button variant="success" id='assign' size="lg" type="button" name={temp.form_id} onClick={this.changePage}>Assign</ Button>}</td>
                                      <td>{user === 'student' ? <Button type="button" id={temp.instance_id} size="lg" name={temp.form_id} onClick={this.changePage}>{tableText.btn_text}</Button> 
@@ -247,7 +248,7 @@ class Assignments extends React.Component{
                             <Row>  <Col> <h1>Assign Assignment</h1></Col></Row>
                             <Row>
                             <Col sm={3}>  <MenuContainer/> </Col>
-                            <Col sm={9}> <CreateInstance form_id={this.state.form_id} /> </Col>
+                            <Col sm={9}> <AssignContainer form_id={this.state.form_id} /> </Col>
                             </Row>
                         </Container>
                     

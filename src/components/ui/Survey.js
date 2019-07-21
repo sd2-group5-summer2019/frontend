@@ -166,11 +166,11 @@ class Survey extends React.Component{
                     <h1 className="header">{title} </h1>
                     <form onSubmit={this.formHandler}>
 
-                        {questions.map((questions, i)=>  
+                        {questions.map((question, i)=>  
                            <div className="yellow" key={i+1}>
-                            <label name={"question" + i}>{(i +1) + ") " + questions.question_text}</label>
+                            <label name={"question" + i}>{(i +1) + ") " + question.question_text}</label>
                             <br></br>
-                            <input id={i} type="text" autoComplete="off" name={questions.question_id} value={this.state.results.value} onChange={this.questionHandler}/>
+                            <input id={i} type="text" autoComplete="off" name={question.question_id} value={this.state.results.value} onChange={this.questionHandler}/>
                             <br></br>
                             </div>
                        )}

@@ -109,7 +109,7 @@ class CreateInstance extends React.Component{
                 <tbody>
                 
                 {data.map((data, i) =>
-                                <tr value={data.user_id} key={data.user_id}>
+                                <tr value={data.user_id} key={i}>
                                     <td>{data.first_name + " " + data.last_name}</td>
                                     <td>
                                         {this.state.list[i] === undefined || this.state.list[i].id ==='removed' ? 
@@ -153,7 +153,9 @@ class CreateInstance extends React.Component{
         
         let apiCall = 'getAllStudents'
         
-        let payload = {"user_id":35, "type": "coordinator"}
+
+        let payload = {"user_id":this.props.user_id, 
+                        "type": this.props.userType}
         
 
         if(code_val === 4){
@@ -237,7 +239,7 @@ class CreateInstance extends React.Component{
         const payload = this.createPayload(this.state.code)
         payload.end_date = e.target.end_date.value
         payload.start_date = e.target.start_date.value
-        console.log(payload.end_date)
+        console.log(payload)
 
         axios.post('http://localhost:3001/api/assignForm', payload).then(res=>{
 

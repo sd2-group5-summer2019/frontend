@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import CreateInstance from "./CreateInstance";
 import InputGroup from 'react-bootstrap/InputGroup';
 import ListGroup from 'react-bootstrap/ListGroup';
+import {AssignContainer} from "../containers/GeneralContainer";
 
 class CreateAssignment extends React.Component{
     static defaultProps = {
@@ -369,7 +370,7 @@ class CreateAssignment extends React.Component{
         }  else {
             return(
              
-                     <CreateInstance form_id={this.state.form_id} />
+                     <AssignContainer form_id={this.state.form_id} />
             )
         }
       
