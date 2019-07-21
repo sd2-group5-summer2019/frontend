@@ -12,7 +12,7 @@ import Get_Results from '../ui/Get_Results';
 import Button from 'react-bootstrap/Button';
 import CreateInstance from '../ui/CreateInstance';
 import { Nav } from 'react-bootstrap';
-import {AssignContainer} from '../containers/GeneralContainer';
+import {AssignContainer, TakeAssignmentContainer} from '../containers/GeneralContainer';
 
 class Assignments extends React.Component{
         constructor(props){
@@ -208,7 +208,7 @@ class Assignments extends React.Component{
                     <Container >
                         <Row>
                             <Col sm={3} > <MenuContainer/> </Col>
-                            <Col sm={9} style={{padding:"10px 0 0 0"}}> <Survey flag={"true"} form_id={this.state.form_id} instance_id={this.state.instance_id} /> </Col>
+                            <Col sm={9} style={{padding:"10px 0 0 0"}}> <TakeAssignmentContainer form_id={this.state.form_id} instance_id={this.state.instance_id} /> </Col>
                         </Row>
                     </Container>
                 )

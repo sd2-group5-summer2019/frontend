@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import Teams from '../pages/Teams';
 import CreateInstance from '../ui/CreateInstance';
+import Survey from '../ui/Survey';
 
 const mapStateToProps = state =>{
     return {
@@ -14,5 +15,7 @@ const mapStateToProps = state =>{
 const TeamsContainer = connect(mapStateToProps)(Teams)
 
 export const AssignContainer = connect(mapStateToProps)(CreateInstance)
+
+export const TakeAssignmentContainer = connect(mapStateToProps)(Survey)
 
 export default TeamsContainer;

@@ -9,25 +9,19 @@ import {Card, Button } from "react-bootstrap";
 
 
 class Survey extends React.Component{
-    static defaultProps = {
-        questions : [
-            {"question": "Survey Question 1"},
-            {"question": "Survey Question 2"}
-        ]
-    }
+   
 
     constructor(props) {
         super(props);
         this.state = {
             form_id:this.props.form_id,
-            student_id:'13',
+            student_id:this.props.user_id,
             token:'testToken',
             loading:false,
             title:'',
             type:'',
             data:[],
             results:[],
-            requested:this.props.flag,
             form_retreived:false,
             form_submitted:false
         };
@@ -92,14 +86,14 @@ class Survey extends React.Component{
     }
 
     componentDidMount(){
-            if(this.state.requested){
+            
                 const payload = {
                     form_id:this.state.form_id
                 }
                 axios.post(`http://localhost:3001/api/getForm`, payload)
                 .then(response => this.changePage(response))
                 .catch(function (error){console.log(error)})
-            }
+           
     }
 
     requestForm(event){
@@ -109,7 +103,7 @@ class Survey extends React.Component{
         }
         this.setState({loading:true})
         console.log(this.state.form_id)
-        axios.post(`http://localhost:3001/api/getSurvey`, payload)
+        axios.post(`http://localhost:3001/api/getForm`, payload)
         .then(response => this.changePage(response))
         .catch(function (error){console.log(error)})
 
@@ -121,7 +115,7 @@ class Survey extends React.Component{
 
         results[event.target.id] = {
             question_id:event.target.name,
-            answer:event.target.value
+           text:event.target.value
         } 
         
         this.setState({
