@@ -3,6 +3,9 @@ import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Form from "react-bootstrap/FormGroup";
+import { Button } from "react-bootstrap";
 
 
 class Survey extends React.Component{
@@ -35,6 +38,7 @@ class Survey extends React.Component{
         this.questionHandler= this.questionHandler.bind(this);
         this.formHandler = this.formHandler.bind(this);
         this.redirectOnSubmit = this.redirectOnSubmit.bind(this);
+        this.inputBox = this.inputBox.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
       }
     
@@ -45,12 +49,54 @@ class Survey extends React.Component{
         }) 
     }
 
+    // returns input element that best matches the question type
+    inputBox(question, i){
+
+        let element = <p></p>
+
+        switch(question.question_type){
+
+            case 'fill_blank':
+                    element = <input className="form-control" id={i} type="text" autoComplete="off" name={question.question_id} value={this.state.results.value} onChange={this.questionHandler}/>
+            break;
+            case 'select':
+                    element =  <Container>
+                                    <Row>
+                                        <Col><label> 1 </label></Col> <Col><label> 2 </label></Col> <Col><label> 3 </label></Col> <Col><label> 4 </label></Col> <Col><label> 5 </label></Col>
+                                    </Row>
+                                    <Row>   
+                                            <Col> <input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={1}/> </Col>
+                                            <Col> <input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={2}/> </Col>
+                                            <Col> <input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={3}/> </Col>
+                                            <Col> <input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={4}/> </Col>
+                                            <Col> <input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={5}/> </Col>
+                                    </Row>
+                            </Container>
+            break;
+            case 'multiple_choice':
+                    element =   <div>
+                                    <input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={question.answers[0].answer_text }/> <label>{question.answers[0].answer_text }</label><br></br>
+                                    <input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={question.answers[1].answer_text }/> <label>{question.answers[1].answer_text }</label><br></br>
+                                    <input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={question.answers[2].answer_text}/> <label>{question.answers[2].answer_text }</label><br></br>
+                                    <input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={question.answers[3].answer_text}/> <label>{question.answers[3].answer_text }</label><br></br>
+                                </div>
+                  
+            break;
+            case 'free_response':
+                    element =  <textarea className="form-control" id={i} type="input" autoComplete="off" name={question.question_id} value={this.state.results.value} onChange={this.questionHandler}/>
+            break;
+        }
+
+        return element
+       
+    }
+
     componentDidMount(){
             if(this.state.requested){
                 const payload = {
                     form_id:this.state.form_id
                 }
-                axios.post(`http://localhost:3001/api/getForm`, payload)
+                axios.post(`http://localhost:3001/api/frontendTest`, payload)
                 .then(response => this.changePage(response))
                 .catch(function (error){console.log(error)})
             }
@@ -75,12 +121,13 @@ class Survey extends React.Component{
 
         results[event.target.id] = {
             question_id:event.target.name,
-            text:event.target.value
+            answer:event.target.value
         } 
         
         this.setState({
                 results:results
                       })
+        console.log(results)
     }
 
     // handles sending the survey to the backend
@@ -121,9 +168,9 @@ class Survey extends React.Component{
         
                 console.log(res.data)
                 this.setState({
-                data:result,
-                title:result[0].title,
-                type:result[0].type,
+                data:result.questions,
+                title:result.title,
+                type:result.type,
                 loading:false,
                 form_retreived:true
                 })
@@ -142,20 +189,21 @@ class Survey extends React.Component{
         const formStatus = this.state.form_retreived
         const form_submitted = this.state.form_submitted
         
-        if(!formStatus){
-            return(
+        // if(!formStatus){
+        //     return(
                 
-                <div>
-                <h1>Request Survey/form (for testing purposes for now)</h1>
-                <p> this isnt gonna be a thing in the final product though</p>
-                <form onSubmit={this.requestForm}>
-                    <label>Enter Form Id </label>
-                    <input type="text" name="form_id" value={this.state.form_id} onChange={this.handleChange1}></input>
-                    <button type="submit">Request Form/survey</button>
-                </form>
-                </div>
-            )
-        } else if(formStatus && !form_submitted){
+        //         <div>
+        //         <h1>Request Survey/form (for testing purposes for now)</h1>
+        //         <p> this isnt gonna be a thing in the final product though</p>
+        //         <form onSubmit={this.requestForm}>
+        //             <label>Enter Form Id </label>
+        //             <input type="text" name="form_id" value={this.state.form_id} onChange={this.handleChange1}></input>
+        //             <button type="submit">Request Form/survey</button>
+        //         </form>
+        //         </div>
+        //     )
+        // } else 
+        if(formStatus && !form_submitted){
             
             const title = this.state.title
             //var questions = this.props.questions;
@@ -163,27 +211,34 @@ class Survey extends React.Component{
            //let {questions}= Array.from(this.state.data)
             return(
                 <div>
-                    <h1 className="header">{title} </h1>
-                    <form onSubmit={this.formHandler}>
-
+                    <h1 className="header">Complete {this.state.type} </h1>
+                    <Form  onSubmit={this.formHandler}>
+                        <ListGroup>
+                            <ListGroup.Item>{title}</ListGroup.Item>
                         {questions.map((question, i)=>  
-                           <div className="yellow" key={i+1}>
+
+                            <ListGroup.Item key={i+1}>
+                           
                             <label name={"question" + i}>{(i +1) + ") " + question.question_text}</label>
                             <br></br>
-                            <input id={i} type="text" autoComplete="off" name={question.question_id} value={this.state.results.value} onChange={this.questionHandler}/>
+                            {this.inputBox(question, i)}
+                            
                             <br></br>
-                            </div>
+                            </ListGroup.Item>
                        )}
                        
-                        <button type="submit"> Submit </button>
-                        
-                    </form>
+                        <Button size="lg" type="submit"> Submit {this.state.type} </Button>
+                        </ListGroup>
+                    </Form>
                 </div>
             )
         } else if (form_submitted) {
             return(
                 <h1>Survey Completed</h1>
             )
+        }
+        else{
+           return( <div>something went wrong...</div>)
         }
       
     }
