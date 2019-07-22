@@ -48,7 +48,7 @@ class CreateMeeting extends React.Component{
             title:this.state.title,
             description:this.state.description,
             start_date:this.state.date,
-            end_date:this.state.date,
+            end_date:this.state.date
         }
         console.log(payload)
         axios.post(`http://localhost:3001/api/createForm`, payload)

@@ -16,6 +16,7 @@ import Get_Results from './components/ui/Get_Results';
 import {MeetingsPageC} from './components/containers/CreateMeetingC';
 import CreateMeetingC from './components/containers/CreateMeetingC';
 import TeamsContainer from './components/containers/GeneralContainer';
+import CreateTaskC from './components/containers/CreateTaskC'
 
 const routes = (
     <Router>
@@ -36,6 +37,7 @@ const routes = (
             <Route path="/create_assignment" exact component={CreateAssignmentC} />
             <Route path="/meetings" exact component={MeetingsPageC} />
             <Route path="/create_meeting" exact component={CreateMeetingC} />
+            <Route path="/create_task" exact component={CreateTaskC} />
         </Switch>
     </Router>
 )
