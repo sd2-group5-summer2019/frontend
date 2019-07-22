@@ -13,8 +13,11 @@ class Students extends React.Component {
 		//this.state.students = [{id: "nid", first_name: "mahzain", last_name: "malik", nid: "ma026001", email: "mahzain@knights.ucf.edu", team: "group 5"}]
 	}
     componentDidMount() {
-    	const type = 'coordinator'
-    	axios.post('http://localhost:3001/api/getAllStudents', type)
+    	const payload = {
+			"user_id":this.props.user_id,
+			"type":this.props.userType
+		}
+    	axios.post('http://localhost:3001/api/getAllStudents', payload)
         .then(res => {
             this.setState({students:res.data})
             console.log(res.data);
