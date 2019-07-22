@@ -16,7 +16,7 @@ class Survey extends React.Component{
         this.state = {
             form_id:this.props.form_id,
             student_id:this.props.user_id,
-            token:'testToken',
+            token:this.props.token,
             loading:false,
             title:'',
             type:'',
@@ -34,6 +34,7 @@ class Survey extends React.Component{
         this.redirectOnSubmit = this.redirectOnSubmit.bind(this);
         this.inputBox = this.inputBox.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
+        this.filterQuizQuestions = this.filterQuizQuestions.bind(this);
       }
     
     
@@ -98,12 +99,13 @@ class Survey extends React.Component{
 
     requestForm(event){
         event.preventDefault()
+        const header =`Authorization:Bearer ${this.state.token}`
         const payload = {
             form_id: this.state.form_id
         }
         this.setState({loading:true})
         console.log(this.state.form_id)
-        axios.post(`http://localhost:3001/api/getForm`, payload)
+        axios.post(`http://localhost:3001/api/getForm`, {data:payload,  headers:header})
         .then(response => this.changePage(response))
         .catch(function (error){console.log(error)})
 
@@ -115,7 +117,7 @@ class Survey extends React.Component{
 
         results[event.target.id] = {
             question_id:event.target.name,
-           text:event.target.value
+            text:event.target.value
         } 
         
         this.setState({
@@ -127,15 +129,15 @@ class Survey extends React.Component{
     // handles sending the survey to the backend
     formHandler(event){
         event.preventDefault()
+        const header =`authorization: bearer ${this.state.token}`
         const payload = {
             user_id:this.state.student_id,
-            token:this.state.token,
-            form_id:this.state.form_id,
+            form_id:parseInt(this.state.form_id),
             results:this.state.results,
             instance_id:this.props.instance_id    
         }
         console.log(payload)
-        axios.post(`http://localhost:3001/api/submitForm`, payload)
+        axios.post(`http://localhost:3001/api/submitForm`, payload, {headers:{header}})
         .then(response => this.redirectOnSubmit(response))
         .catch(function (error){console.log(error)})
     }
@@ -151,6 +153,72 @@ class Survey extends React.Component{
             console.log("Something went wrong")
     }
 
+    // formats the response from the backend into something the frontend can 
+    // use for when it sends back multiple choice questions
+    filterQuizQuestions(data){
+        console.log(data)
+        let tempData = {}
+        let answers = []
+        
+        if(data.quiz !== undefined){
+            tempData={questions:[]}
+
+            if(data.quiz.length > 0){
+
+                tempData.title = data.quiz[0].title
+                tempData.type = data.quiz[0].type
+                let q_id = ''
+                let q_id_index = 0
+                let answer_index = 0
+                let index = 0
+                
+
+                while(index < data.quiz.length){
+                    if(q_id === data.quiz[index].question_id){
+
+                        if(data.quiz[index].question_type === 'multiple_choice'){
+                            tempData.questions[q_id_index].answers[answer_index] = {answer_text:data.quiz[index].key_text}
+                        }
+                        answer_index ++;
+                        index++;
+                    }else{
+                        q_id = data.quiz[index].question_id
+                        q_id_index = index
+                        tempData.questions[index]={
+                            question_id : data.quiz[index].question_id,
+                            question_text : data.quiz[index].question_text,
+                            question_type : data.quiz[index].question_type,
+                            answers
+                        }
+
+                        if(data.quiz[index].question_type === 'multiple_choice'){
+                            tempData.questions[index].answers = [{answer_text:data.quiz[index].key_text}]
+                        }
+
+                        answer_index=1
+                        index++;
+                    }
+                }
+                console.log(tempData)
+                return tempData
+            }
+            console.log(data.quiz)
+            
+        }else if(data.survey !== undefined)
+        {
+            if(data.survey.length > 0){
+                tempData.title = data.survey[0].title
+                tempData.type = data.survey[0].type
+               
+                tempData.questions = data.survey
+                return tempData                
+            }
+            return[{"error":"Assignment has no questions"}]
+        }
+        return [{"title":"no such assignment exists"}];
+    }
+
+
     // processes the response from the form request
     // stores the questions array in data
     // changes form_retrieved to true so render can load the
@@ -158,13 +226,13 @@ class Survey extends React.Component{
     changePage(res){
         
         if(res.status===200 && typeof res.data.status === 'undefined'){
-            const result = res.data
+            const result = this.filterQuizQuestions(res.data)
         
-                console.log(res.data)
+                
                 this.setState({
                 data:result,
-                title:'',
-                type:'',
+                title:result.title,
+                type:result.type,
                 loading:false,
                 form_retreived:true
                 })
@@ -184,25 +252,18 @@ class Survey extends React.Component{
         const form_submitted = this.state.form_submitted
         
         
-        // if(!formStatus){
-        //     return(
+        if(!formStatus){
+            return(
                 
-        //         <div>
-        //         <h1>Request Survey/form (for testing purposes for now)</h1>
-        //         <p> this isnt gonna be a thing in the final product though</p>
-        //         <form onSubmit={this.requestForm}>
-        //             <label>Enter Form Id </label>
-        //             <input type="text" name="form_id" value={this.state.form_id} onChange={this.handleChange1}></input>
-        //             <button type="submit">Request Form/survey</button>
-        //         </form>
-        //         </div>
-        //     )
-        // } else 
-        if(formStatus && !form_submitted && this.state.data !== undefined){
+                <div>
+             
+                </div>
+            )
+        } else if(formStatus && !form_submitted && this.state.data.questions !== undefined){
             
             const title = this.state.title
             //var questions = this.props.questions;
-            let questions = this.state.data
+            let questions = this.state.data.questions
            //let {questions}= Array.from(this.state.data)
             return(
                 <Card>
