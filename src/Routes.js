@@ -16,8 +16,8 @@ import Get_Results from './components/ui/Get_Results';
 import {MeetingsPageC} from './components/containers/CreateMeetingC';
 import CreateMeetingC from './components/containers/CreateMeetingC';
 import TeamsContainer from './components/containers/GeneralContainer';
-import CreateTaskC from './components/containers/CreateTaskC'
-
+import CreateTaskC from './components/containers/CreateTaskC';
+import {ProjectManagementPageC} from './components/containers/CreateTaskC';
 const routes = (
     <Router>
         <Switch>
@@ -38,6 +38,7 @@ const routes = (
             <Route path="/meetings" exact component={MeetingsPageC} />
             <Route path="/create_meeting" exact component={CreateMeetingC} />
             <Route path="/create_task" exact component={CreateTaskC} />
+            <Route path="/project_management_page" exact component={ProjectManagementPageC}/>
         </Switch>
     </Router>
 )

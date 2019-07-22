@@ -1,6 +1,6 @@
 import CreateTask from '../ui/CreateTask';
 import {connect} from 'react-redux';
-//import TasksPage from '../pages/TasksPage';
+import ProjectManagementPage from '../pages/ProjectManagementPage';
 
 const mapStateToProps = state =>{
     return {
@@ -13,7 +13,7 @@ const mapStateToProps = state =>{
 
 const CreateTaskC = connect(mapStateToProps)(CreateTask)
 
-//export const TasksPageC = connect(mapStateToProps)(TasksPage)
+export const ProjectManagementPageC = connect(mapStateToProps)(ProjectManagementPage)
 
 
 export default CreateTaskC;

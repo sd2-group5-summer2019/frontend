@@ -11,7 +11,7 @@ import {Redirect} from 'react-router-dom';
 import Get_Results from '../ui/Get_Results';
 import {LinkContainer} from "react-router-bootstrap";
 import { Navbar, Nav, NavItem} from "react-bootstrap";
-import Meeting from '../ui/Meeting';
+import Task from '../ui/Task';
 //access_level, title, user_id, description, team_id, start_date, end_date
 //{title:'test', description:'agenda', start_date:'start', end_date:'end', completed:'false'}
 //[{form_id:'10', title:'test', description:'agenda', start_date:'start', end_date:'end', is_complete:false}]                            
@@ -52,7 +52,7 @@ class ProjectManagementPage extends React.Component{
                     }
                 }
                 this.setState({
-                    milestones:milestones
+                    milestones:milestones,
                     tasks:tasks
                 })
                 console.log(response.data)
@@ -67,29 +67,25 @@ class ProjectManagementPage extends React.Component{
            console.log(res)
 
            this.setState({
-               title:res.title,
-               description:res.name,
                instance_id: res.id,
                is_complete: res.value === "0" ? false : true,
-               end_date: res.data,
                page:true
            })           
         }
    
     render(){
-
         if(!this.state.page){
                return(
                   <Container>
-                    <Row className="text-center"> <h1>Meetings</h1></Row>
-                    <Row><MenuContainer/></Row>
+                    <Row className="text-center"> <h1>Project Management</h1></Row>
                     <Row>
-                        <Col sm={3}>  </Col>
+                        <Col sm={3}><MenuContainer/></Col>
                         <Col sm={9}>
                         <LinkContainer to="/create_task">
                             <NavItem>Create a New Task or Milestone</NavItem>
                         </LinkContainer>
-                            <Table  responsive="sm" striped bordered hover variant="dark">
+                        <h2>Tasks</h2>
+                            <Table  responsive="sm" striped bordered hover>
                                 <thead>
                                     <tr>
                                         <th>Name</th>
@@ -105,11 +101,32 @@ class ProjectManagementPage extends React.Component{
                                             <td>{task.title}</td>
                                             <td>{task.end_date}</td>
                                             <td>{task.is_complete ? 'Completed' : 'Not Started' }</td>
-                                            <td> <button title={task.title} name={task.description} id={task.task_id} value={task.is_complete} data={task.end_date} onClick={this.changePage}>{task.is_complete ? 'View Task Summary':'Turn in Task'}</button></td> 
+                                            <td> <button id={task.task_id} value={task.is_complete} onClick={this.changePage}>{task.is_complete ? 'View Task Summary':'Turn in Task'}</button></td> 
                                         </tr>
                                     )}
                                  </tbody>
                              </Table>
+                        <h2>Milestones</h2>
+                            <Table  responsive="sm" striped bordered hover>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                 <tbody>
+                                     {this.state.milestones.map(milestone =>
+                                        <tr key={milestone.instance_id}>
+                                            <td>{milestone.title}</td>
+                                            <td>{milestone.end_date}</td>
+                                            <td>{milestone.is_complete ? 'Completed' : 'Not Started' }</td>
+                                            <td> <button id={milestone.task_id} value={milestone.is_complete} onClick={this.changePage}>{milestone.is_complete ? 'View Milestone Summary':'Turn in Milestone'}</button></td> 
+                                        </tr>
+                                    )}
+                                 </tbody>
+                             </Table>                        
                         </Col>
                     </Row>
                 </Container>

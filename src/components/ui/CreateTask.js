@@ -67,13 +67,17 @@ class CreateTask extends React.Component{
     }
 
     componentDidMount() {
-        axios.post(`http://localhost:3001/api/getTeamID`, this.props.user_id)
+        const payload = {
+            user_id: this.props.user_id
+        }
+        axios.post(`http://localhost:3001/api/getTeamID`, payload)
         .then(response => {
-            this.setState({team_id:response.data})
-            console.log(this.state.team_id)
+            this.setState({team_id:response.data.team_id[0].team_id})
+            console.log(response.data)
         })
         .catch(function (error){console.log(error)})
 
+        console.log(this.state.team_id)
         axios.post(`http://localhost:3001/api/getTeamMembers`, this.state.team_id)
         .then(response => {
             this.setState({team_members:response.data})
@@ -236,10 +240,10 @@ class CreateTask extends React.Component{
                             <input type="text" name="title" value={this.state.title} onChange={this.handleChange}></input>
                             <br></br>
                             <label >Start Date </label>
-                            <input type="date" name="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.start_date} onChange={this.handleChange}></input>
+                            <input type="date" name="start_date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.start_date} onChange={this.handleChange}></input>
                             <br></br>
                             <label >End Date </label>
-                            <input type="date" name="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.end_date} onChange={this.handleChange}></input>
+                            <input type="date" name="end_date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.end_date} onChange={this.handleChange}></input>
                             <br></br>                        
                             <label>Description: </label>                       
                             <textarea style={{color:'black'}} name="description" value={this.state.description} onChange={this.handleChange} placeholder="Description"/>
