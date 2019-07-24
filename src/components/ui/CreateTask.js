@@ -67,6 +67,7 @@ class CreateTask extends React.Component{
         })
     }
 
+
     componentDidMount() {
         const payload = {
             user_id: this.props.user_id
@@ -154,7 +155,7 @@ class CreateTask extends React.Component{
     resetForm(){
         this.setState({
             title:'',
-            type:'meeting',
+            type:'task',
             description:'',
             start_date:'',
             end_date:'',
@@ -260,8 +261,8 @@ class CreateTask extends React.Component{
                <div>
                    <h1>Task Created</h1>
                    <button onClick={this.resetForm}>Create Another Task or Milestone</button>
-                   <LinkContainer to="/project">
-                            <button>Back to Meetings Menu</button>
+                   <LinkContainer to="/project_management_page">
+                            <button>Back to Project Management Menu</button>
                    </LinkContainer>
 
                </div>

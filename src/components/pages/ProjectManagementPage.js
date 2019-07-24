@@ -24,6 +24,7 @@ class ProjectManagementPage extends React.Component{
                 tasks:[],
                 loading:false,
                 instance_id:'',
+                type:'',
                 title:'',
                 description:'',
                 is_complete:'',
@@ -33,22 +34,9 @@ class ProjectManagementPage extends React.Component{
             }
             this.componentDidMount = this.componentDidMount.bind(this);
             this.changePage = this.changePage.bind(this);
-           // this.getStudentName = this.getStudentName.bind(this);
         }
 
 
-        // getStudentName(user_id){
-        //     const payload = {
-        //         user_id:user_id
-        //     }
-
-        //     let name = axios.post(`http://localhost:3001/api/getStudentName`, payload)
-        //     .then(response => {
-        //         return response.data.first_name + " " + response.data.last_name
-        //     })
-        //     .catch(function(error){console.log(error)})
-        //     console.log(name)
-        // }
 
         componentDidMount(){
             let user_id = this.props.user_id
@@ -60,32 +48,67 @@ class ProjectManagementPage extends React.Component{
                 const milestones = [];
                 const tasks = [];
                 for(var i = 0; i < response.data.length; i++) {
-                    if(response.data[i].type === 'milestone')
+                    if(response.data[i].type === 'milestone'){
                         milestones.push(response.data[i])
+                    }
                     if(response.data[i].type === 'task') {
-                        tasks.push(response.data[i])
+                        console.log(response.data[i].user_id)
+                        const name_payload = {
+                            user_id:response.data[i].user_id
+                        }
+                        const temp = response.data[i]
+                        axios.post(`http://localhost:3001/api/getStudentName`, name_payload)
+                        .then(response_name => {
+                            temp.name = response_name.data.first_name + " " + response_name.data.last_name                     
+                            tasks.push(temp)
+                            this.setState({tasks:tasks})
+                        })
+                        .catch(function(error){console.log(error)})
                     }
                 }
                 this.setState({
                     milestones:milestones,
-                    tasks:tasks
                 })
                 console.log(response.data)
             })
             .catch(function (error){console.log(error)})
+            console.log(this.state.tasks)
         }
         
         changePage(event){
-           event.preventDefault();
-           const res = event.target
+            event.preventDefault();
+            const id = event.target.id
+            const type = event.target.title
+            if(type === "task"){
+                const tasks = this.state.tasks;
+                for(var i = 0; i < tasks.length; i++) {
+                    if(tasks[i].instance_id.toString() === id) {
+                        this.setState({
+                            title:tasks[i].title,
+                            instance_id:tasks[i].instance_id,
+                            type:"task",
+                            description:tasks[i].description,
+                            is_complete:tasks[i].is_complete,
+                            page:true
+                        })
+                    }
+                }
 
-           console.log(res)
-
-           this.setState({
-               instance_id: res.id,
-               is_complete: res.value === "0" ? false : true,
-               page:true
-           })           
+            } else {
+                const milestones = this.state.milestones
+                for(var i = 0; i < milestones.length; i++) {
+                    if(milestones[i].instance_id.toString() === id) {
+                        this.setState({
+                            title:milestones[i].title,
+                            instance_id:milestones[i].instance_id,
+                            type:"milestone",
+                            description:milestones[i].description,
+                            is_complete:milestones[i].is_complete,
+                            page:true
+                        })
+                    }
+                }
+            }          
         }
    
     render(){
@@ -115,15 +138,17 @@ class ProjectManagementPage extends React.Component{
                                             <td>{milestone.title}</td>
                                             <td>{milestone.end_date}</td>
                                             <td>{milestone.is_complete ? 'Completed' : 'Not Started' }</td>
-                                            <td> <button id={milestone.task_id} value={milestone.is_complete} onClick={this.changePage}>View Summary</button></td> 
+                                            <td> <button id={milestone.instance_id} title={milestone.type} name={milestone.description} value={milestone.is_complete} onClick={this.changePage}>View Summary</button></td> 
                                         </tr>
                                     )}
                                  </tbody>
-                             </Table>                           <h2>Tasks</h2>
+                             </Table>                           
+                             <h2>Tasks</h2>
                             <Table  responsive="sm" striped bordered hover>
                                 <thead>
                                     <tr>
                                         <th>Name</th>
+                                        <th>Assigned to</th>
                                         <th>Due Date</th>
                                         <th>Status</th>
                                         <th></th>
@@ -133,9 +158,10 @@ class ProjectManagementPage extends React.Component{
                                      {this.state.tasks.map(task =>
                                         <tr key={task.instance_id}>
                                             <td>{task.title}</td>
+                                            <td>{task.name}</td>
                                             <td>{task.end_date}</td>
                                             <td>{task.is_complete ? 'Completed' : 'Not Started' }</td>
-                                            <td> <button id={task.task_id} value={task.is_complete} disabled={this.props.user_id !== task.user_id} onClick={this.changePage}>{task.is_complete ? 'View Task Summary':'Turn in Task'}</button></td> 
+                                            <td> <button id={task.instance_id} title={task.type} onClick={this.changePage}>View Summary</button></td> 
                                         </tr>
                                     )}
                                  </tbody>
@@ -147,29 +173,15 @@ class ProjectManagementPage extends React.Component{
                )
 
             }else if(this.state.page){
-                if(this.state.type = 'task'){
-                    return(
-                        <Container>
-                            <Row>
-                                <Col sm={3}> <MenuContainer/> </Col>
-                                <Col sm={9}> <Task type={this.state.type} task_id={this.state.task_id} is_complete={this.state.is_complete} /> </Col>
-                            </Row>
-                        </Container>
-                    )
-                }
-            
-                else if (this.state.type = 'milestone'){
-                    return(
-                        <Container>
-                            <Row>
-                                <Col sm={3}> <MenuContainer/> </Col>
-                                <Col sm={9}> <Task type={this.state.type} instance_id={this.state.instance_id} is_complete={this.state.is_complete}/></Col>
-                            </Row>
-                        </Container>
-                    )                
-                }
-            }
-            else{
+                return(
+                    <Container>
+                        <Row>
+                            <Col sm={3}> <MenuContainer/> </Col>
+                            <Col sm={9}> <Task title={this.state.title} description={this.state.description} type={this.state.type} instance_id={this.state.instance_id} type={this.state.type} is_complete={this.state.is_complete} /> </Col>
+                        </Row>
+                    </Container>
+                )
+            }else{
                 return(<Redirect to='/'/>)
             }           
     }
