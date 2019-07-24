@@ -7,14 +7,14 @@ import Col from 'react-bootstrap/Col';
 
 class Meeting extends React.Component{
 
-//hard coded users in team for now
+//[{first_name:'bob', last_name:'saget', user_id:'13'}, {first_name:'spongebob', last_name:'squarepants', user_id:'1'}, {first_name:'patrick', last_name:'star', user_id:'2'}]
     constructor(props) {
         super(props);
         this.state = {
             flag:false,
             instance_id:this.props.instance_id,
             team_id:'',
-            team_members:[{first_name:'bob', last_name:'saget', user_id:'13'}, {first_name:'spongebob', last_name:'squarepants', user_id:'1'}, {first_name:'patrick', last_name:'star', user_id:'2'}],
+            team_members:[],
             token:'testToken',
             reasons:[],
             loading:false,
