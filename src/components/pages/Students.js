@@ -2,19 +2,48 @@ import React from 'react';
 import axios from 'axios';
 import {LinkContainer} from "react-router-bootstrap";
 import { Navbar, Nav, NavItem} from "react-bootstrap";
+import UploadFile from '../ui/UploadFile';
+import Form from 'react-bootstrap/FormControl';
 class Students extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			students: []
+			students: [],
+			files:null
 		}
 		this.deleteRequest = this.deleteRequest.bind(this);
 		this.componentDidMount = this.componentDidMount.bind(this);
+		this.submitFile = this.submitFile.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 		//this.state.students = [{id: "nid", first_name: "mahzain", last_name: "malik", nid: "ma026001", email: "mahzain@knights.ucf.edu", team: "group 5"}]
 	}
+
+	submitFile(e){
+		e.preventDefault()
+		const formData = new FormData();
+		formData.append("file", this.state.file)
+		formData.append("sd1_term", "summer")
+		formData.append("sd1_year", '2019')
+
+		console.log(formData)
+    	axios.post('http://localhost:3001/api/csvUpload',  formData, { headers: { Authorization: `Bearer ${this.props.token}`, 'content-type': 'multipart/form-data'} })
+        .then(res => {
+           
+           console.log(res.data);
+         })
+	}
+	
+	handleChange(e){
+		e.preventDefault()
+		this.setState({file:e.target.files[0]})
+	}
+
     componentDidMount() {
-    	const type = 'coordinator'
-    	axios.post('http://localhost:3001/api/getAllStudents', type)
+    	const payload = {
+			"user_id":this.props.user_id,
+			"type":this.props.userType
+		}
+    	axios.post('http://localhost:3001/api/getAllStudents', payload)
         .then(res => {
             this.setState({students:res.data})
             console.log(res.data);
@@ -63,6 +92,12 @@ class Students extends React.Component {
 	               		)}
 	               	</tbody>
 	            </table>
+				
+				
+				<form onSubmit={this.submitFile}>
+            		<input name="file" type="file" onChange={this.handleChange}></input>
+           		 	<button>Submit</button>
+        		</form>
             </div>
         );
     }

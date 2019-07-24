@@ -1,5 +1,9 @@
 import {connect} from 'react-redux';
 import Teams from '../pages/Teams';
+import CreateInstance from '../ui/CreateInstance';
+import Survey from '../ui/Survey';
+import Students from '../pages/Students';
+import {Dash} from '../pages/Homepage';
 
 const mapStateToProps = state =>{
     return {
@@ -10,6 +14,16 @@ const mapStateToProps = state =>{
     }
 }
 
+
 const TeamsContainer = connect(mapStateToProps)(Teams)
+
+export const AssignContainer = connect(mapStateToProps)(CreateInstance)
+
+export const TakeAssignmentContainer = connect(mapStateToProps)(Survey)
+
+export const StudentsContainer = connect(mapStateToProps)(Students)
+// Dash container
+export const DashContainer = connect(mapStateToProps)(Dash)
+
 
 export default TeamsContainer;
