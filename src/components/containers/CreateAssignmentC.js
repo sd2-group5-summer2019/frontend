@@ -16,6 +16,6 @@ const CreateAssignmentC = connect(mapStateToProps)(CreateAssignment)
 
 export const AssignmentsPageC = connect(mapStateToProps)(AssignmentsPage)
 
-export const TeamContainer = connect(mapStateToProps)(Teams)
+
 
 export default CreateAssignmentC;

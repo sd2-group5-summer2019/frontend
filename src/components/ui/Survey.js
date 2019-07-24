@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Form from "react-bootstrap/FormGroup";
 import {Card, Button } from "react-bootstrap";
+import { apiCall } from "./UploadFile";
 
 
 class Survey extends React.Component{
@@ -87,14 +88,15 @@ class Survey extends React.Component{
     }
 
     componentDidMount(){
-            
+                
                 const payload = {
                     form_id:this.state.form_id
                 }
-                axios.post(`http://localhost:3001/api/getForm`, payload)
+                
+                axios.post(`http://localhost:3001/api/getForm`,  payload, { headers: { Authorization: `Bearer ${this.state.token}` } })
                 .then(response => this.changePage(response))
                 .catch(function (error){console.log(error)})
-           
+              
     }
 
     requestForm(event){
@@ -105,7 +107,7 @@ class Survey extends React.Component{
         }
         this.setState({loading:true})
         console.log(this.state.form_id)
-        axios.post(`http://localhost:3001/api/getForm`, {data:payload,  headers:header})
+        axios.post(`http://localhost:3001/api/getForm`,  payload, { headers: { Authorization: `Bearer ${this.state.token}` } })
         .then(response => this.changePage(response))
         .catch(function (error){console.log(error)})
 
@@ -129,7 +131,6 @@ class Survey extends React.Component{
     // handles sending the survey to the backend
     formHandler(event){
         event.preventDefault()
-        const header =`authorization: bearer ${this.state.token}`
         const payload = {
             user_id:this.state.student_id,
             form_id:parseInt(this.state.form_id),
@@ -137,7 +138,7 @@ class Survey extends React.Component{
             instance_id:this.props.instance_id    
         }
         console.log(payload)
-        axios.post(`http://localhost:3001/api/submitForm`, payload, {headers:{header}})
+        axios.post(`http://localhost:3001/api/submitForm`, payload, { headers: { Authorization: `Bearer ${this.state.token}` } })
         .then(response => this.redirectOnSubmit(response))
         .catch(function (error){console.log(error)})
     }
