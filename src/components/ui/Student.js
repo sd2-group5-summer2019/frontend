@@ -19,6 +19,7 @@ class Student extends React.Component {
 		this.componentDidMount = this.componentDidMount.bind(this);
 	}
 
+
     componentDidMount() {
     	const payload = {
 			"user_id":this.state.student_id
@@ -26,6 +27,7 @@ class Student extends React.Component {
 		console.log(payload)
     	axios.post('http://localhost:3001/api/getInstances', payload)
         .then(res => {
+
         	const temp = []
         	for(var i = 0; i < res.data.length; i++){
         		//console.log(res.data[i])
@@ -38,6 +40,7 @@ class Student extends React.Component {
             console.log(temp);
         })                        
         .catch(function(error){console.log(error)})
+
 
         axios.post("http://localhost:3001/api/getStudentName", payload)
         .then(res => {
