@@ -33,7 +33,22 @@ class ProjectManagementPage extends React.Component{
             }
             this.componentDidMount = this.componentDidMount.bind(this);
             this.changePage = this.changePage.bind(this);
+           // this.getStudentName = this.getStudentName.bind(this);
         }
+
+
+        // getStudentName(user_id){
+        //     const payload = {
+        //         user_id:user_id
+        //     }
+
+        //     let name = axios.post(`http://localhost:3001/api/getStudentName`, payload)
+        //     .then(response => {
+        //         return response.data.first_name + " " + response.data.last_name
+        //     })
+        //     .catch(function(error){console.log(error)})
+        //     console.log(name)
+        // }
 
         componentDidMount(){
             let user_id = this.props.user_id
@@ -84,28 +99,6 @@ class ProjectManagementPage extends React.Component{
                         <LinkContainer to="/create_task">
                             <NavItem>Create a New Task or Milestone</NavItem>
                         </LinkContainer>
-                        <h2>Tasks</h2>
-                            <Table  responsive="sm" striped bordered hover>
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Assigned To</th>
-                                        <th>Due Date</th>
-                                        <th>Status</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                 <tbody>
-                                     {this.state.tasks.map(task =>
-                                        <tr key={task.task_id}>
-                                            <td>{task.title}</td>
-                                            <td>{task.end_date}</td>
-                                            <td>{task.is_complete ? 'Completed' : 'Not Started' }</td>
-                                            <td> <button id={task.task_id} value={task.is_complete} onClick={this.changePage}>{task.is_complete ? 'View Task Summary':'Turn in Task'}</button></td> 
-                                        </tr>
-                                    )}
-                                 </tbody>
-                             </Table>
                         <h2>Milestones</h2>
                             <Table  responsive="sm" striped bordered hover>
                                 <thead>
@@ -122,11 +115,32 @@ class ProjectManagementPage extends React.Component{
                                             <td>{milestone.title}</td>
                                             <td>{milestone.end_date}</td>
                                             <td>{milestone.is_complete ? 'Completed' : 'Not Started' }</td>
-                                            <td> <button id={milestone.task_id} value={milestone.is_complete} onClick={this.changePage}>{milestone.is_complete ? 'View Milestone Summary':'Turn in Milestone'}</button></td> 
+                                            <td> <button id={milestone.task_id} value={milestone.is_complete} onClick={this.changePage}>View Summary</button></td> 
                                         </tr>
                                     )}
                                  </tbody>
-                             </Table>                        
+                             </Table>                           <h2>Tasks</h2>
+                            <Table  responsive="sm" striped bordered hover>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                 <tbody>
+                                     {this.state.tasks.map(task =>
+                                        <tr key={task.instance_id}>
+                                            <td>{task.title}</td>
+                                            <td>{task.end_date}</td>
+                                            <td>{task.is_complete ? 'Completed' : 'Not Started' }</td>
+                                            <td> <button id={task.task_id} value={task.is_complete} disabled={this.props.user_id !== task.user_id} onClick={this.changePage}>{task.is_complete ? 'View Task Summary':'Turn in Task'}</button></td> 
+                                        </tr>
+                                    )}
+                                 </tbody>
+                             </Table>
+                     
                         </Col>
                     </Row>
                 </Container>

@@ -14,7 +14,7 @@ class CreateMeeting extends React.Component{
             token:'testToken',
             loading:false,
             title:'',
-            team_id:'1',
+            team_id:'',
             type:'meeting',
             description:'',
             date:'',
@@ -29,7 +29,19 @@ class CreateMeeting extends React.Component{
         this.resetForm = this.resetForm.bind(this);
       }
     
-    // handles changes on the form on anything that is not a question
+    componentDidMount() {
+        const payload = {
+            user_id: this.props.user_id
+        }
+        axios.post(`http://localhost:3001/api/getTeamID`, payload)
+        .then(response_team_id => {
+            this.setState({team_id:response_team_id.data.team_id[0].team_id})
+            console.log(response_team_id.data)    
+        })
+        .catch(function (error){console.log(error)}) 
+    }
+
+        // handles changes on the form on anything that is not a question
     handleChange(event){
         this.setState({
             [event.target.name]:event.target.value

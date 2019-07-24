@@ -11,7 +11,7 @@ import {Redirect} from 'react-router-dom';
 import Get_Results from '../ui/Get_Results';
 import {LinkContainer} from "react-router-bootstrap";
 import { Navbar, Nav, NavItem} from "react-bootstrap";
-import Meeting from '../ui/Meeting';
+import {MeetingC} from '../containers/CreateMeetingC';
 //access_level, title, user_id, description, team_id, start_date, end_date
 //{title:'test', description:'agenda', start_date:'start', end_date:'end', completed:'false'}
 //[{form_id:'10', title:'test', description:'agenda', start_date:'start', end_date:'end', is_complete:false}]                            
@@ -52,6 +52,8 @@ class MeetingsPage extends React.Component{
                 console.log(response.data)
             })
             .catch(function (error){console.log(error)})
+
+
         }
         
         changePage(event){
@@ -76,14 +78,13 @@ class MeetingsPage extends React.Component{
                return(
                   <Container>
                     <Row className="text-center"> <h1>Meetings</h1></Row>
-                    <Row><MenuContainer/></Row>
                     <Row>
-                        <Col sm={3}>  </Col>
+                        <Col sm={3}><MenuContainer/></Col>
                         <Col sm={9}>
                         <LinkContainer to="/create_meeting">
                             <NavItem>Create New Meeting</NavItem>
                         </LinkContainer>
-		                    <Table  responsive="sm" striped bordered hover variant="dark">
+		                    <Table  responsive="sm" striped bordered hover>
 		                        <thead>
 		              		        <tr>
 		              			        <th>Title</th>
@@ -115,7 +116,7 @@ class MeetingsPage extends React.Component{
                         <Container>
                             <Row>
                                 <Col sm={3}> <MenuContainer/> </Col>
-                                <Col sm={9}> <Meeting flag={"true"} instance_id={this.state.instance_id} title={this.state.title} description={this.state.description} /> </Col>
+                                <Col sm={9}> <MeetingC flag={"true"} instance_id={this.state.instance_id} title={this.state.title} description={this.state.description} /> </Col>
                             </Row>
                         </Container>
                     )

@@ -13,7 +13,7 @@ class CreateTask extends React.Component{
         super(props);
         this.state = {
             token:'testToken',
-            loading:false,
+            loading: false,
             title:'',
             team_id:'',
             type:'task',
@@ -22,7 +22,7 @@ class CreateTask extends React.Component{
             end_date:'',
             assign_to_id:'',
             milestone_instance_id:'',
-            team_members:[{first_name:'bob', last_name:'saget', user_id:'13'}, {first_name:'spongebob', last_name:'squarepants', user_id:'1'}, {first_name:'patrick', last_name:'star', user_id:'2'}],
+            team_members:[],
             milestones:[],
             form_threshold: '',
             form_retreived:false,
@@ -36,6 +36,7 @@ class CreateTask extends React.Component{
         this.resetForm = this.resetForm.bind(this);
         this.typeHandler = this.typeHandler.bind(this);
         this.assignToHandler = this.assignToHandler.bind(this);
+        this.milestoneSelectionHandler = this.milestoneSelectionHandler.bind(this);
       }
     
     // handles changes on the form on anything that is not a question
@@ -71,24 +72,29 @@ class CreateTask extends React.Component{
             user_id: this.props.user_id
         }
         axios.post(`http://localhost:3001/api/getTeamID`, payload)
-        .then(response => {
-            this.setState({team_id:response.data.team_id[0].team_id})
-            console.log(response.data)
+        .then(response_team_id => {
+            this.setState({team_id:response_team_id.data.team_id[0].team_id})
+            console.log(response_team_id.data)
+
+            axios.post(`http://localhost:3001/api/getTeamMembers`, {team_id:response_team_id.data.team_id[0].team_id})
+            .then(response_team_members => {
+                this.setState({team_members:response_team_members.data.team_members})
+                console.log(response_team_members.data)
+            })
+            .catch(function (error){console.log(error)}) 
         })
         .catch(function (error){console.log(error)})
 
-        console.log(this.state.team_id)
-        axios.post(`http://localhost:3001/api/getTeamMembers`, this.state.team_id)
+        axios.post(`http://localhost:3001/api/getInstances`, payload)
         .then(response => {
-            this.setState({team_members:response.data})
-            console.log(this.state.team_members)
-        })
-        .catch(function (error){console.log(error)}) 
-
-        axios.post(`http://localhost:3001/api/getMilestones`, this.state.team_id)
-        .then(response => {
-            this.setState({milestones:response.data})
-            console.log(this.state.milestones)
+            let temp = [];
+            for(var i = 0; i < response.data.length; i++){
+                if(response.data[i].type === "milestone"){
+                    console.log(response.data[i])
+                    temp.push(response.data[i]);
+                }
+            }
+            this.setState({milestones:temp})
         })
         .catch(function (error){console.log(error)})
     }
@@ -147,7 +153,6 @@ class CreateTask extends React.Component{
     
     resetForm(){
         this.setState({
-            loading:false,
             title:'',
             type:'meeting',
             description:'',
@@ -162,7 +167,6 @@ class CreateTask extends React.Component{
         const formStatus = this.state.form_retreived
         const form_submitted = this.state.form_submitted
 
-
         if(!formStatus && !form_submitted && this.state.type === 'task'){
             return(
                 <div>
@@ -173,11 +177,11 @@ class CreateTask extends React.Component{
                         <label>Title: </label>
                         <input type="text" name="title" value={this.state.title} onChange={this.handleChange}></input>
                         <br></br>
-                        <label >Start Date: </label>
-                        <input type="date" name="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.start_date} onChange={this.handleChange}></input>
+                        <label >Start Date </label>
+                        <input type="date" name="start_date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.start_date} onChange={this.handleChange}></input>
                         <br></br>
-                        <label >End Date: </label>
-                        <input type="date" name="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.end_date} onChange={this.handleChange}></input>
+                        <label >End Date </label>
+                        <input type="date" name="end_date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value={this.state.end_date} onChange={this.handleChange}></input>
                         <br></br> 
                         <label>Description: </label>                       
                         <textarea style={{color:'black'}} name="description" value={this.state.description} onChange={this.handleChange} placeholder="Description"/>
@@ -195,7 +199,7 @@ class CreateTask extends React.Component{
                                 {this.state.team_members.map(student =>
                                     <tr key={student.user_id}>
                                         <td>{student.first_name} {student.last_name}</td>
-                                        <td> <input type="radio" name={student.user_id} value={this.state.assign_to_id} onChange={this.assignToHandler} checked={this.state.assign_to_id === student.user_id}/></td>
+                                        <td> <input type="radio" name={student.user_id} value={this.state.assign_to_id} onChange={this.assignToHandler} checked={(this.state.assign_to_id === student.user_id.toString())}/></td>
                                     </tr>
                                 )}
                             </tbody>
@@ -212,9 +216,9 @@ class CreateTask extends React.Component{
                             <tbody>
                                 {this.state.milestones.map(milestone =>
                                     <tr key={milestone.instance_id}>
-                                        <td>{milestone.name}</td>
+                                        <td>{milestone.title}</td>
                                         <td>{milestone.description}</td>
-                                        <td> <input type="radio" name={milestone.instance_id} value={this.state.milestone_instance_id} onChange={this.milestoneSelectionHandler} checked={this.state.milestone_instance_id === milestone.instance_id}/></td>
+                                        <td> <input type="radio" name={milestone.instance_id} value={this.state.milestone_instance_id} onChange={this.milestoneSelectionHandler} checked={this.state.milestone_instance_id === milestone.instance_id.toString()}/></td>
                                     </tr>
                                 )}
                                 <tr>
