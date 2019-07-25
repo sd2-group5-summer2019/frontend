@@ -31,7 +31,8 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
                         <ListGroup >
                             <ListGroup.Item action href="/">Dashboard</ListGroup.Item>
                             <ListGroup.Item action href="/assignments">Assignments</ListGroup.Item>
-                            <ListGroup.Item action href="/">Project Management</ListGroup.Item>
+                            <ListGroup.Item action href="/meetings"> Meetings</ListGroup.Item>
+                            <ListGroup.Item action href="/project_management_page">Project Management</ListGroup.Item>
                             {userType !== 'student'?
                             <React.Fragment>
                                 <ListGroup.Item action href="/"> Analytics</ListGroup.Item>
@@ -39,7 +40,6 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
                                 <ListGroup.Item action href="/teams"> Teams</ListGroup.Item>
                                 <ListGroup.Item action href="/sponsors"> Advisors</ListGroup.Item>
                                 <ListGroup.Item action href="/sponsors"> Sponsors</ListGroup.Item>
-                                <ListGroup.Item action href="/meetings"> Meetings</ListGroup.Item>
                             </React.Fragment>
                             : 
                             <React.Fragment></React.Fragment>

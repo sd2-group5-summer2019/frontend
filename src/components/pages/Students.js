@@ -2,20 +2,20 @@ import React from 'react';
 import axios from 'axios';
 import {LinkContainer} from "react-router-bootstrap";
 import { Navbar, Nav, NavItem} from "react-bootstrap";
-import UploadFile from '../ui/UploadFile';
-import Form from 'react-bootstrap/FormControl';
+import Student from "../ui/Student"
 class Students extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			students: [],
+			user_id:'',
+			page:false,
 			files:null
 		}
-		this.deleteRequest = this.deleteRequest.bind(this);
+		this.changePage = this.changePage.bind(this);
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.submitFile = this.submitFile.bind(this);
 		this.handleChange = this.handleChange.bind(this);
-		//this.state.students = [{id: "nid", first_name: "mahzain", last_name: "malik", nid: "ma026001", email: "mahzain@knights.ucf.edu", team: "group 5"}]
 	}
 
 	submitFile(e){
@@ -39,67 +39,83 @@ class Students extends React.Component {
 	}
 
     componentDidMount() {
-    	const payload = {
-			"user_id":this.props.user_id,
-			"type":this.props.userType
-		}
-    	axios.post('http://localhost:3001/api/getAllStudents', payload)
-        .then(res => {
-            this.setState({students:res.data})
-            console.log(res.data);
-        })
+    	if(this.props.students != null){
+    		this.setState({students:this.props.students})
+    	} else {
+	    	const payload = {
+				"user_id":this.props.user_id,
+				"type":this.props.userType
+			}
+			console.log(payload)
+	    	axios.post('http://localhost:3001/api/getAllStudents', payload)
+	        .then(res => {
+	            this.setState({students:res.data})
+	            console.log(res.data);
+	        })    	
+    	}
+
     }
-    deleteRequest(id) {
-		axios.post('http://localhost:3001/api/delete_user', id)
-    	.catch(function (error){console.log(error)})
+    changePage(event) {
+		this.setState({
+			user_id:event.target.id,
+			page:true
+		})
     }
 	//GET ALL GROUPS FOR PARTICULAR COURSE FROM BACKEND
 	//GET ALL GROUPS IN APP
 	//ADD BUTTONS FOR CREATE COURSE, EDIT, AND DELETE
     render() {
     	console.log(this.state.students)
-        return(
-        	<div>
-        		<Navbar>
-                	<Nav>
-                    	<LinkContainer to="/create_student">
-                     		<NavItem>Create New Student</NavItem>
-                    	</LinkContainer>
-                	</Nav>
-            	</Navbar>
-	            <h1>All Students</h1>
-	            <table>
-	              	<thead>
-	              		<tr>
-	              			<th>First Name</th>
-	              			<th>Last Name</th>
-	              			<th>NID</th>
-	              			<th>Email</th>
-	              			<th>Team</th>
-	              			<th>Actions</th>
-	              		</tr>
-	               	</thead>
-	               	<tbody>
-	               		{this.state.students.map(student =>
-	               			<tr key={student.user_id}>
-	               				<td>{student.first_name}</td>
-	               				<td>{student.last_name}</td>
-	               				<td>{student.nid}</td>
-	               				<td>{student.email}</td>
-	               				<td>{student.team}</td>
-	               				<td>VIEW | EDIT | <button name="DELETE" onClick={() => this.deleteRequest(student.id)}>DELETE</button></td>
-	               			</tr>
-	               		)}
-	               	</tbody>
-	            </table>
-				
-				
-				<form onSubmit={this.submitFile}>
-            		<input name="file" type="file" onChange={this.handleChange}></input>
-           		 	<button>Submit</button>
-        		</form>
-            </div>
-        );
+      	if(!this.state.page){        
+      		return(
+	        	<div>
+	        		<Navbar>
+	                	<Nav>
+	                    	<LinkContainer to="/create_student">
+	                     		<NavItem>Create New Student</NavItem>
+	                    	</LinkContainer>
+	                	</Nav>
+	            	</Navbar>
+		            <h1>All Students</h1>
+		            <table>
+		              	<thead>
+		              		<tr>
+		              			<th>First Name</th>
+		              			<th>Last Name</th>
+		              			<th>NID</th>
+		              			<th>Email</th>
+		              			<th>Team</th>
+		              			<th></th>
+		              		</tr>
+		               	</thead>
+		               	<tbody>
+		               		{this.state.students.map(student =>
+		               			<tr key={student.user_id}>
+		               				<td>{student.first_name}</td>
+		               				<td>{student.last_name}</td>
+		               				<td>{student.nid}</td>
+		               				<td>{student.email}</td>
+		               				<td>{student.team}</td>
+		               				<td><button id={student.user_id}name="View" onClick={this.changePage}>View</button></td>
+		               			</tr>
+		               		)}
+		               	</tbody>
+		            </table>
+					
+					
+					<form onSubmit={this.submitFile}>
+	            		<input name="file" type="file" onChange={this.handleChange}></input>
+	           		 	<button>Submit</button>
+	        		</form>
+	            </div>
+	        )
+    	}
+    	else if(this.state.page) {
+    		return(    		
+    			<Student student_id={this.state.user_id}/>
+			)
+    	}
+
     }
 }
 export default Students;

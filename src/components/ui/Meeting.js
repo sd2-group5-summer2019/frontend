@@ -7,14 +7,14 @@ import Col from 'react-bootstrap/Col';
 
 class Meeting extends React.Component{
 
-//hard coded users in team for now
+//[{first_name:'bob', last_name:'saget', user_id:'13'}, {first_name:'spongebob', last_name:'squarepants', user_id:'1'}, {first_name:'patrick', last_name:'star', user_id:'2'}]
     constructor(props) {
         super(props);
         this.state = {
+            flag:false,
             instance_id:this.props.instance_id,
-            user_id:'',
             team_id:'',
-            users:[{first_name:'bob', last_name:'saget', user_id:'13'}, {first_name:'spongebob', last_name:'squarepants', user_id:'1'}, {first_name:'patrick', last_name:'star', user_id:'2'}],
+            team_members:[],
             token:'testToken',
             reasons:[],
             loading:false,
@@ -25,20 +25,40 @@ class Meeting extends React.Component{
             form_submitted:false
         };
     
-        this.componentWillMount = this.componentWillMount.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
         this.formHandler = this.formHandler.bind(this);
         this.redirectOnSubmit = this.redirectOnSubmit.bind(this);
         this.absenceHandler = this.absenceHandler.bind(this);
     }
     
-    componentWillMount(){
-        const temp = this.state.users;
+    componentDidMount(){
+        const payload = {
+            user_id: this.props.user_id
+        }
+        axios.post(`http://localhost:3001/api/getTeamID`, payload)
+        .then(response_team_id => {
+            this.setState({team_id:response_team_id.data.team_id[0].team_id})
+            console.log(response_team_id.data)
+
+            axios.post(`http://localhost:3001/api/getTeamMembers`, {team_id:response_team_id.data.team_id[0].team_id})
+            .then(response_team_members => {
+                this.setState({team_members:response_team_members.data.team_members})
+                console.log(response_team_members.data)
+            })
+            .catch(function (error){console.log(error)}) 
+        })
+        .catch(function (error){console.log(error)})
+
+        const temp = this.state.team_members;
         for(var i = 0; i < temp.length; i++)
         {
             temp[i].did_attend = true;
             temp[i].reason = ""
         }
-        this.setState({users:temp})
+        this.setState({
+            team_members:temp,
+            flag:true
+        })    
     }
 
     formHandler(event){
@@ -54,8 +74,6 @@ class Meeting extends React.Component{
         axios.post(`http://localhost:3001/api/createForm`, payload)
         .then(response => this.redirectOnSubmit(response))
         .catch(function (error){console.log(error)})
-        
-
     }
 
     redirectOnSubmit(res){
@@ -70,7 +88,7 @@ class Meeting extends React.Component{
     }
 
     absenceHandler(event) {
-        const temp = this.state.users
+        const temp = this.state.team_members
         const user_id = event.target.name
         const reason = event.target.value
         for(var i = 0; i < temp.length; i++){
@@ -82,10 +100,11 @@ class Meeting extends React.Component{
                 temp[i].reason=reason
             }            
         }
-        this.setState({users:temp})
+        this.setState({team_members:temp})
     }
 
     render(){
+
         const form_submitted = this.state.form_submitted
 
         if(!form_submitted){
@@ -105,7 +124,7 @@ class Meeting extends React.Component{
                                 </tr>
                             </thead>
                             <tbody>
-                                {this.state.users.map(student =>
+                                {this.state.team_members.map(student =>
                                     <tr key={student.user_id}>
                                         <td>{student.first_name} {student.last_name}</td>
                                         <td> <input type="text" name={student.user_id} value={this.state.reasons.reason} onChange={this.absenceHandler}/> 
