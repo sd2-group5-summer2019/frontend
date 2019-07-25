@@ -9,8 +9,6 @@ import {AssignmentsPageC} from './components/containers/CreateAssignmentC';
 import Create_Team from './components/ui/Create_Team';
 import Create_Student from './components/ui/Create_Student';
 import Create_Sponsor from './components/ui/Create_Sponsor';
-import Teams from './components/pages/Teams';
-import Students from './components/pages/Students';
 import Sponsors from './components/pages/Sponsors';
 import Get_Results from './components/ui/Get_Results';
 import {MeetingsPageC} from './components/containers/CreateMeetingC';
@@ -18,6 +16,7 @@ import CreateMeetingC from './components/containers/CreateMeetingC';
 import TeamsContainer, { StudentsContainer } from './components/containers/GeneralContainer';
 import CreateTaskC from './components/containers/CreateTaskC';
 import {ProjectManagementPageC} from './components/containers/CreateTaskC';
+import ActivateAccount from './components/ui/ActivateAccount'
 
 const routes = (
     <Router>
@@ -39,6 +38,7 @@ const routes = (
             <Route path="/meetings" exact component={MeetingsPageC} />
             <Route path="/create_meeting" exact component={CreateMeetingC} />
             <Route path="/create_task" exact component={CreateTaskC}/>
+            <Route path="/activate_account" exact component={ActivateAccount}/>
             <Route path="/project_management_page" exact component={ProjectManagementPageC}/>
         </Switch>
     </Router>

@@ -235,7 +235,7 @@ class CreateInstance extends React.Component{
     }
 
     formHandler(e){
-        e.preventDefault()
+       
         const payload = this.createPayload(this.state.code)
         payload.end_date = e.target.end_date.value
         payload.start_date = e.target.start_date.value
@@ -246,7 +246,7 @@ class CreateInstance extends React.Component{
             console.log(res.data)
         })
          
-        
+        alert("Assignment assigned");
     }
     
     

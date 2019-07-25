@@ -82,21 +82,21 @@ class LogIn extends React.Component {
         
                   <form onSubmit={this.formHandler}>
     
-                    <label> NID or knights Email </label>
+                    <label> Username (nid)</label>
                     <br></br>
-                    <input name="username" value={this.state.id} onChange={this.changeHandler} type="text"></input>
+                    <input className="form-control" name="username" value={this.state.id} onChange={this.changeHandler} type="text"></input>
                     <br></br>
-                    <label> password </label>
+                    <label> Password </label>
                     <br></br>
-                    <input name="password" value={this.state.passwd} onChange={this.changeHandler} type="password" ></input>
+                    <input className="form-control" name="password" value={this.state.passwd} onChange={this.changeHandler} type="password" ></input>
                     <br></br>
-                    <button type="submit">Submit</button>
+                    <center><button className="btn-primary" type="submit">Submit</button></center>
                     <br></br>
 
                     <br></br>
                         <Nav>
-                          <Nav.Link href="/register">
-                              Register 
+                          <Nav.Link href="/activate_account">
+                              Activate New Student Account
                          </Nav.Link>
                         </Nav>
                 </form>    

@@ -2,7 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import {LinkContainer} from "react-router-bootstrap";
 import { Navbar, Nav, NavItem} from "react-bootstrap";
-import Student from "../ui/Student"
+import Student from "../ui/Student";
+
 class Students extends React.Component {
 	constructor(props) {
 		super(props)

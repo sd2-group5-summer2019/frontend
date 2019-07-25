@@ -59,9 +59,10 @@ class Assignments extends React.Component{
             console.log(payload)
             axios.post(`http://localhost:3001/api/${api}`, payload).then(response => {
                 if(user_type === 'student'){
+                   
                     this.setState({
                         assignments:response.data.filter(function(item){
-                            return item.is_complete === 0;
+                            return (item.is_complete === 0 && (item.type === 'survey' || item.type === 'quiz'));
                         })
                     })
                 }else{
