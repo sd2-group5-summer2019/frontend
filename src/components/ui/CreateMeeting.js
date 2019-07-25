@@ -33,7 +33,7 @@ class CreateMeeting extends React.Component{
         const payload = {
             user_id: this.props.user_id
         }
-        axios.post(`http://localhost:3001/api/getTeamID`, payload)
+        axios.post(`http://` + this.props.ip_address + `:3001/api/getTeamID`, payload)
         .then(response_team_id => {
             this.setState({team_id:response_team_id.data.team_id[0].team_id})
             console.log(response_team_id.data)    
@@ -63,7 +63,7 @@ class CreateMeeting extends React.Component{
             end_date:this.state.date
         }
         console.log(payload)
-        axios.post(`http://localhost:3001/api/createForm`, payload)
+        axios.post(`http://` + this.props.ip_address + `:3001/api/createForm`, payload, {headers:{authorization:this.props.token}})
         .then(response => this.redirectOnSubmit(response))
         .catch(function (error){console.log(error)})
     }

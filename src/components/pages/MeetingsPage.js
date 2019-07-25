@@ -40,7 +40,9 @@ class MeetingsPage extends React.Component{
             const payload = {
                 user_id:user_id
             }
-            axios.post(`http://localhost:3001/api/getInstances`, payload).then(response => {
+
+            axios.post(`http://` + this.props.ip_address + `:3001/api/getInstances`, payload, {headers:{authorization:this.props.token}})
+            .then(response => {
                 const meetings = [];
                 for(var i = 0; i < response.data.length; i++) {
                     if(response.data[i].type === 'meeting')

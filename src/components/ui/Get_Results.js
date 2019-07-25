@@ -45,7 +45,7 @@ class Get_Results extends React.Component {
         e.preventDefault();
 
         console.log(this.state)
-        axios.post(`http://localhost:3001/api/getAnswers`, this.state)
+        axios.post(`http://` + this.props.ip_address + `:3001/api/getAnswers`, this.state, {headers:{authorization:this.props.token}})
         .then(response => this.changePage(response))
         .catch(function (error){console.log(error)})
     }

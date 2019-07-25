@@ -57,7 +57,7 @@ class Assignments extends React.Component{
             
 
             console.log(payload)
-            axios.post(`http://localhost:3001/api/${api}`, payload).then(response => {
+            axios.post(`http://` + this.props.ip_address  + `:3001/api/${api}`, payload, {headers:{authorization:this.props.token}}).then(response => {
                 if(user_type === 'student'){
                    
                     this.setState({

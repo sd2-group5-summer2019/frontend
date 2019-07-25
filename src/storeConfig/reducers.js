@@ -10,7 +10,8 @@ const initialState = {
     user_id:'',
     token:'',
     loggedIn:false,
-    userType:''
+    userType:'',
+    ip_address:'10.171.204.179'
 }
 
 function currentUser(state = initialState, action){
@@ -21,14 +22,15 @@ function currentUser(state = initialState, action){
                user_id:action.payload.user_id,
                token: action.payload.token,
                loggedIn:true,
-               userType:action.payload.userType
+               userType:action.payload.userType,
+               ip_address:'10.171.204.179'
            })
         case ON_LOGOUT:     
             return Object.assign({}, state, {
             userType:'',
             user_id:'',
             token:'',
-            loggedIn:false
+            loggedIn:false,
         })
         case GET_TYPE:
             return state.userType

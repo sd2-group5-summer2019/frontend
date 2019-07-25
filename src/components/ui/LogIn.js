@@ -64,7 +64,8 @@ class LogIn extends React.Component {
     formHandler = async event => {
         event.preventDefault()
         console.log(this.state)
-        axios.post(`http://localhost:3001/api/login_secure`, this.state)
+        console.log(`http://` + this.props.ip_address + `:3001/api/login_secure`)
+        axios.post(`http://` + this.props.ip_address + `:3001/api/login_secure`, this.state, {headers:{authorization:this.props.token}})
         .then(response => this.changePage(response))
         .catch(function (error){console.log(error + "in formhandler")})
     }

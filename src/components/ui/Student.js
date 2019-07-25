@@ -25,7 +25,7 @@ class Student extends React.Component {
 			"user_id":this.state.student_id
 		}
 		console.log(payload)
-    	axios.post('http://localhost:3001/api/getInstances', payload)
+    	axios.post(`http://` + this.props.ip_address + `:3001/api/getInstances`, payload, {headers:{authorization:this.props.token}})
         .then(res => {
 
         	const temp = []
@@ -42,7 +42,7 @@ class Student extends React.Component {
         .catch(function(error){console.log(error)})
 
 
-        axios.post("http://localhost:3001/api/getStudentName", payload)
+        axios.post(`http://` + this.props.ip_address + `:3001/api/getStudentName`, payload, {headers:{authorization:this.props.token}})
         .then(res => {
         	this.setState({student_name:res.data.first_name + " " + res.data.last_name})
         	console.log(res.data)

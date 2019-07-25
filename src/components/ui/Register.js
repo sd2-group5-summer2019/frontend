@@ -49,7 +49,7 @@ class Register extends React.Component{
         if (this.validateForm()){
             
             console.log(this.state)
-            axios.post(`http://localhost:3001/api/register`, this.state)
+            axios.post(`http://` + this.props.ip_address + `:3001/api/register`, this.state, {headers:{authorization:this.props.token}})
             .then(response => this.changePage(response))
             .catch(function (error){console.log(error)})
             alert("Form submitted");

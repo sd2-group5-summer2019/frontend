@@ -46,7 +46,7 @@ class Create_Sponsor extends React.Component {
         e.preventDefault();
 
         console.log(this.state)
-        axios.post(`http://localhost:3001/api/create_sponsor`, this.state)
+        axios.post(`http://` + this.props.ip_address + `:3001/api/create_sponsor`, this.state, {headers:{authorization:this.props.token}})
         .then(response => this.changePage(response))
         .catch(function (error){console.log(error)})
         alert("Form submitted");
@@ -54,7 +54,7 @@ class Create_Sponsor extends React.Component {
     }
 
     componentDidMount() {
-    axios.get('http://localhost:3001/api/get_all_teams')
+    axios.get(`http://` + this.props.ip_address + `:3001/api/get_all_teams`)
         .then(res => {
             this.state.all_teams = res.data;
         })

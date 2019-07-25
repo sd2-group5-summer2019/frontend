@@ -23,7 +23,7 @@ class Teams extends React.Component {
 		
 	const payload ={'user_id':this.state.user_id}
 	console.log(payload)
-    axios.post(`http://localhost:3001/api/getAllTeams`, payload)
+    axios.post(`http://` + this.props.ip_address + `:3001/api/getAllTeams`, payload, {headers:{authorization:this.props.token}})
         .then(res => {
 			console.log(res.data)
            this.setState({
@@ -33,7 +33,7 @@ class Teams extends React.Component {
 	}
 	
 	changePage(event) {
-		axios.post(`http://localhost:3001/api/getTeamMembers`, {team_id:event.target.id})
+		axios.post(`http://` + this.props.ip_address + `:3001/api/getTeamMembers`, {team_id:event.target.id}, {headers:{authorization:this.props.token}})
 			.then(res => {
 				console.log(res.data)
 				this.setState({

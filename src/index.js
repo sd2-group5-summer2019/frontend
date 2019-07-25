@@ -12,7 +12,13 @@ import routes from './Routes';
 // you dont get logged out, later on as the store gets more complex
 // we can add more to local storage but for now its just
 // user_id,loggedIn boolean, token, and type
-const initialState =  (localStorage['redux-store']) ? JSON.parse(localStorage['redux-store']) : {}
+const initialState =  (localStorage['redux-store']) ? JSON.parse(localStorage['redux-store']) : ({
+    user_id:'',
+    token:'',
+    loggedIn:false,
+    userType:'',
+    ip_address:'10.171.204.179'
+})
 
 // creates the store
 const store = createStore(currentUser, initialState)
