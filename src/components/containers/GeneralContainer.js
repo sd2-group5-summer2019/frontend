@@ -7,6 +7,7 @@ import Students from '../pages/Students';
 import Student from '../ui/Student';
 import InstructorDashboard from '../ui/InstructorDashboard';
 import StudentDashboard from '../ui/StudentDashboard';
+import Get_Results from '../ui/Get_Results'
 
 const mapStateToProps = state =>{
     return {
