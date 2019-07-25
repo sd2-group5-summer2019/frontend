@@ -23,6 +23,7 @@ function currentUser(state = initialState, action){
                token: action.payload.token,
                loggedIn:true,
                userType:action.payload.userType,
+               ip_address:'10.171.204.179'
            })
         case ON_LOGOUT:     
             return Object.assign({}, state, {
