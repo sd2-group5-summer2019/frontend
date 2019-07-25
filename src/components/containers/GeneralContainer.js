@@ -34,5 +34,5 @@ export const InstructorDashContainer = connect(mapStateToProps)(InstructorDashbo
 // Student Dashboard container
 export const StudentDashContainer = connect(mapStateToProps)(StudentDashboard)
 
-
+export const Get_ResultsContainer = connect(mapStateToProps)(Get_Results)
 export default TeamsContainer;

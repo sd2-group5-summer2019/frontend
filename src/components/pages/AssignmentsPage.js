@@ -12,7 +12,7 @@ import Get_Results from '../ui/Get_Results';
 import Button from 'react-bootstrap/Button';
 import CreateInstance from '../ui/CreateInstance';
 import { Nav } from 'react-bootstrap';
-import {AssignContainer, TakeAssignmentContainer} from '../containers/GeneralContainer';
+import {AssignContainer, TakeAssignmentContainer, Get_ResultsContainer} from '../containers/GeneralContainer';
 
 class Assignments extends React.Component{
         constructor(props){
@@ -222,7 +222,7 @@ class Assignments extends React.Component{
                                 <Col sm={3} > <MenuContainer/>  </Col>
                                 <Col sm={9}> 
                                    
-                                    <Get_Results flag={"true"} form_id={this.state.form_id} /> 
+                                    <Get_ResultsContainer flag={"true"} form_id={this.state.form_id} /> 
                                 </Col>
                             </Row>
                         </Container>
