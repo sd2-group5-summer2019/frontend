@@ -10,20 +10,35 @@ class Teams extends React.Component {
 			user_id:this.props.user_id,
 			teams: [],
 			students:[],
-			page:false
-			
+			page:false,
+			files:null
 		}
 		this.changePage = this.changePage.bind(this);
 		this.componentDidMount = this.componentDidMount.bind(this);
-		// this.state.teams = [{id: "nid", project_name: "name", sponsor: "Heinrik", num_students: "5"}]
-
+		this.submitFile = this.submitFile.bind(this)
+		this.handleChange = this.handleChange.bind(this)
 	}
 
-    componentDidMount() {
-		
-	const payload ={'user_id':this.state.user_id}
-	console.log(payload)
-    axios.post(`http://` + this.props.ip_address + `:3001/api/getAllTeams`, payload, {headers:{authorization:this.props.token}})
+	submitFile(e){
+		e.preventDefault()
+		const formData = new FormData();
+		formData.append("file", this.state.file)
+		formData.append("user_id", this.props.user_id)
+		axios.post(`http://` + this.props.ip_address + `:3001/api/teamUpload`,  formData, {headers:{authorization:this.props.token}})
+	    .then(res => {
+	       
+	       console.log(res.data);
+	     })
+	}
+
+	handleChange(e){
+		e.preventDefault()
+		this.setState({file:e.target.files[0]})
+	}
+	componentDidMount(){
+		const payload ={'user_id':this.state.user_id}
+		console.log(payload)
+    	axios.post(`http://` + this.props.ip_address + `:3001/api/getAllTeams`, payload, {headers:{authorization:this.props.token}})
         .then(res => {
 			console.log(res.data)
            this.setState({
@@ -73,7 +88,12 @@ class Teams extends React.Component {
 		               		)}
 		               	</tbody>
 		            </table>
-	            </div>
+
+						<form onSubmit={this.submitFile}>
+		            		<input name="file" type="file" onChange={this.handleChange}></input>
+		           		 	<button>Submit</button>
+		        		</form>	            
+	        		</div>
 	        );		
     	} else if(this.state.page) {
     		return(<Students students={this.state.students}/>)

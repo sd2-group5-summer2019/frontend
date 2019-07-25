@@ -8,6 +8,7 @@ import Student from '../ui/Student';
 import InstructorDashboard from '../ui/InstructorDashboard';
 import StudentDashboard from '../ui/StudentDashboard';
 import ActivateAccount from '../ui/ActivateAccount';
+import Get_Results from '../ui/Get_Results'
 
 const mapStateToProps = state =>{
     return {
@@ -39,4 +40,5 @@ export const StudentDashContainer = connect(mapStateToProps)(StudentDashboard)
 
 export const ActivateAccountC = connect(mapStateToProps)(ActivateAccount)
 
+export const Get_ResultsContainer = connect(mapStateToProps)(Get_Results)
 export default TeamsContainer;

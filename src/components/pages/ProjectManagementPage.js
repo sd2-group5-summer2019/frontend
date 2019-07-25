@@ -44,7 +44,8 @@ class ProjectManagementPage extends React.Component{
             const payload = {
                 user_id:user_id
             }
-            axios.post(`http://` + this.props.ip_address + `:3001/api/getInstances`, payload, {headers:{authorization:this.props.token}}).then(response => {
+            axios.post(`http://` + this.props.ip_address + `:3001/api/getInstances`, payload, {headers:{authorization:this.props.token}})
+            .then(response => {
                 const milestones = [];
                 const tasks = [];
                 for(var i = 0; i < response.data.length; i++) {
@@ -52,18 +53,20 @@ class ProjectManagementPage extends React.Component{
                         milestones.push(response.data[i])
                     }
                     if(response.data[i].type === 'task') {
-                        console.log(response.data[i].user_id)
+
                         const name_payload = {
                             user_id:response.data[i].user_id
                         }
                         const temp = response.data[i]
                         axios.post(`http://` + this.props.ip_address + `:3001/api/getStudentName`, name_payload, {headers:{authorization:this.props.token}})
                         .then(response_name => {
-                            temp.name = response_name.data.first_name + " " + response_name.data.last_name                     
+                            temp.name = response_name.data.first_name + " " + response_name.data.last_name 
+                            console.log(temp)
                             tasks.push(temp)
                             this.setState({tasks:tasks})
                         })
                         .catch(function(error){console.log(error)})
+                        console.log(temp)
                     }
                 }
                 this.setState({
