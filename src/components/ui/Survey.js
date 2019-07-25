@@ -28,7 +28,6 @@ class Survey extends React.Component{
         };
     
         this.handleChange1 = this.handleChange1.bind(this);
-        this.requestForm = this.requestForm.bind(this);
         this.changePage = this.changePage.bind(this);
         this.questionHandler= this.questionHandler.bind(this);
         this.formHandler = this.formHandler.bind(this);
