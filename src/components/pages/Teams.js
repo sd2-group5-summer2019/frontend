@@ -10,7 +10,7 @@ class Teams extends React.Component {
 			user_id:this.props.user_id,
 			teams: [],
 			students:[],
-			page:false
+			page:false,
 			files:null
 		}
 		this.changePage = this.changePage.bind(this);
@@ -23,10 +23,7 @@ class Teams extends React.Component {
 		e.preventDefault()
 		const formData = new FormData();
 		formData.append("file", this.state.file)
-		formData.append("sd1_term", "summer")
-		formData.append("sd1_year", '2019')
-
-		console.log(formData)
+		formData.append("user_id", this.props.user_id)
 		axios.post(`http://` + this.props.ip_address + `:3001/api/teamUpload`,  formData, {headers:{authorization:this.props.token}})
 	    .then(res => {
 	       
@@ -38,10 +35,10 @@ class Teams extends React.Component {
 		e.preventDefault()
 		this.setState({file:e.target.files[0]})
 	}
-		
-	const payload ={'user_id':this.state.user_id}
-	console.log(payload)
-    axios.post(`http://` + this.props.ip_address + `:3001/api/getAllTeams`, payload, {headers:{authorization:this.props.token}})
+	componentDidMount(){
+		const payload ={'user_id':this.state.user_id}
+		console.log(payload)
+    	axios.post(`http://` + this.props.ip_address + `:3001/api/getAllTeams`, payload, {headers:{authorization:this.props.token}})
         .then(res => {
 			console.log(res.data)
            this.setState({
