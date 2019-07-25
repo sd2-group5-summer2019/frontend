@@ -26,7 +26,7 @@ class Students extends React.Component {
 		formData.append("sd1_year", '2019')
 
 		console.log(formData)
-    	axios.post('http://localhost:3001/api/studentUpload',  formData, { headers: { Authorization: `Bearer ${this.props.token}`, 'content-type': 'multipart/form-data'} })
+    	axios.post(`http://` + this.props.ip_address + `:3001/api/studentUpload`,  formData, {headers:{authorization:this.props.token}})
         .then(res => {
            
            console.log(res.data);
@@ -47,7 +47,7 @@ class Students extends React.Component {
 				"type":this.props.userType
 			}
 			console.log(payload)
-	    	axios.post('http://localhost:3001/api/getAllStudents', payload)
+	    	axios.post(`http://` + this.props.ip_address + `:3001/api/getAllStudents`, payload, {headers:{authorization:this.props.token}})
 	        .then(res => {
 	            this.setState({students:res.data})
 	            console.log(res.data);

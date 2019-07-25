@@ -14,14 +14,14 @@ class Sponsors extends React.Component {
 	}
 
     componentDidMount() {
-    	axios.get('http://localhost:3001/api/get_all_sponsors')
+    	axios.get('http://` + this.props.ip_address + `:3001/api/get_all_sponsors')
         .then(res => {
             this.state.sponsors = res.data;
         })
     }
 
     deleteRequest(id) {
-    	axios.post('http://localhost:3001/api/delete_user', id)
+    	axios.post(`http://` + this.props.ip_address + `:3001/api/delete_user`, id, {headers:{authorization:this.props.token}})
         .catch(function (error){console.log(error)})
     }
 	//GET ALL GROUPS FOR PARTICULAR COURSE FROM BACKEND

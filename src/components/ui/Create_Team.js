@@ -49,7 +49,7 @@ class Create_Team extends React.Component {
         e.preventDefault();
 
         console.log(this.state)
-        axios.post(`http://localhost:3001/api/create_team`, this.state)
+        axios.post(`http://` + this.props.ip_address + `:3001/api/create_team`, this.state, {headers:{authorization:this.props.token}})
         .then(response => this.changePage(response))
         .catch(function (error){console.log(error)})
         alert("Form submitted");
@@ -57,7 +57,7 @@ class Create_Team extends React.Component {
     }
 
     componentDidMount() {
-    axios.get('http://localhost:3001/api/get_all_sponsors')
+    axios.get(`http://` + this.props.ip_address + `:3001/api/get_all_sponsors`)
         .then(res => {
         	this.state.all_sponsors = res.data;
         })

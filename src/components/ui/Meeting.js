@@ -35,12 +35,12 @@ class Meeting extends React.Component{
         const payload = {
             user_id: this.props.user_id
         }
-        axios.post(`http://localhost:3001/api/getTeamID`, payload)
+        axios.post(`http://` + this.props.ip_address + `:3001/api/getTeamID`, payload)
         .then(response_team_id => {
             this.setState({team_id:response_team_id.data.team_id[0].team_id})
             console.log(response_team_id.data)
 
-            axios.post(`http://localhost:3001/api/getTeamMembers`, {team_id:response_team_id.data.team_id[0].team_id})
+            axios.post(`http://` + this.props.ip_address + `:3001/api/getTeamMembers`, {team_id:response_team_id.data.team_id[0].team_id}, {headers:{authorization:this.props.token}})
             .then(response_team_members => {
                 this.setState({team_members:response_team_members.data.team_members})
                 console.log(response_team_members.data)
@@ -71,7 +71,7 @@ class Meeting extends React.Component{
             users:this.state.users   
         }
         console.log(payload)
-        axios.post(`http://localhost:3001/api/createForm`, payload)
+        axios.post(`http://` + this.props.ip_address + `:3001/api/createForm`, payload)
         .then(response => this.redirectOnSubmit(response))
         .catch(function (error){console.log(error)})
     }

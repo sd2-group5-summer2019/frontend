@@ -171,7 +171,7 @@ class CreateInstance extends React.Component{
             loadingButton:'loading...'
         })
         
-        axios.post(`http://localhost:3001/api/${apiCall}`, payload)
+        axios.post(`http://` + this.props.ip_address + `:3001/api/${apiCall}`, payload, {headers:{authorization:this.props.token}})
         .then(res => {
             console.log(res.data)
             this.setState({
@@ -241,7 +241,7 @@ class CreateInstance extends React.Component{
         payload.start_date = e.target.start_date.value
         console.log(payload)
 
-        axios.post('http://localhost:3001/api/assignForm', payload).then(res=>{
+        axios.post(`http://` + this.props.ip_address + `:3001/api/assignForm`, payload, {headers:{authorization:this.props.token}}).then(res=>{
 
             console.log(res.data)
         })

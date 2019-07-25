@@ -48,7 +48,7 @@ class Create_Student extends React.Component {
         e.preventDefault();
 
         console.log(this.state)
-        axios.post(`http://localhost:3001/api/create_student`, this.state)
+        axios.post(`http://` + this.props.ip_address + `:3001/api/create_student`, this.state, {headers:{authorization:this.props.token}})
         .then(response => this.changePage(response))
         .catch(function (error){console.log(error)})
         alert("Form submitted");
@@ -56,7 +56,7 @@ class Create_Student extends React.Component {
     }
 
     componentDidMount() {
-    axios.get('http://localhost:3001/api/get_all_teams')
+    axios.post(`http://` + this.props.ip_address + `:3001/api/get_all_teams`, {headers:{authorization:this.props.token}})
         .then(res => {
             this.state.all_teams = res.data;
         })
