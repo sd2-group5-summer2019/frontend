@@ -66,7 +66,7 @@ class ActivateAccount extends React.Component{
         console.log(payload)
         this.setState({code:code, loading:true})
 
-        axios.post(`http://` + 'localhost' + `:3001/api/verifyCode`, payload, {headers:{authorization:this.state.token}})
+        axios.post(`http://` + this.props.ip_address + `:3001/api/verifyCode`, payload, {headers:{authorization:this.state.token}})
         .then(response => {
             console.log(response.data)
                 if(response.data.status !== undefined && response.data.status === 'Success'){
@@ -89,7 +89,7 @@ class ActivateAccount extends React.Component{
 
         if(password === passwordCheck){
             const payload = {"username": this.state.username, "new_password":password}    
-            axios.post(`http://` + 'localhost' + `:3001/api/setNewPassword`, payload, {headers:{authorization:this.state.token}})
+            axios.post(`http://` + this.props.ip_address + `:3001/api/setNewPassword`, payload, {headers:{authorization:this.state.token}})
             .then(response => {
                     if(response.data.status !== undefined && response.data.status === 'Success'){
                         this.setState({
