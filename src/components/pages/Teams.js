@@ -11,11 +11,12 @@ class Teams extends React.Component {
 			teams: [],
 			students:[],
 			page:false
-			
+			files:null
 		}
 		this.changePage = this.changePage.bind(this);
 		this.componentDidMount = this.componentDidMount.bind(this);
 		this.submitFile = this.submitFile.bind(this)
+		this.handleChange = this.handleChange.bind(this)
 	}
 
 	submitFile(e){
@@ -33,7 +34,10 @@ class Teams extends React.Component {
 	     })
 	}
 
-    componentDidMount() {
+	handleChange(e){
+		e.preventDefault()
+		this.setState({file:e.target.files[0]})
+	}
 		
 	const payload ={'user_id':this.state.user_id}
 	console.log(payload)
