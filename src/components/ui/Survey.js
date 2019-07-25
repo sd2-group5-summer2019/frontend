@@ -280,7 +280,7 @@ class Survey extends React.Component{
            //let {questions}= Array.from(this.state.data)
             return(
                 <Card>
-                    <Card.Header as="h1">{title} </Card.Header>
+                    <Card.Header as="h1"> {title} </Card.Header>
                     <Card.Body>
                         <Card.Text></Card.Text>
                         <ListGroup>
