@@ -19,6 +19,8 @@ const initialState =  (localStorage['redux-store']) ? JSON.parse(localStorage['r
     userType:'',
     ip_address:'10.171.204.179'
 })
+// '10.171.204.179'
+// localhost 
 
 // creates the store
 const store = createStore(currentUser, initialState)
