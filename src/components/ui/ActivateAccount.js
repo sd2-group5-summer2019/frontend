@@ -35,7 +35,7 @@ class ActivateAccount extends React.Component{
         const payload ={"username": e.target.username.value}
         this.setState({username:username, loading:true})
 
-        axios.post(`http://` + 'localhost' + `:3001/api/verifyStudentEmail`, payload)
+        axios.post(`http://` + this.props.ip_address + `:3001/api/verifyStudentEmail`, payload)
         .then(response => {
                 if(response.data.status !== undefined){
                    this.setState({
