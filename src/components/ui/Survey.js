@@ -110,19 +110,18 @@ class Survey extends React.Component{
               
     }
 
-    requestForm(event){
-        event.preventDefault()
-        const header =`Authorization:Bearer ${this.state.token}`
-        const payload = {
-            form_id: this.state.form_id
-        }
-        this.setState({loading:true})
-        console.log(this.state.form_id)
-        axios.post(`http://localhost:3001/api/getForm`,  payload, { headers: { Authorization: `Bearer ${this.state.token}` } })
-        .then(response => this.changePage(response))
-        .catch(function (error){console.log(error)})
-
-    }
+    // requestForm(event){
+    //     event.preventDefault()
+    //     const header =`Authorization:Bearer ${this.state.token}`
+    //     const payload = {
+    //         form_id: this.state.form_id
+    //     }
+    //     this.setState({loading:true})
+    //     console.log(this.state.form_id)
+    //     axios.post(`http://localhost:3001/api/getForm`,  payload, {headers:{authorization:this.props.token}})
+    //     .then(response => this.changePage(response))
+    //     .catch(function (error){console.log(error)})
+    // }
 
     questionHandler(event){
 
@@ -149,7 +148,7 @@ class Survey extends React.Component{
             instance_id:this.props.instance_id    
         }
         console.log(payload)
-        axios.post(`http://` + this.props.ip_address + `:3001/api/submitForm`, payload, { headers: { Authorization: `Bearer ${this.state.token}` } })
+        axios.post(`http://` + this.props.ip_address + `:3001/api/submitForm`, payload, {headers:{authorization:this.props.token}})
         .then(response => this.redirectOnSubmit(response))
         .catch(function (error){console.log(error)})
     }
