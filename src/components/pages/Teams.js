@@ -15,8 +15,22 @@ class Teams extends React.Component {
 		}
 		this.changePage = this.changePage.bind(this);
 		this.componentDidMount = this.componentDidMount.bind(this);
-		// this.state.teams = [{id: "nid", project_name: "name", sponsor: "Heinrik", num_students: "5"}]
+		this.submitFile = this.submitFile.bind(this)
+	}
 
+	submitFile(e){
+		e.preventDefault()
+		const formData = new FormData();
+		formData.append("file", this.state.file)
+		formData.append("sd1_term", "summer")
+		formData.append("sd1_year", '2019')
+
+		console.log(formData)
+		axios.post(`http://` + this.props.ip_address + `:3001/api/teamUpload`,  formData, {headers:{authorization:this.props.token}})
+	    .then(res => {
+	       
+	       console.log(res.data);
+	     })
 	}
 
     componentDidMount() {
@@ -73,7 +87,12 @@ class Teams extends React.Component {
 		               		)}
 		               	</tbody>
 		            </table>
-	            </div>
+
+						<form onSubmit={this.submitFile}>
+		            		<input name="file" type="file" onChange={this.handleChange}></input>
+		           		 	<button>Submit</button>
+		        		</form>	            
+	        		</div>
 	        );		
     	} else if(this.state.page) {
     		return(<Students students={this.state.students}/>)
