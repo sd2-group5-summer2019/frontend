@@ -11,7 +11,6 @@ class CreateMeeting extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            token:'testToken',
             loading:false,
             title:'',
             team_id:'',
@@ -33,7 +32,7 @@ class CreateMeeting extends React.Component{
         const payload = {
             user_id: this.props.user_id
         }
-        axios.post(`http://` + this.props.ip_address + `:3001/api/getTeamID`, payload)
+        axios.post(`http://` + this.props.ip_address + `:3001/api/getTeamID`, payload, {headers:{authorization:this.props.token}})
         .then(response_team_id => {
             this.setState({team_id:response_team_id.data.team_id[0].team_id})
             console.log(response_team_id.data)    
@@ -56,7 +55,6 @@ class CreateMeeting extends React.Component{
             access_level:this.props.userType,
             type:this.state.type,
             team_id:this.state.team_id,
-            token:this.state.token,
             title:this.state.title,
             description:this.state.description,
             start_date:this.state.date,
