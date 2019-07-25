@@ -206,6 +206,7 @@ class Assignments extends React.Component{
             }else if(page === 1){
                 return(
                     <Container >
+                        <Row><br></br></Row>
                         <Row>
                             <Col sm={3} > <MenuContainer/> </Col>
                             <Col sm={9} style={{padding:"10px 0 0 0"}}> <TakeAssignmentContainer form_id={this.state.form_id} instance_id={this.state.instance_id} /> </Col>

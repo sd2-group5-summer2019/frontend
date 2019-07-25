@@ -70,12 +70,24 @@ class Survey extends React.Component{
                             </Container>
             break;
             case 'multiple_choice':
-                    element =   <div>
-                                    <input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={question.answers[0].answer_text }/> <label>{question.answers[0].answer_text }</label><br></br>
-                                    <input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={question.answers[1].answer_text }/> <label>{question.answers[1].answer_text }</label><br></br>
-                                    <input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={question.answers[2].answer_text}/> <label>{question.answers[2].answer_text }</label><br></br>
-                                    <input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={question.answers[3].answer_text}/> <label>{question.answers[3].answer_text }</label><br></br>
-                                </div>
+                    element =   <Container >
+                                    <Row> 
+                                            <Col sm={.5}><input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={question.answers[0].answer_text }/> </Col>
+                                            <Col md={11}><label> {" " + question.answers[0].answer_text }</label></Col>
+                                    </Row>
+                                    <Row>  
+                                        <Col  sm={.5}> <input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={question.answers[1].answer_text }/> </Col>
+                                        <Col  md={11}><label> {" " + question.answers[1].answer_text }</label></Col>
+                                    </Row>
+                                    <Row>
+                                        <Col sm={.5}> <input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={question.answers[2].answer_text}/></Col>
+                                        <Col md={11}> <label> {" " + question.answers[2].answer_text }</label></Col> 
+                                    </Row>
+                                    <Row>   
+                                        <Col sm={.5}><input type="radio" id={i} onChange={this.questionHandler} name={question.question_id} value={question.answers[3].answer_text}/></Col>
+                                        <Col md={11}> <label> {" " + question.answers[3].answer_text }</label></Col>
+                                    </Row>
+                                </Container>
                   
             break;
             case 'free_response':
@@ -270,7 +282,7 @@ class Survey extends React.Component{
                 <Card>
                     <Card.Header as="h1">{title} </Card.Header>
                     <Card.Body>
-                        <Card.Text>Description</Card.Text>
+                        <Card.Text></Card.Text>
                         <ListGroup>
                    
                                 <ListGroup.Item></ListGroup.Item>

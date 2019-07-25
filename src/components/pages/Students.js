@@ -26,7 +26,7 @@ class Students extends React.Component {
 		formData.append("sd1_year", '2019')
 
 		console.log(formData)
-    	axios.post('http://localhost:3001/api/csvUpload',  formData, { headers: { Authorization: `Bearer ${this.props.token}`, 'content-type': 'multipart/form-data'} })
+    	axios.post('http://localhost:3001/api/studentUpload',  formData, { headers: { Authorization: `Bearer ${this.props.token}`, 'content-type': 'multipart/form-data'} })
         .then(res => {
            
            console.log(res.data);
