@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {LinkContainer} from "react-router-bootstrap";
 import { Navbar, Nav, NavItem} from "react-bootstrap";
-import Student from "../ui/Student";
+import {StudentC} from "../containers/GeneralContainer";
 
 class Students extends React.Component {
 	constructor(props) {
@@ -113,7 +113,7 @@ class Students extends React.Component {
     	}
     	else if(this.state.page) {
     		return(    		
-    			<Student student_id={this.state.user_id}/>
+    			<StudentC student_id={this.state.user_id}/>
 			)
     	}
 
