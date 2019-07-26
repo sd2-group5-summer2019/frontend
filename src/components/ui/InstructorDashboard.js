@@ -1,13 +1,38 @@
 import React from 'react';
+import { Table, Container, Row, Col } from 'react-bootstrap';
 
 
 class InstructorDash extends React.Component{
+    constructor(props){
+        super(props)
+        this.state ={
+            alerts:[],
+            alertsLoaded:false
+        }
 
+    }
+
+    componentDidMount(){
+        
+
+    }
 
     render(){
-        return(
-            <div>Instructor Dashboard</div>
-        )
+        if(this.state.alertsLoaded){
+            return(
+                <Container> 
+                    <Row>
+                        <Col>
+                        Working 
+                        </Col>
+                    </Row>
+                </Container>
+            )
+        }else{
+            return(
+                <div>loading</div>
+            )
+        }
     }
 }
 
