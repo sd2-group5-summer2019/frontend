@@ -305,7 +305,7 @@ class Survey extends React.Component{
         } else if (form_submitted) {
             return(
                 <Card>
-                    <Card.Body><h1>Survey Completed</h1></Card.Body>
+                    <Card.Body><h1>Assignment Completed</h1></Card.Body>
                 </Card>
                 
             )
