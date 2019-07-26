@@ -21,7 +21,6 @@ class ProjectManagementPage extends React.Component{
             super(props)
             this.state = {
                 milestones:[],
-                flag:this.props.flag,
                 tasks:[],
                 loading:false,
                 instance_id:'',
@@ -49,11 +48,13 @@ class ProjectManagementPage extends React.Component{
             .then(response => {
                 const milestones = [];
                 const tasks = [];
+                console.log(response.data)
                 for(var i = 0; i < response.data.length; i++) {
                     if(response.data[i].type === 'milestone'){
                         milestones.push(response.data[i])
                     }
                     if(response.data[i].type === 'task') {
+                        console.log(response.data[i])
 
                         const name_payload = {
                             user_id:response.data[i].user_id
@@ -130,7 +131,6 @@ class ProjectManagementPage extends React.Component{
                                     <tr>
                                         <th>Name</th>
                                         <th>Due Date</th>
-                                        <th>Status</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -139,7 +139,6 @@ class ProjectManagementPage extends React.Component{
                                         <tr key={milestone.instance_id}>
                                             <td>{milestone.title}</td>
                                             <td>{milestone.end_date}</td>
-                                            <td>{milestone.is_complete ? 'Completed' : 'Not Started' }</td>
                                             <td> <button id={milestone.instance_id} title={milestone.type} name={milestone.description} value={milestone.is_complete} onClick={this.changePage}>View Summary</button></td> 
                                         </tr>
                                     )}
@@ -152,7 +151,6 @@ class ProjectManagementPage extends React.Component{
                                         <th>Name</th>
                                         <th>Assigned to</th>
                                         <th>Due Date</th>
-                                        <th>Status</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -162,7 +160,6 @@ class ProjectManagementPage extends React.Component{
                                             <td>{task.title}</td>
                                             <td>{task.name}</td>
                                             <td>{task.end_date}</td>
-                                            <td>{task.is_complete ? 'Completed' : 'Not Started' }</td>
                                             <td> <button id={task.instance_id} title={task.type} onClick={this.changePage}>View Summary</button></td> 
                                         </tr>
                                     )}
@@ -174,7 +171,7 @@ class ProjectManagementPage extends React.Component{
                 </Container>
                )
 
-            }else if(this.state.page || this.state.flag){
+            }else if(this.state.page){
                 return(
                     <Container>
                         <Row>

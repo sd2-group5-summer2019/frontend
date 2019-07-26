@@ -171,7 +171,6 @@ class StudentDashboard extends React.Component{
                                     <tr>
                                         <th>Name</th>
                                         <th>Due Date</th>
-                                        <th>Status</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -179,7 +178,6 @@ class StudentDashboard extends React.Component{
                                      {this.state.tasks.map(task =>
                                         <tr key={task.instance_id}>
                                             <td>{task.title}</td>
-                                            <td>{task.name}</td>
                                             <td>{task.end_date}</td>
                                             <td> <button id={task.instance_id} title={task.type} onClick={this.changePage}>View Summary</button></td> 
                                         </tr>

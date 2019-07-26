@@ -79,35 +79,25 @@ class Task extends React.Component{
         const type = this.state.type
         const is_complete = this.state.is_complete
         console.log(this.state)
-        if(!form_submitted && !is_complete && type === 'task'){
+        if(!form_submitted && type === 'task'){
             return(
                 <div>
                     <h1 className="header">Task: {this.state.title} </h1>
                     <p>{this.state.description}</p>
-                    <form onSubmit={this.formHandler}>
-                        <textarea style={{color:'black'}} name="task_note" value={this.state.task_note} onChange={this.handleChange} placeholder="Enter any information about completing this task."/>
-                        <button type="submit"> Submit </button>
-                    </form>
                 </div>
             )
 
-        } else if(!form_submitted && !is_complete && type === 'milestone'){
+        } else if(!form_submitted && type === 'milestone'){
             return(
                 <div>
                     <h1 className="header">Milestone: {this.state.title} </h1>
                         <p>{this.state.description}</p>
-                        <form onSubmit={this.formHandler}><button type="submit"> Submit </button></form>
                 </div>
             )
 
         } else if (form_submitted){
             return (<Redirect to='/'/>)
-        } else if (is_complete && type === 'task'){
-            //show task info
-
-        } else if (is_complete && type === 'milestone'){
-            //show milestone info
-        }
+        } 
         else {
             return (<div><h1>ERROR</h1></div>)
         }

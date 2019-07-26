@@ -33,7 +33,6 @@ class MeetingsPage extends React.Component{
             }
             this.componentDidMount = this.componentDidMount.bind(this);
             this.changePage = this.changePage.bind(this);
-            this.getAttendance = this.getAttendance.bind(this)
         }
 
         componentDidMount(){
@@ -56,11 +55,6 @@ class MeetingsPage extends React.Component{
                 console.log(response.data)
             })
             .catch(function (error){console.log(error)})
-        }
-
-        getAttendance() {
-
-
         }
         
         changePage(event){
@@ -94,7 +88,7 @@ class MeetingsPage extends React.Component{
    
     render(){
 
-        if(!this.state.page){
+        if(!this.state.page ){
                return(
                   <Container>
                     <Row className="text-center"> <h1>Meetings</h1></Row>
