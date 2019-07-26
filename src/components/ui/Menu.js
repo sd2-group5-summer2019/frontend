@@ -29,7 +29,7 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
                   <Navbar.Collapse  id="responsive-navbar-nav">
                   <Nav justify className="flex-column">
                         <ListGroup >
-                            <ListGroup.Item action href="/">Dashboard</ListGroup.Item>
+                            <ListGroup.Item action href="/student_dashboard">Dashboard</ListGroup.Item>
                             <ListGroup.Item action href="/assignments">Assignments</ListGroup.Item>
                             <ListGroup.Item action href="/meetings"> Meetings</ListGroup.Item>
                             <ListGroup.Item action href="/project_management_page">Project Management</ListGroup.Item>

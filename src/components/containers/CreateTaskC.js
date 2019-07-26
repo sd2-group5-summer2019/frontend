@@ -1,4 +1,5 @@
 import CreateTask from '../ui/CreateTask';
+import Task from '../ui/Task'
 import {connect} from 'react-redux';
 import ProjectManagementPage from '../pages/ProjectManagementPage';
 
@@ -16,5 +17,5 @@ const CreateTaskC = connect(mapStateToProps)(CreateTask)
 
 export const ProjectManagementPageC = connect(mapStateToProps)(ProjectManagementPage)
 
-
+export const TaskC = connect(mapStateToProps)(Task)
 export default CreateTaskC;
