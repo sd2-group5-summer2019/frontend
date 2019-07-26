@@ -35,7 +35,7 @@ class CreateMeeting extends React.Component{
         axios.post(`http://` + this.props.ip_address + `:3001/api/getTeamID`, payload, {headers:{authorization:this.props.token}})
         .then(response_team_id => {
             this.setState({team_id:response_team_id.data.team_id[0].team_id})
-            console.log(response_team_id.data)    
+            console.log(response_team_id)    
         })
         .catch(function (error){console.log(error)}) 
     }

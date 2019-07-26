@@ -11,7 +11,7 @@ import {Redirect} from 'react-router-dom';
 import Get_Results from '../ui/Get_Results';
 import {LinkContainer} from "react-router-bootstrap";
 import { Navbar, Nav, NavItem} from "react-bootstrap";
-import Task from '../ui/Task';
+import {TaskC} from '../containers/CreateTaskC';
 //access_level, title, user_id, description, team_id, start_date, end_date
 //{title:'test', description:'agenda', start_date:'start', end_date:'end', completed:'false'}
 //[{form_id:'10', title:'test', description:'agenda', start_date:'start', end_date:'end', is_complete:false}]                            
@@ -21,6 +21,7 @@ class ProjectManagementPage extends React.Component{
             super(props)
             this.state = {
                 milestones:[],
+                flag:this.props.flag,
                 tasks:[],
                 loading:false,
                 instance_id:'',
@@ -61,12 +62,10 @@ class ProjectManagementPage extends React.Component{
                         axios.post(`http://` + this.props.ip_address + `:3001/api/getStudentName`, name_payload, {headers:{authorization:this.props.token}})
                         .then(response_name => {
                             temp.name = response_name.data.first_name + " " + response_name.data.last_name 
-                            console.log(temp)
                             tasks.push(temp)
                             this.setState({tasks:tasks})
                         })
                         .catch(function(error){console.log(error)})
-                        console.log(temp)
                     }
                 }
                 this.setState({
@@ -175,12 +174,12 @@ class ProjectManagementPage extends React.Component{
                 </Container>
                )
 
-            }else if(this.state.page){
+            }else if(this.state.page || this.state.flag){
                 return(
                     <Container>
                         <Row>
                             <Col sm={3}> <MenuContainer/> </Col>
-                            <Col sm={9}> <Task title={this.state.title} description={this.state.description} type={this.state.type} instance_id={this.state.instance_id} type={this.state.type} is_complete={this.state.is_complete} /> </Col>
+                            <Col sm={9}> <TaskC title={this.state.title} description={this.state.description} type={this.state.type} instance_id={this.state.instance_id} is_complete={this.state.is_complete} /> </Col>
                         </Row>
                     </Container>
                 )

@@ -108,6 +108,9 @@ class Task extends React.Component{
         } else if (is_complete && type === 'milestone'){
             //show milestone info
         }
+        else {
+            return (<div><h1>ERROR</h1></div>)
+        }
       
     }
 }

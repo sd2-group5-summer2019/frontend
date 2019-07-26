@@ -16,12 +16,14 @@ import CreateMeetingC from './components/containers/CreateMeetingC';
 import TeamsContainer, { StudentsContainer } from './components/containers/GeneralContainer';
 import CreateTaskC from './components/containers/CreateTaskC';
 import {ProjectManagementPageC} from './components/containers/CreateTaskC';
-import ActivateAccount from './components/ui/ActivateAccount'
+import {StudentDashContainer} from './components/containers/GeneralContainer';
+import ActivateAccount from './components/ui/ActivateAccount';
 
 const routes = (
     <Router>
         <Switch>
             <Route path="/" exact component={HomeContainer}/>
+            <Route path="/student_dashboard" exact component={StudentDashContainer}/> 
             <Route path="/login" exact component={LoginContainer} />
             <Route path="/survey" exact component={Survey} />
             <Route path="/register" exact component={Register} />

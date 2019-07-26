@@ -28,10 +28,12 @@ class MeetingsPage extends React.Component{
                 is_complete:'',
                 start_date:'',
                 form_id:'',
+                attendance:[],
                 page:false
             }
             this.componentDidMount = this.componentDidMount.bind(this);
             this.changePage = this.changePage.bind(this);
+            this.getAttendance = this.getAttendance.bind(this)
         }
 
         componentDidMount(){
@@ -54,6 +56,9 @@ class MeetingsPage extends React.Component{
                 console.log(response.data)
             })
             .catch(function (error){console.log(error)})
+        }
+
+        getAttendance() {
 
 
         }
@@ -71,7 +76,19 @@ class MeetingsPage extends React.Component{
                is_complete: res.value === "0" ? false : true,
                start_date: res.data,
                page:true
-           })           
+           })   
+           if(res.value === "0"){
+                const payload = {
+                    instance_id:res.id
+                }
+                console.log(payload)
+                axios.post(`http://` + this.props.ip_address + `:3001/api/getAttendance`, payload, {headers:{authorization:this.props.token}})
+                .then(response => {
+                    this.setState({attendance:response.data})
+                })
+                .catch(function (error){console.log(error)})  
+           }
+
         }
    
     render(){
@@ -132,7 +149,23 @@ class MeetingsPage extends React.Component{
                                     <h2>Meeting Results for {this.state.title} on {this.state.start_date}</h2>
                                     <h3>Agenda</h3>
                                     <p>{this.state.description}</p>
-                                    Attendance Information Here
+                                    <h3>Absent Students</h3>
+                                    <Table  responsive="sm" striped bordered hover>
+                                        <thead>
+                                            <tr>
+                                                <th>Student Name</th>
+                                                <th>Reason for absense</th>
+                                            </tr>
+                                        </thead>
+                                         <tbody>
+                                             {this.state.attendance.map((student, i) =>
+                                                <tr key={i}>
+                                                    <td>{student.first_name} {student.last_name}</td>
+                                                    <td>{student.reason}</td>
+                                                </tr>
+                                            )}
+                                         </tbody>
+                                     </Table>
                                 </Col>
                             </Row>
                         </Container>
