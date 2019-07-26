@@ -24,7 +24,6 @@ const routes = (
     <Router>
         <Switch>
             <Route path="/" exact component={HomeContainer}/>
-            <Route path="/student_dashboard" exact component={StudentDashContainer}/> 
             <Route path="/login" exact component={LoginContainer} />
             <Route path="/survey" exact component={Survey} />
             <Route path="/register" exact component={Register} />

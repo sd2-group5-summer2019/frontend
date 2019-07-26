@@ -7,7 +7,7 @@ class InstructorDash extends React.Component{
         super(props)
         this.state ={
             alerts:[],
-            alertsLoaded:false
+            alertsLoaded:true
         }
 
     }
@@ -23,7 +23,9 @@ class InstructorDash extends React.Component{
                 <Container> 
                     <Row>
                         <Col>
-                        Working 
+                        <Table>
+
+                        </Table>
                         </Col>
                     </Row>
                 </Container>

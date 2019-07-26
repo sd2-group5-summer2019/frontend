@@ -29,13 +29,13 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
                   <Navbar.Collapse  id="responsive-navbar-nav">
                   <Nav justify className="flex-column">
                         <ListGroup >
-                            <ListGroup.Item action href="/student_dashboard">Dashboard</ListGroup.Item>
+                            <ListGroup.Item action href="/">Dashboard</ListGroup.Item>
                             <ListGroup.Item action href="/assignments">Assignments</ListGroup.Item>
                             <ListGroup.Item action href="/meetings"> Meetings</ListGroup.Item>
                             <ListGroup.Item action href="/project_management_page">Project Management</ListGroup.Item>
                             {userType !== 'student'?
                             <React.Fragment>
-                                <ListGroup.Item action href="/"> Analytics</ListGroup.Item>
+                              
                                 <ListGroup.Item action href="/students"> Students</ListGroup.Item>
                                 <ListGroup.Item action href="/teams"> Teams</ListGroup.Item>
                                 <ListGroup.Item action href="/sponsors"> Advisors</ListGroup.Item>
@@ -44,7 +44,7 @@ const Menu = ({ userType='', user_id='', token='', loggedIn=false , onLogout}) =
                             : 
                             <React.Fragment></React.Fragment>
                         }
-                            <ListGroup.Item action href="/settings"> Settings </ListGroup.Item>
+                            
                             <ListGroup.Item>
                                 <Button size="lg" type="button" onClick={function(){logoutHelper(); onLogout();}}>Log Out</Button>
                             </ListGroup.Item>

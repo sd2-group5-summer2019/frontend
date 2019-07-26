@@ -140,12 +140,11 @@ class StudentDashboard extends React.Component{
             if(!this.state.page){
                return(
                   <Container>
-                    <Row className="text-center"> <h1>Student Dashboard</h1></Row>
+                    <Row className="text-center">  <h1>Student Dashboard</h1></Row>
                     <Row>
-                        <Col sm={3}><MenuContainer/></Col>
-                        <Col sm={9}>
+                        <Col >
 
-                        <h2>Assignments</h2>
+                            <h2>Assignments</h2>
                             <Table  responsive="sm" striped bordered hover>
                                 <thead>
                                     <tr>
@@ -214,31 +213,21 @@ class StudentDashboard extends React.Component{
             }else {
                 console.log(this.state)
                 if(this.state.type === 'task') {
-                    return(
-                        <Container>
-                            <Row>
-                                <Col sm={3}> <MenuContainer/> </Col>
-                                <Col sm={9}> <TaskC title={this.state.title} description={this.state.description} type={this.state.type} instance_id={this.state.instance_id} type={this.state.type} is_complete={this.state.is_complete} /> </Col>
-                            </Row>
-                        </Container>
+                    return(     
+                           <Col sm={9}> <TaskC title={this.state.title} description={this.state.description} type={this.state.type} instance_id={this.state.instance_id} type={this.state.type} is_complete={this.state.is_complete} /> </Col>
                     )
                 } else if(this.state.type === 'meeting') {
                     return(
-                        <Container>
-                            <Row>
-                                <Col sm={3}> <MenuContainer/> </Col>
                                 <Col sm={9}> <MeetingC instance_id={this.state.instance_id} title={this.state.title} description={this.state.description} /> </Col>
-                            </Row>
-                        </Container>
                     )
                 } else if (this.state.type === 'quiz' || this.state.type === 'survey'){
                     return(
-                        <Container>
-                            <Row>
-                                <Col sm={3}> <MenuContainer/> </Col>
+                        
+                           
+                               
                                 <Col sm={9}> <TakeAssignmentContainer instance_id={this.state.instance_id} form_id={this.state.form_id} /> </Col>
-                            </Row>
-                        </Container>
+                            
+                       
                     )
                 }
 
