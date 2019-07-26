@@ -56,6 +56,7 @@ class ActivateAccount extends React.Component{
 
         console.log(e.target.username.value)
         console.log(this.state.username)
+        e.target.username.value = ''
     }
 
     checkCode(e){
@@ -78,6 +79,8 @@ class ActivateAccount extends React.Component{
                 }
         })
         .catch(function (error){console.log(error)})
+
+        e.target.code.value = ''
     }
 
     changePassword(e){
@@ -104,6 +107,8 @@ class ActivateAccount extends React.Component{
                 passwordError:"Passwords don't match",
                  loading:true
             })
+        e.target.password.value = ''
+        e.target.passwordCheck.value = ''
         }
        
     }
