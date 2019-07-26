@@ -45,21 +45,23 @@ class Meeting extends React.Component{
             .then(response_team_members => {
                 this.setState({team_members:response_team_members.data.team_members})
                 console.log(response_team_members.data)
-            })
+                const temp = response_team_members.data.team_members;
+                for(var i = 0; i < temp.length; i++)
+                {
+                    temp[i].did_attend = true;
+                    temp[i].reason = ""
+                }
+            this.setState({
+                team_members:temp,
+                flag:true
+            })              
+        })
             .catch(function (error){console.log(error)}) 
         })
         .catch(function (error){console.log(error)})
 
-        const temp = this.state.team_members;
-        for(var i = 0; i < temp.length; i++)
-        {
-            temp[i].did_attend = true;
-            temp[i].reason = ""
-        }
-        this.setState({
-            team_members:temp,
-            flag:true
-        })    
+
+  
     }
 
     formHandler(event){
@@ -69,7 +71,7 @@ class Meeting extends React.Component{
             type:'attendance',
             token:this.state.token,
             instance_id:this.state.instance_id,
-            users:this.state.users   
+            users:this.state.team_members   
         }
         console.log(payload)
         axios.post(`http://` + this.props.ip_address + `:3001/api/createForm`, payload, {headers:{authorization:this.props.token}})
@@ -92,16 +94,20 @@ class Meeting extends React.Component{
         const temp = this.state.team_members
         const user_id = event.target.name
         const reason = event.target.value
+
+        this.setState({
+            loading:true
+        })
         for(var i = 0; i < temp.length; i++){
-            if(temp[i].user_id === user_id){
-                if(!reason.length)
+            if(temp[i].user_id.toString() === user_id){
+                if(reason.length === 0)
                     temp[i].did_attend=true
                 else
                     temp[i].did_attend=false
                 temp[i].reason=reason
             }            
         }
-        this.setState({team_members:temp})
+        this.setState({team_members:temp, loading:false})
     }
 
     render(){
