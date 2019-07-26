@@ -13,11 +13,12 @@ import Sponsors from './components/pages/Sponsors';
 import Get_Results from './components/ui/Get_Results';
 import {MeetingsPageC} from './components/containers/CreateMeetingC';
 import CreateMeetingC from './components/containers/CreateMeetingC';
-import TeamsContainer, { StudentsContainer } from './components/containers/GeneralContainer';
+import TeamsContainer, { StudentsContainer} from './components/containers/GeneralContainer';
 import CreateTaskC from './components/containers/CreateTaskC';
 import {ProjectManagementPageC} from './components/containers/CreateTaskC';
 import {StudentDashContainer} from './components/containers/GeneralContainer';
-import ActivateAccount from './components/ui/ActivateAccount';
+
+import { ActivateAccountC } from './components/containers/GeneralContainer';
 
 const routes = (
     <Router>
@@ -40,7 +41,7 @@ const routes = (
             <Route path="/meetings" exact component={MeetingsPageC} />
             <Route path="/create_meeting" exact component={CreateMeetingC} />
             <Route path="/create_task" exact component={CreateTaskC}/>
-            <Route path="/activate_account" exact component={ActivateAccount}/>
+            <Route path="/activate_account" exact component={ActivateAccountC}/>
             <Route path="/project_management_page" exact component={ProjectManagementPageC}/>
         </Switch>
     </Router>
