@@ -41,11 +41,11 @@ class StudentDashboard extends React.Component{
            const assignments = this.state.assignments;
            console.log(event.target.title)
            if(event.target.title === "meeting"){
-            for(var i = 0; i < meetings.length; i++) {
-                if(meetings[i].instance_id.toString() === event.target.id) {
-                    res = meetings[i]
+                for(var i = 0; i < meetings.length; i++) {
+                    if(meetings[i].instance_id.toString() === event.target.id) {
+                        res = meetings[i]
+                    }
                 }
-            }
                 this.setState({
                    title:res.title,
                    type: res.type,

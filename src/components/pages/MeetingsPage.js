@@ -77,13 +77,14 @@ class MeetingsPage extends React.Component{
                start_date: res.data,
                page:true
            })   
-           if(res.value === "0"){
+           if(res.value === "1"){
                 const payload = {
                     instance_id:res.id
                 }
                 console.log(payload)
                 axios.post(`http://` + this.props.ip_address + `:3001/api/getAttendance`, payload, {headers:{authorization:this.props.token}})
                 .then(response => {
+                    console.log(response.data)
                     this.setState({attendance:response.data})
                 })
                 .catch(function (error){console.log(error)})  
